@@ -1,0 +1,1056 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Sonia Liu Portfolio</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 24 24%27%3E%3Cpath fill=%27%23FF8662%27 d=%27M12 0c.9 6.6 5.4 11.1 12 12-6.6.9-11.1 5.4-12 12-.9-6.6-5.4-11.1-12-12C6.6 11.1 11.1 6.6 12 0z%27/%3E%3C/svg%3E">
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Sonia Liu（劉敏雯）— Project Manager × AI 協作。專案管理、需求分析、AI 協作開發。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Poppins:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;700&family=Noto+Sans+JP:wght@700&family=Noto+Serif+TC:wght@700&family=JetBrains+Mono:wght@500;700&display=swap">
+<style>
+/* Layout: full-width colour bands (hero → about collage → résumé → work deck → contact), one fixed nav, dot nav on the right, sections snap softly.
+   Single light theme on purpose: the design is a pastel poster, so colours are set explicitly and do not flip in dark mode. */
+:root{
+  color-scheme:light;
+  --mist:#DDE3EA; --blue:#8DB4E2; --pink:#E9D3E6; --ink:#262A30; --muted:#5E6670; --white:#FFFFFF;
+  --coral:#FF8662; --lime:#EBFF3A; --butter:#FFF1B8; --blush:#FAD6DE; --lavender:#E2DAF6; --powder:#CFE0F5; --sage:#D6E4DA;
+  --line:#C6CED8;
+  --display:"DM Serif Display", "Noto Serif TC", Georgia, serif;
+  --ui:"Poppins", "Noto Sans TC", system-ui, sans-serif;
+  --body:"Noto Sans TC", "PingFang TC", "Microsoft JhengHei", system-ui, sans-serif;
+  --jp:"Noto Sans JP", "Noto Sans TC", sans-serif;
+  --container:1200px;
+  --nav-h:96px;
+  --h1:clamp(60px,13.6vw,196px);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-snap-type:y proximity;scroll-padding-top:0}
+body{margin:0;background:var(--mist);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.7;overflow-x:hidden}
+img{max-width:100%;display:block}
+a{color:inherit}
+.container{max-width:calc(var(--container) + 2*max(16px, env(safe-area-inset-left,0px)));margin:0 auto;padding-left:max(16px, env(safe-area-inset-left,0px));padding-right:max(16px, env(safe-area-inset-right,0px));position:relative}
+section{position:relative;scroll-snap-align:start}
+.star{display:block;fill:currentColor}
+:focus-visible{outline:3px solid var(--coral);outline-offset:3px;border-radius:6px}
+
+/* ---------- nav ---------- */
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:60;background:var(--mist)}
+.nav{position:fixed;top:env(safe-area-inset-top,0px);left:0;right:0;z-index:50;transition:background .3s ease, box-shadow .3s ease}
+.nav.scrolled{background:color-mix(in srgb,var(--mist) 78%,transparent);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);box-shadow:0 1px 0 rgba(38,42,48,.06)}
+.nav .container{display:flex;align-items:center;justify-content:space-between;height:var(--nav-h)}
+.nav.scrolled .container{height:72px}
+.logo{display:flex;align-items:center;gap:8px;font-family:var(--display);font-size:26px;text-decoration:none;color:var(--ink)}
+.logo .star{width:22px;height:22px;color:var(--coral)}
+.links{display:flex;align-items:center;gap:36px;font-family:var(--ui);font-weight:600;font-size:14px}
+.links a{text-decoration:none;position:relative}
+.links a.navlink.active{color:var(--muted)}
+.links a.navlink.active::after{content:"";position:absolute;left:10%;right:10%;bottom:-6px;height:2px;border-radius:2px;background:var(--muted)}
+.pill{display:inline-flex;align-items:center;justify-content:center;gap:8px;border-radius:999px;font-family:var(--ui);font-weight:600;font-size:14px;padding:11px 22px;text-decoration:none;border:1.5px solid transparent;transition:transform .2s ease, filter .2s ease;cursor:pointer}
+.pill:hover{transform:translateY(-2px)}
+.pill.coral{background:var(--coral);color:var(--ink)}
+.pill.lime{background:var(--lime);color:var(--ink)}
+.pill.ghost{border-color:currentColor;background:transparent}
+
+/* ---------- dot nav ---------- */
+.dots{position:fixed;right:max(20px, env(safe-area-inset-right,0px));top:50%;transform:translateY(-50%);z-index:40;display:flex;flex-direction:column;gap:14px}
+.dots a{display:block;width:10px;height:10px;border-radius:999px;background:transparent;border:1.5px solid var(--ink);position:relative;transition:height .3s ease, background .3s ease}
+.dots a.on{height:28px;background:var(--ink)}
+.dots a span{position:absolute;right:20px;top:50%;transform:translateY(-50%);font-family:var(--ui);font-size:12px;font-weight:600;white-space:nowrap;background:var(--ink);color:var(--white);padding:2px 8px;border-radius:6px;opacity:0;pointer-events:none;transition:opacity .2s ease}
+.dots a:hover span,.dots a:focus-visible span{opacity:1}
+.dots.on-dark a{border-color:var(--white)}
+.dots.on-dark a.on{background:var(--white)}
+
+/* ---------- hero ---------- */
+#home{min-height:1030px;overflow:clip;
+  background:
+    radial-gradient(620px 620px at 88% 8%, rgba(141,180,226,.95), rgba(141,180,226,0) 70%),
+    radial-gradient(560px 560px at 0% 70%, rgba(233,211,230,.95), rgba(233,211,230,0) 70%),
+    var(--mist)}
+.hero-type{position:relative;z-index:3;padding-top:118px;pointer-events:none}
+.hero-type h1{margin:0;font-family:var(--ui);font-weight:700;font-size:var(--h1);line-height:1;letter-spacing:-.025em;color:var(--ink)}
+.hero-type .outline{display:block;font-family:var(--ui);font-weight:600;font-size:clamp(50px,11.2vw,162px);line-height:1.02;letter-spacing:-.01em;color:transparent;-webkit-text-stroke:1.5px var(--ink)}
+.hero-type .outline.jp{font-family:"Poppins", "Noto Sans JP", sans-serif;font-weight:700;font-size:clamp(34px,7.1vw,102px);letter-spacing:0;line-height:1.3;color:var(--ink);-webkit-text-stroke:0;filter:url(#hollow)}
+.id-card{position:absolute;z-index:2;top:calc(118px + var(--h1) * .52);left:calc(max(16px, env(safe-area-inset-left,0px)) + var(--h1) * 3.8);width:min(471px, calc(100vw - 24px - max(16px, env(safe-area-inset-left,0px)) - var(--h1) * 3.8));height:499px;background:var(--blush);padding:40px 30px 36px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:0}
+.avatar{position:relative;width:196px;height:196px;flex:none;border-radius:50%;background:#FFF8F8;display:grid;place-items:center;overflow:visible;box-shadow:0 0 0 8px rgba(255,255,255,.45)}
+.avatar img{width:74%;height:auto;transform:translate(2%,2%)}
+.avatar .ph{font-family:var(--ui);font-size:13px;color:var(--muted);text-align:center;line-height:1.4}
+.id-card .name{font-size:30px;font-weight:500;letter-spacing:.12em;margin:26px 0 0;line-height:1.3}
+.id-card .role{margin-top:10px;padding-bottom:20px;position:relative}
+.id-card .role::after{content:"";position:absolute;left:50%;bottom:0;width:40px;height:2px;border-radius:2px;background:var(--coral);transform:translateX(-50%)}
+.id-card .role{font-family:var(--ui);font-weight:600;font-size:16px;letter-spacing:.14em}
+.id-card .role b{font-family:var(--body);font-weight:600;letter-spacing:.06em}
+.id-card .skills{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin-top:20px;font-size:15px;font-weight:500;letter-spacing:.02em}
+.id-card .skills span{background:var(--white);border-radius:999px;padding:5px 14px;line-height:1.5}
+
+.hero-stars .s{position:absolute;z-index:4}
+.strip{position:absolute;z-index:1;left:0;right:0;top:663px;height:300px;background:var(--ink);color:var(--white)}
+.strip .container{height:100%;display:grid;grid-template-columns:260px 1fr;align-items:start;align-content:start;padding-top:44px}
+.open{display:inline-flex;align-items:center;gap:8px;background:var(--lime);color:var(--ink);font-family:var(--ui);font-weight:600;font-size:14px;border-radius:999px;padding:7px 18px}
+.open-row{display:flex;align-items:center;gap:12px;flex-wrap:nowrap;white-space:nowrap}
+.feat{display:inline-flex;align-items:center;gap:6px;background:var(--coral);color:var(--ink);font-family:var(--body);font-weight:600;font-size:14px;border-radius:999px;padding:7px 18px;text-decoration:none;white-space:nowrap;transition:transform .2s ease}
+.feat:hover{transform:translateY(-2px)}
+.open::before{content:"";width:10px;height:10px;border-radius:50%;background:var(--ink)}
+.socials{display:flex;gap:12px;margin-top:22px}
+.socials a{width:56px;height:56px;border-radius:50%;display:grid;place-items:center;background:var(--white);transition:transform .2s ease}
+.socials a:hover{transform:translateY(-3px)}
+.socials img{width:52%;height:52%}
+.quote{margin:0 0 -6px;align-self:end;font-family:var(--ui);font-size:17px;line-height:1.65;max-width:860px}
+.quote span{display:block;font-family:var(--body)}
+.scroll-down{position:absolute;z-index:5;left:50%;top:885px;transform:translateX(-50%);width:128px;height:128px;border-radius:50%;background:var(--lime);border:1.5px solid var(--ink);display:flex;flex-direction:column;align-items:center;justify-content:center;font-family:var(--ui);font-weight:600;font-size:15px;line-height:1.2;text-decoration:none;color:var(--ink);transition:transform .25s ease}
+.scroll-down:hover{transform:translateX(-50%) translateY(4px)}
+.scroll-down .arr{font-size:18px;margin-top:2px;animation:bob 1.8s ease-in-out infinite}
+@keyframes bob{50%{transform:translateY(4px)}}
+
+/* ---------- about ---------- */
+#about{min-height:780px;padding-top:120px;overflow:clip;background:var(--mist)}
+.eyebrow{font-family:var(--ui);font-weight:500;font-size:20px;letter-spacing:.2em;color:var(--coral);text-transform:uppercase;margin:20px 0 0}
+.about-copy{position:relative;z-index:3;max-width:700px}
+.about-copy h2{font-family:var(--display);font-weight:400;font-size:clamp(56px,7.4vw,106px);line-height:1.08;margin:22px 0 28px;text-wrap:balance}
+.about-copy p{font-size:20px;line-height:1.9;margin:0 0 34px;max-width:29em}
+.about-copy .lead{font-size:26px;font-weight:700;line-height:1.7;margin:0 0 18px;max-width:22em}
+.about-btns .pill{font-size:19px;padding:16px 34px}
+.about-btns .pill .in{width:22px;height:22px}
+.about-btns{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+.about-copy .pill.ghost{border-color:var(--ink);color:var(--ink)}
+.pill.small{font-size:13px;padding:8px 18px}
+.pill .in{width:18px;height:18px}
+.collage{position:absolute;right:0;top:0;width:min(62vw,880px);height:100%;pointer-events:none}
+.collage .mt{position:absolute;right:0;top:140px;width:774px;max-width:none;filter:drop-shadow(2px 3px 5px rgba(38,42,48,.18))}
+.collage .bar{position:absolute;right:0;top:447px;width:668px;height:175px;background:var(--lavender);border-radius:88px 0 0 88px}
+.collage .me{position:absolute;right:56px;top:305px;width:384px}
+.collage .me img{width:100%;max-width:none}
+
+/* ---------- résumé ---------- */
+#resume{--M:clamp(100px,calc((100svh - 573px)/2),240px);padding-bottom:120px;overflow:clip;
+  background:
+    radial-gradient(620px 560px at 94% 820px, rgba(233,211,230,.95), rgba(233,211,230,0) 70%),
+    radial-gradient(520px 520px at 0% 52%, rgba(141,180,226,.95), rgba(141,180,226,0) 70%),
+    radial-gradient(640px 640px at 100% 92%, rgba(233,211,230,.95), rgba(233,211,230,0) 70%),
+    var(--mist)}
+.band{background:linear-gradient(to bottom, rgba(141,180,226,0) 0, var(--blue) 250px, var(--blue) calc(100% - 140px), rgba(141,180,226,0) 100%);padding-bottom:var(--band-pb,56px)}
+.resume-mark{display:flex;flex-direction:column;align-items:center;padding-top:44px;font-family:var(--display);font-size:clamp(56px,6.8vw,98px);line-height:.8;color:transparent;-webkit-text-stroke:1.2px var(--lime);letter-spacing:.01em;user-select:none}
+#resume .container{max-width:calc(1040px + 2*max(16px, env(safe-area-inset-left,0px)))}
+.resume-grid{display:grid;grid-template-columns:minmax(0,1fr) 500px;gap:44px;margin-top:calc(var(--M) - 68px);align-items:start}
+#resume-start{scroll-margin-top:var(--M);scroll-snap-align:start}
+#resume{scroll-snap-align:none}
+.edu{padding-top:24px}
+.resume-grid > .exp{margin-bottom:-120px;position:relative;z-index:2}
+.label{font-family:var(--ui);font-weight:500;font-size:24px;margin:0 0 4px}
+h3.sec{font-family:var(--display);font-weight:400;font-size:42px;line-height:1.15;margin:0 0 22px;text-wrap:balance}
+.edu{margin-left:0}
+.tl{list-style:none;margin:0;padding:0;display:grid;gap:26px}
+.tl li{display:grid;grid-template-columns:22px 72px 1fr;gap:10px;align-items:start}
+.tl .star{width:18px;height:18px;color:var(--coral);margin-top:4px}
+.tl .yr{font-family:var(--ui);font-weight:600;font-size:21px;line-height:1.3;font-variant-numeric:tabular-nums}
+.tl .what{font-weight:700;font-size:15.5px;line-height:1.45}
+.tl .what i{font-style:normal;font-weight:400;color:var(--muted);padding:0 4px}
+.tl .sub{font-size:13px;color:var(--muted);line-height:1.5}
+.edu .tl .sub{color:var(--white)}
+.exp{background:var(--butter);padding:38px 36px 42px}
+.exp h3.sec{margin-bottom:10px}
+.exp .tl{gap:15px}
+.exp .tl li{grid-template-columns:20px 50px 1fr;gap:8px}
+.exp .tl .star{width:15px;height:15px;margin-top:3px}
+.exp .tags{margin-top:26px;gap:8px}
+.exp .tag-dark{font-size:12px;padding:4px 12px}
+.exp .tl .yr{font-size:16px}
+.exp .tl .what{font-size:13.5px;line-height:1.4}
+.exp .tl .sub{font-size:12px;line-height:1.45}
+.tags{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
+.tag-dark{background:var(--ink);color:var(--white);font-size:12.5px;border-radius:999px;padding:5px 14px}
+.skills-grid{display:grid;grid-template-columns:minmax(0,1fr) 480px;gap:52px;align-items:start}
+.skills-grid .chips{max-width:440px}
+.skills-wrap{margin-top:40px}
+.lang-wrap{margin-top:112px}
+.lang-wrap h3.sec{margin-bottom:16px}
+.lang-wrap .langs span{color:var(--ink);opacity:.7}
+.group h4{font-size:15px;font-weight:700;margin:0 0 10px}
+.chips{display:flex;flex-wrap:wrap;gap:10px 10px}
+.chip{background:var(--white);border-radius:999px;font-size:13.5px;padding:4px 16px}
+.chip.tool{display:inline-flex;align-items:center;gap:7px;padding-left:12px}
+.chip.tool svg{width:15px;height:15px;fill:var(--ink);flex:none}
+.lower{display:grid;grid-template-columns:minmax(0,1fr) 480px;gap:52px;margin-top:72px;align-items:start}
+.lower .hobby-card{width:100%}
+.langs{display:flex;flex-wrap:wrap;gap:20px 46px}
+.langs div{display:flex;flex-direction:column;line-height:1.3}
+.langs b{font-family:var(--ui);font-weight:600;font-size:16px}
+.langs span{font-size:12.5px;color:var(--muted)}
+.certs{margin-top:22px}
+.certs .tags{margin-top:0}
+.certs .tag-dark{font-size:13px;padding:0 16px;height:34px;display:inline-flex;align-items:center;gap:6px;line-height:1;white-space:nowrap}
+.certs.tags{align-items:center}
+button.tag-dark{font:inherit;font-size:13px;border:0;cursor:pointer;display:inline-flex;align-items:center;gap:6px;transition:transform .2s ease,background .2s ease}
+button.tag-dark::after{content:"";width:14px;height:14px;flex:none;background:currentColor;-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='round'%3E%3Crect x='3' y='5' width='18' height='14' rx='2'/%3E%3Cpath d='M7 15l3-3 3 3 2-2 2 2'/%3E%3C/svg%3E") center/contain no-repeat;mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='round'%3E%3Crect x='3' y='5' width='18' height='14' rx='2'/%3E%3Cpath d='M7 15l3-3 3 3 2-2 2 2'/%3E%3C/svg%3E") center/contain no-repeat;opacity:.8}
+button.tag-dark:hover{transform:translateY(-2px);background:#3A3F47}
+.cert-modal{border:0;padding:0;background:transparent;max-width:min(920px,94vw);width:100%;overflow:visible}
+.cert-modal::backdrop{background:rgba(20,22,26,.72);backdrop-filter:blur(4px)}
+.cert-modal figure{margin:0;background:var(--white);border-radius:18px;padding:14px;box-shadow:0 20px 60px rgba(0,0,0,.35)}
+.cm-wrap{position:relative}
+.cm-track{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;border-radius:10px;background:#f4f4f4}
+.cm-track::-webkit-scrollbar{display:none}
+.cm-track .cm-slide{flex:0 0 100%;scroll-snap-align:center;margin:0;display:grid;place-items:center}
+.cm-track img{width:100%;height:auto;max-height:76vh;object-fit:contain;display:block}
+.cm-nav{position:absolute;top:50%;transform:translateY(-50%);width:44px;height:44px;border-radius:50%;border:0;background:var(--ink);color:#fff;font-size:20px;cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,.25)}
+.cm-nav.prev{left:10px}.cm-nav.next{right:10px}
+.cm-nav[hidden],.cm-dots[hidden]{display:none}
+.cm-dots{display:flex;justify-content:center;gap:8px;padding-top:10px}
+.cm-dots button{border:0;border-radius:999px;padding:5px 14px;font:600 13px var(--ui);background:#e8ebef;color:var(--ink);cursor:pointer}
+.cm-dots button.on{background:var(--ink);color:#fff}
+.cert-modal figcaption{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:12px 4px 2px;font-family:var(--ui);font-weight:600;font-size:15px}
+.cert-modal figcaption small{font-family:var(--body);font-weight:400;font-size:13px;color:var(--muted)}
+.cert-modal .x{position:absolute;top:-14px;right:-14px;width:40px;height:40px;border-radius:50%;border:0;background:var(--lime);color:var(--ink);font-size:20px;cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,.25)}
+@media (max-width:640px){.cert-modal .x{top:-48px;right:0}}
+.hobby-card{background:var(--white);border-radius:24px;padding:22px 28px 24px;width:382px;max-width:100%;box-shadow:0 18px 40px rgba(38,42,48,.08)}
+.hobby-card ul{margin:0;padding:0;list-style:none;display:grid;gap:9px;font-size:14.5px}
+.hobby-card li::before{content:"・";font-weight:700}
+.hobby-card b{font-weight:700}
+.hobby-card i{font-style:normal;color:var(--muted);padding:0 4px}
+.hobby-card small{display:block;padding-left:1.1em;font-size:13.5px}
+
+/* ---------- work deck ---------- */
+#work{padding-block:92px 72px;min-height:100svh;display:flex;flex-direction:column;justify-content:center;background:var(--mist)}
+#work>.container{width:100%}
+.work-head{display:flex;align-items:end;justify-content:space-between;gap:24px;flex-wrap:wrap;margin-bottom:18px}
+.work-head h2{font-family:var(--ui);font-weight:600;font-size:28px;margin:0;letter-spacing:.01em}
+.tabs{display:flex;gap:8px;flex-wrap:wrap}
+.tab{font-family:var(--ui);font-weight:600;font-size:13px;border:1.5px solid var(--ink);background:transparent;color:var(--ink);border-radius:999px;padding:8px 14px;cursor:pointer;display:flex;gap:8px;align-items:center}
+.tab .n{font-variant-numeric:tabular-nums;opacity:.6}
+.tab[aria-selected="true"]{background:var(--ink);color:var(--mist)}
+.tab[aria-selected="true"] .n{opacity:1;color:var(--lime)}
+.track{padding:4px 0 34px;margin-bottom:-24px;display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;gap:24px;scrollbar-width:none}
+.track::-webkit-scrollbar{display:none}
+.slide{flex:0 0 100%;scroll-snap-align:start;min-width:0;display:block;position:relative;color:var(--ink);border-radius:12px;overflow:hidden;box-shadow:0 22px 34px -26px rgba(38,42,48,.5)}
+.story{gap:10px}
+.facts li{padding-top:8px}
+.shot{position:relative;display:block;width:100%;height:min(640px,calc(100svh - 300px));min-height:400px;min-width:0;border-radius:0;overflow:hidden;text-decoration:none;color:var(--ink);background:var(--white);}
+.frames{position:absolute;inset:0;transition:transform .6s cubic-bezier(.2,.7,.2,1)}
+.frame{position:absolute;inset:0;display:grid;place-items:center;opacity:0;transition:opacity .9s ease}
+.frame.on{opacity:1}
+.frame img,.frame video{width:100%;height:100%;object-fit:cover;object-position:center top}
+.shot:hover .frames{transform:none}
+.art-title{font-family:var(--display);font-size:clamp(34px,5vw,72px);line-height:1;text-align:center;padding:0 24px}
+.cjk{font-size:.86em;letter-spacing:.02em;margin-right:.12em;position:relative;top:-.03em}
+.art-title small{display:block;font-family:var(--ui);font-size:13px;letter-spacing:.2em;text-transform:uppercase;margin-top:14px;font-weight:600;opacity:.7}
+.placeholder{position:absolute;left:16px;bottom:16px;font-family:var(--ui);font-size:12px;font-weight:600;background:var(--white);color:var(--muted);border:1.5px dashed var(--muted);border-radius:8px;padding:4px 10px}
+.hover-cta{position:absolute;right:16px;bottom:16px;font-family:var(--ui);font-weight:600;font-size:13px;background:var(--ink);color:var(--mist);border-radius:999px;padding:8px 14px;opacity:0;transform:translateY(8px);transition:.3s ease}
+.shot:hover .hover-cta,.shot:focus-visible .hover-cta{opacity:1;transform:none}
+.sticker{position:absolute;font-family:var(--ui);font-weight:700;font-size:12px;letter-spacing:.06em;padding:6px 12px;border-radius:6px;background:var(--lime);color:var(--ink)}
+.shot .star{position:absolute;width:28px;height:28px;color:var(--lime)}
+.shot .star.c{color:var(--coral)}
+.a1{background:linear-gradient(135deg,var(--powder),var(--pink))}
+.a2{background:linear-gradient(135deg,var(--butter),var(--blush))}
+.a3{background:linear-gradient(135deg,var(--sage),var(--powder))}
+.a4{background:linear-gradient(135deg,var(--blue),var(--powder))}
+.story{position:absolute;right:20px;bottom:20px;width:min(350px,36%);background:var(--white);border-radius:10px;box-shadow:0 14px 30px -12px rgba(38,42,48,.45);min-width:0;display:flex;flex-direction:column;justify-content:center;gap:12px;padding:22px 24px}
+.meta{display:flex;justify-content:space-between;align-items:baseline;gap:12px;font-family:var(--ui);font-size:12px;font-weight:600;color:var(--coral);letter-spacing:.04em}
+.meta .idx{font-size:14px;color:var(--muted);font-variant-numeric:tabular-nums}
+.story h2{font-family:var(--display);font-weight:400;font-size:clamp(28px,2.7vw,38px);line-height:1.1;margin:0;text-wrap:balance}
+.lede{margin:0;color:var(--muted);max-width:34em}
+.facts{list-style:none;margin:4px 0 0;padding:0;display:grid;gap:10px}
+.facts li{display:grid;grid-template-columns:auto 1fr;gap:12px;align-items:baseline;border-top:1px solid var(--line);padding-top:10px}
+.facts b{font-family:var(--ui);font-size:20px;font-weight:700;font-variant-numeric:tabular-nums;min-width:3.2ch}
+.facts span{font-size:14px}
+.story .chips{margin-top:2px}
+.story .lede{font-size:14.5px;color:var(--ink);line-height:1.65}
+.story .meta{color:var(--ink)}
+.story .meta .idx{color:rgba(38,42,48,.6)}
+.story .chips .chip{border-color:rgba(38,42,48,.7)}
+.actions .pill.ghost{border-color:var(--ink);color:var(--ink)}
+.story .chips .chip{background:transparent;border:1.2px solid var(--ink);font-size:12.5px;padding:3px 12px}
+.actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:4px}
+.controls{display:flex;justify-content:space-between;align-items:center;gap:16px;padding-top:14px}
+.pdots{display:flex;gap:8px}
+.pdot{width:8px;height:8px;border-radius:999px;background:var(--line);transition:width .3s ease, background .3s ease}
+.pdot.on{width:28px;background:var(--ink)}
+.arrows{display:flex;gap:10px;align-items:center}
+.count{font-family:var(--ui);font-weight:600;font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums;margin-right:6px}
+.arrow{width:48px;height:48px;border-radius:999px;border:1.5px solid var(--ink);background:var(--white);color:var(--ink);display:grid;place-items:center;cursor:pointer;font-size:18px}
+.arrow:hover{background:var(--ink);color:var(--white)}
+.arrow:disabled{opacity:.3;cursor:default;background:var(--white);color:var(--ink)}
+
+/* ---------- contact ---------- */
+#contact{position:relative;background:var(--ink);color:var(--white);padding-block:110px 40px;text-align:center}
+#contact h2{font-family:var(--ui);font-weight:700;font-size:clamp(48px,6.8vw,98px);line-height:1;margin:0;letter-spacing:-.01em}
+#contact .hi{margin:22px 0 22px;font-size:17px}
+.cta-row{display:flex;flex-wrap:wrap;justify-content:center;gap:14px}
+.cta-row .pill{font-size:14px;padding:10px 24px}
+@media (min-width:641px){.cta-row .pdf{order:9}}
+.copy-ok{display:block;height:20px;margin-top:10px;font-size:13px;color:var(--lime)}
+.copyright{margin-top:22px;font-size:12px;color:#7C838D}
+
+
+/* ---------- experience details: drawer (desktop) / accordion (mobile) ---------- */
+.exp-hint{margin:-8px 0 12px;font-size:12px;color:var(--muted)}
+.job{cursor:pointer;border-radius:10px;margin:0 -10px;padding:6px 10px;transition:background .2s ease}
+.job:hover,.job:focus-visible{background:rgba(255,255,255,.55)}
+.more-hint{margin-left:8px;font-family:var(--ui);font-size:11.5px;font-weight:600;color:var(--coral);opacity:0;transition:opacity .2s ease}
+.job:hover .more-hint,.job:focus-visible .more-hint{opacity:1}
+.more{display:none}
+.tl .dl li,.exp .tl .dl li{display:list-item;grid-template-columns:none;gap:0}
+.dl{margin:8px 0 0;padding-left:1.1em;display:grid;gap:6px;font-size:13px;line-height:1.6}
+.more .intro{margin:8px 0 0;font-size:13px}
+.more .pill{margin-top:10px}
+.scrim{position:fixed;inset:0;background:rgba(38,42,48,.32);z-index:70;opacity:0;pointer-events:none;transition:opacity .3s ease}
+.scrim.is-open{opacity:1;pointer-events:auto}
+.drawer{position:fixed;top:0;right:0;bottom:0;width:min(max(50vw,640px),92vw);z-index:80;background:var(--butter);box-shadow:-20px 0 50px rgba(38,42,48,.18);transform:translateX(100%);transition:transform .45s cubic-bezier(.2,.7,.2,1);display:flex;flex-direction:column;padding:max(24px,env(safe-area-inset-top,0px)) max(32px, env(safe-area-inset-right,0px)) max(24px,env(safe-area-inset-bottom,0px)) 32px}
+.drawer.is-open{transform:none}
+.drawer-head{display:flex;align-items:center;justify-content:space-between}
+.drawer-head h3{font-family:var(--display);font-weight:400;font-size:30px;margin:0}
+.x{width:42px;height:42px;border-radius:50%;border:1.5px solid var(--ink);background:transparent;color:var(--ink);font-size:20px;cursor:pointer}
+.x:hover{background:var(--ink);color:var(--butter)}
+.scrub{position:relative;margin:26px 6px 8px;padding-bottom:28px}
+.scrub .rail{position:absolute;left:0;right:0;top:9px;height:2px;background:rgba(38,42,48,.25)}
+.scrub .fill{position:absolute;left:0;top:9px;height:2px;background:var(--coral);transition:width .3s ease}
+.scrub .stops{position:relative;display:flex;justify-content:space-between}
+.scrub .stop{position:relative;width:20px;height:20px;border-radius:50%;border:2px solid var(--ink);background:var(--butter);cursor:pointer;padding:0;transition:transform .2s ease,background .2s ease}
+.scrub .stop span{position:absolute;top:26px;left:50%;transform:translateX(-50%);font-family:var(--ui);font-weight:600;font-size:12.5px;color:var(--muted)}
+.scrub .stop.on{background:var(--coral);border-color:var(--coral);transform:scale(1.2)}
+.scrub .stop.on span{color:var(--ink)}
+.scrub input[type=range]{position:absolute;left:-10px;right:-10px;top:0;width:calc(100% + 20px);height:20px;margin:0;opacity:0;cursor:grab}
+.dtrack{flex:1;min-height:0;display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;scrollbar-width:none;gap:24px;margin-top:14px}
+.dtrack::-webkit-scrollbar{display:none}
+.dslide{flex:0 0 100%;scroll-snap-align:start;overflow-y:auto;min-width:0;padding-right:6px}
+.dslide .period{font-family:var(--ui);font-weight:600;font-size:13px;color:var(--coral);letter-spacing:.04em}
+.dslide h4{font-family:var(--display);font-weight:400;font-size:30px;line-height:1.2;margin:6px 0 4px}
+.dslide .org{font-size:14px;color:var(--muted);margin:0 0 16px}
+.dslide .intro{font-size:15px;margin:0 0 6px}
+.dslide .dl{font-size:15px;gap:10px;line-height:1.75}
+.dslide .dl b{font-weight:700}
+.dslide .pill{margin-top:20px}
+.drawer-foot{display:flex;align-items:center;justify-content:flex-end;gap:10px;padding-top:14px;border-top:1px solid rgba(38,42,48,.15)}
+.drawer-foot .count{margin-right:auto}
+@media (max-width:760px){
+  .exp-hint{display:block}
+  .more-hint{display:none}
+  .job.is-open .more{display:block}
+  .job .what::after{content:"＋";float:right;color:var(--coral);font-weight:700}
+  .job.is-open .what::after{content:"－"}
+  .drawer,.scrim{display:none}
+}
+
+.tool-grid{list-style:none;margin:4px 0 0;padding:0;display:grid;grid-template-columns:repeat(6,56px);justify-content:space-between;row-gap:20px;max-width:480px}
+.tool-grid li{position:relative;width:56px;height:56px;display:grid;place-items:center}
+.tool-grid img{width:52px;height:52px;object-fit:contain;transition:transform .2s ease}
+.tool-grid li:hover img{transform:translateY(-3px)}
+.tool-grid span{position:absolute;bottom:-26px;left:50%;transform:translateX(-50%);white-space:nowrap;font-size:11.5px;background:var(--ink);color:var(--white);padding:2px 8px;border-radius:6px;opacity:0;pointer-events:none;transition:opacity .2s ease;z-index:2}
+.tool-grid li:hover span{opacity:1}
+.subh{font-size:12.5px;font-weight:500;letter-spacing:.08em;color:var(--muted);margin:16px 0 8px}
+.group h4 + .subh{margin-top:0}
+.tool-cats{display:grid;grid-template-columns:1fr 1fr;gap:6px 24px;max-width:480px}
+.tool-cats .subh{margin-top:8px}
+.tool-cats .tool-grid{display:flex;justify-content:flex-start;flex-wrap:wrap;gap:6px 12px;margin:0 0 28px;max-width:none}
+.tool-cats .tool-grid li{width:48px;height:48px}
+.tool-cats .tool-grid img{width:44px;height:44px}
+@media (max-width:640px){.tool-cats{grid-template-columns:1fr}.tool-cats .tool-grid{display:flex}.tool-cats .tool-grid li,.tool-cats .tool-grid img{width:44px;height:44px}}
+@media (max-width:640px){.tool-grid{grid-template-columns:repeat(6,1fr);gap:10px}.tool-grid li,.tool-grid img{width:44px;height:44px}}
+/* ---------- reveal ---------- */
+.reveal{transition:opacity .8s ease, transform .8s ease}
+.js .reveal:not(.in){opacity:.001;transform:translateY(24px)}
+
+/* ---------- responsive ---------- */
+@media (max-width:1240px){
+  .id-card{height:470px}
+  .collage{width:60vw}
+}
+@media (max-width:1024px){
+  :root{--nav-h:76px}
+  #home{min-height:auto;padding-bottom:70px}
+  .hero-type{padding-top:110px}
+  .id-card{position:relative;top:auto;left:auto;right:auto;width:100%;max-width:520px;height:auto;margin:28px 0 0;padding:36px 20px 36px;z-index:2}
+  .avatar{width:168px;height:168px}
+  .hero-stars{display:none}
+  .strip{position:relative;top:auto;height:auto;margin-top:-20px}
+  .strip .container{grid-template-columns:1fr;height:auto;align-content:start;padding-block:36px 90px;gap:8px}
+  .quote{margin:16px 0 0}
+  .scroll-down{top:auto;bottom:40px;width:104px;height:104px;font-size:13px}
+  #about{padding-top:70px;min-height:auto}
+  .collage{position:relative;width:100%;height:auto;aspect-ratio:880/640;margin-top:30px}
+  .collage .mt{top:0;width:88%}
+  .collage .bar{top:46%;width:80%;height:27%}
+  .collage{margin-bottom:24%}
+  .collage .me{top:30%;right:4%;width:50%}
+  .resume-grid,.lower{grid-template-columns:1fr}
+  .skills-wrap{margin-top:48px;max-width:none}
+  .lang-wrap{margin-top:36px}
+  .resume-grid > .exp{margin-bottom:0}
+  .resume-grid{margin-top:60px}
+  #resume-start{scroll-margin-top:132px}
+  .edu{padding-top:0}
+  .shot{height:auto;aspect-ratio:16/10;min-height:0}
+  .story{position:relative;right:auto;bottom:auto;width:auto;margin:-28px 12px 12px;padding:18px 18px 20px}
+  #work{min-height:auto}
+  .dots{display:none}
+}
+@media (max-width:640px){
+  .work-head{flex-wrap:nowrap;flex-direction:column;align-items:flex-start;gap:14px}
+  .tabs{flex-wrap:nowrap;gap:6px;width:100%;overflow-x:auto;scrollbar-width:none}
+  .tabs::-webkit-scrollbar{display:none}
+  .tab{flex:0 0 auto;font-size:12px;padding:6px 10px;gap:5px;white-space:nowrap}
+  .links .navlink{display:none}
+  .logo{font-size:22px}
+  .label,.edu{margin-left:0}
+  .skills-grid{grid-template-columns:1fr}
+  .exp{padding:22px 18px}
+  .tl li,.exp .tl li{grid-template-columns:18px 52px 1fr}
+  .hobby-card{width:100%}
+  .id-card .skills{font-size:14px}
+  .id-card .role{font-size:13px}
+}
+@media (min-width:1025px) and (max-height:780px){
+  #work{padding-block:84px 40px}
+  .work-head h2{font-size:24px}
+  .tab{padding:6px 12px}
+  .story{padding:16px 22px;gap:7px;right:18px;bottom:18px}
+  .story h2{font-size:26px}
+  .story .lede{font-size:13px;line-height:1.5}
+  .lede{font-size:14px;line-height:1.6}
+  .facts{gap:6px}
+  .facts li{padding-top:6px}
+  .facts b{font-size:17px}
+  .facts span{font-size:13px;line-height:1.55}
+
+  .actions .pill{padding:8px 18px}
+  .controls{padding-top:10px}
+  .arrow{width:42px;height:42px}
+}
+@media (min-width:1025px) and (max-height:820px){
+  #resume{--M:clamp(100px,calc((100svh - 418px)/2),160px)}
+  .exp{padding:16px 28px 26px;margin-top:6px}
+  h3.sec{font-size:36px}
+  .exp h3.sec{margin-bottom:2px}
+  .exp-hint{margin:0 0 8px}
+  .exp .tl{gap:6px}
+  .job{padding:4px 10px}
+  .exp .tl .what{font-size:13px;line-height:1.35}
+  .exp .tl .sub{font-size:11.5px;line-height:1.35}
+  .exp .tl .yr{font-size:15px}
+  .exp .tags{margin-top:10px}
+  .edu{padding-top:28px}
+}
+@media (min-width:1025px) and (max-height:660px){
+  #resume{--M:clamp(90px,calc((100svh - 281px)/2),180px)}
+  .exp{padding:10px 22px 16px;margin-top:0}
+  h3.sec{font-size:30px}
+  .exp-hint{display:none}
+  .exp .tl{gap:3px}
+  .job{padding:2px 8px}
+  .exp .tl .what{font-size:12px;line-height:1.28}
+  .exp .tl .sub{font-size:10.5px;line-height:1.28}
+  .exp .tl .yr{font-size:13px}
+  .exp .tags{margin-top:6px}
+  .edu{padding-top:16px}
+}
+@media (min-width:1025px){
+  #work{min-height:0;display:block;scroll-snap-align:none;padding-block:var(--top,185px) 40px;background:var(--mist)}
+  .tabs,.controls,.hover-cta,.story .meta .idx{display:none}
+  .work-head{margin-bottom:112px}
+  .track{display:block;overflow:visible;padding:0;margin:0;scroll-snap-type:none}
+  .track::after{content:"";display:block;height:55vh}
+  .track{margin-bottom:calc(-55vh + 80px)}
+  #work>.container{max-width:min(1480px,85vw);margin-left:calc((100vw - min(1400px,81vw))/2);margin-right:0}
+  #work>.container{position:relative}
+  #about .about-copy,#about .collage{zoom:var(--az,1)}
+  #about .collage{right:calc(4vw/var(--az,1))}
+  #about{min-height:calc(780px*var(--az,1));padding-top:calc(120px*var(--az,1))}
+  .work-head{display:block;position:sticky;top:calc(72px + (var(--gap,68px) - 20px)/2);height:0;z-index:6;margin:calc(-82px - var(--gap,68px)/2) 0 calc(82px + var(--gap,68px)/2);padding-left:16px;pointer-events:none}
+  .work-head h2{font-family:var(--ui);font-weight:500;font-size:20px;line-height:1;letter-spacing:.2em;color:var(--coral);text-transform:uppercase;margin:0}
+  .slide{--tw:min(290px,calc((min(1480px,85vw) - 32px - 72px)/4));--th:72px;position:sticky;top:var(--top,185px);display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:72px;align-items:center;min-height:min(calc(100svh - var(--top,185px) - 24px),calc(min(1480px,85vw)*.36 + 40px));overflow:visible;margin-bottom:55vh;scroll-snap-align:none;border-radius:0;box-shadow:none;padding:clamp(48px,7.5svh,68px) 72px clamp(48px,7.5svh,68px) 80px;color:var(--ink)}
+
+  #s0{background:#3175C6}
+  #s1{background:#262A30}
+  #s2{background:#F5C84C}
+  #s3{background:#FF8662}
+  #s0,#s1{color:#fff}
+  #s0 .story .meta,#s1 .story .meta,#s0 .story .lede,#s1 .story .lede,#s0 .story .actions .pill,#s1 .story .actions .pill{color:#fff}
+  #s0 .story .meta .date::before,#s1 .story .meta .date::before{background:#fff}
+  #s0 .story .actions .pill,#s1 .story .actions .pill{border-bottom-color:#fff}
+  .slide::before{content:"";position:absolute;left:calc(var(--i) * var(--tw));top:calc(var(--th) * -1 + 1px);width:calc(var(--tw) + var(--th));height:var(--th);background:inherit;clip-path:polygon(0 100%,var(--th) 0,var(--tw) 0,calc(var(--tw) + var(--th)) 100%)}
+  #s0::before{clip-path:polygon(0 100%,0 0,var(--tw) 0,calc(var(--tw) + var(--th)) 100%)}
+  .slide::after{content:"✦  " attr(data-tab);position:absolute;left:calc(var(--i) * var(--tw) + var(--th));top:calc(var(--th) * -1);height:var(--th);display:flex;align-items:center;font-family:'JetBrains Mono',ui-monospace,monospace;font-weight:700;font-size:18px;letter-spacing:.14em;white-space:nowrap;pointer-events:none}
+  #s0::after{left:48px}
+  .story{order:-1;position:static;width:auto;background:none;box-shadow:none;border-radius:0;padding:0;gap:clamp(12px,2.6svh,24px);display:flex;flex-direction:column;align-items:flex-start;align-self:stretch;justify-content:center}
+  .story .meta{justify-content:flex-start;gap:14px;font-family:'JetBrains Mono',ui-monospace,monospace;font-size:14px;font-weight:700;letter-spacing:.12em;color:var(--ink)}
+  .story .meta .date::before{content:"";display:inline-block;width:11px;height:11px;border-radius:50%;background:var(--ink);margin-right:12px}
+  .story .meta .kind{font-weight:500;letter-spacing:.04em;opacity:.7;font-family:var(--ui)}
+  .story h2{font-family:var(--ui);font-weight:700;font-size:clamp(36px,min(4.6vw,8svh),72px);line-height:1.05;letter-spacing:-.01em;margin:4px 0 0}
+  .story h2 .cjk{font-size:1em;letter-spacing:0;margin:0;top:0}
+  .story .lede{font-size:17px;line-height:1.7;max-width:26em}
+  .story .actions{margin-top:clamp(2px,1svh,10px);order:4}
+  .story .actions .pill{background:none;border:0;border-bottom:2px solid var(--ink);border-radius:0;padding:0 0 4px;height:auto;font-family:'JetBrains Mono',ui-monospace,monospace;font-weight:700;font-size:14px;letter-spacing:.12em;color:var(--ink)}
+  .story .actions .pill:hover{background:none;opacity:.6;transform:none}
+  .story .chips{gap:10px;margin-top:clamp(12px,3svh,30px);order:5}
+  .story .chips .chip,.story .chips .chip{background:var(--white);border:0;border-radius:0;color:var(--ink);font-family:'JetBrains Mono',ui-monospace,monospace;font-weight:500;font-size:14px;letter-spacing:.03em;padding:10px 20px;clip-path:polygon(12px 0,100% 0,100% 100%,0 100%,0 12px)}
+  .shot{overflow:visible;height:auto;min-height:0;aspect-ratio:16/9;width:min(100%,calc(max(250px,100svh - 310px)*16/9));justify-self:end;border:5px solid var(--white);border-radius:0;box-shadow:0 18px 30px -18px rgba(38,42,48,.35);background:var(--white)}
+  .shot .frames{overflow:hidden}
+  .shot::before,.shot::after{content:"";position:absolute;top:-16px;width:112px;height:30px;background:rgba(255,255,255,.55);z-index:3;box-shadow:0 1px 2px rgba(38,42,48,.12)}
+  .shot::before{left:-22px;transform:rotate(-5deg)}
+  .shot::after{right:-22px;transform:rotate(5deg)}
+  .slide:first-child .shot,.slide:not(:first-child) .shot{border-radius:0}
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .track{scroll-behavior:auto}
+  *{transition:none!important;animation:none!important}
+  .js .reveal:not(.in){opacity:1;transform:none}
+}
+</style>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <filter id="hollow" x="-5%" y="-10%" width="110%" height="120%" color-interpolation-filters="sRGB">
+    <feMorphology in="SourceAlpha" operator="dilate" radius="1.4" result="grown"/>
+    <feComposite in="grown" in2="SourceAlpha" operator="out" result="ring"/>
+    <feFlood flood-color="#262A30"/>
+    <feComposite in2="ring" operator="in"/>
+  </filter>
+  <symbol id="star" viewBox="0 0 24 24"><path d="M12 0c.9 6.6 5.4 11.1 12 12-6.6.9-11.1 5.4-12 12-.9-6.6-5.4-11.1-12-12C6.6 11.1 11.1 6.6 12 0z"/></symbol>
+</svg>
+
+<header class="nav" id="nav">
+  <div class="container">
+    <a class="logo" href="#home" aria-label="Sonia Liu 回到首頁"><svg class="star"><use href="#star"/></svg>Sonia Liu</a>
+    <nav class="links" aria-label="主選單">
+      <a class="navlink" href="#about" data-sec="about">About</a>
+      <a class="navlink" href="#work" data-sec="work">Work</a>
+      <a class="navlink" href="#resume-start" data-sec="resume">Résumé</a>
+      <a class="pill coral" href="#contact">Get in touch</a>
+    </nav>
+  </div>
+</header>
+
+<nav class="dots" id="dots" aria-label="頁面導覽">
+  <a href="#home" data-sec="home"><span>Home</span></a>
+  <a href="#about" data-sec="about"><span>About</span></a>
+  <a href="#work" data-sec="work"><span>Work</span></a>
+  <a href="#resume-start" data-sec="resume"><span>Résumé</span></a>
+  <a href="#contact" data-sec="contact"><span>Contact</span></a>
+</nav>
+
+<main>
+<!-- ================= HERO ================= -->
+<section id="home" aria-label="首頁">
+  <div class="container">
+    <div class="hero-type">
+      <h1>Sonia Liu</h1>
+      <span class="outline" aria-hidden="true">Portfolio</span>
+      <span class="outline jp" aria-hidden="true">ポートフォリオ</span>
+    </div>
+    <div class="id-card">
+      <div class="avatar">
+        <!-- 換成插畫頭像：assets/avatar.png -->
+        <img src="assets/avatar.png" alt="Sonia 的插畫頭像" onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'ph',innerHTML:'插畫頭像<br>assets/avatar.png'}))">
+      </div>
+      <div class="name">劉敏雯</div>
+      <div class="role">PROJECT MANAGER × <b>AI協作</b></div>
+      <div class="skills"><span>專案管理</span><span>需求分析</span><span>AI 協作開發</span></div>
+    </div>
+    <div class="hero-stars" aria-hidden="true">
+      <svg class="star s" style="left:1014px;top:140px;width:56px;height:56px;color:var(--lime)"><use href="#star"/></svg>
+      <svg class="star s" style="left:1166px;top:230px;width:24px;height:24px;color:var(--coral)"><use href="#star"/></svg>
+      <svg class="star s" style="left:724px;top:342px;width:30px;height:30px;color:var(--coral)"><use href="#star"/></svg>
+      <svg class="star s" style="left:1206px;top:732px;width:44px;height:44px;color:var(--lime)"><use href="#star"/></svg>
+    </div>
+  </div>
+  <div class="strip">
+    <div class="container">
+      <div>
+        <div class="open-row"><span class="open">Open to PM roles</span></div>
+        <div class="socials">
+          <a href="https://www.linkedin.com/in/thisissonialiu" target="_blank" rel="noopener" aria-label="LinkedIn"><img src="assets/linkedin.svg" alt=""></a>
+          <a href="https://github.com/ocean50117" target="_blank" rel="noopener" aria-label="GitHub"><img src="assets/github.svg" alt=""></a>
+          <a href="#" target="_blank" rel="noopener" aria-label="Instagram" data-todo="instagram"><img src="assets/instagram.svg" alt=""></a>
+        </div>
+      </div>
+      <p class="quote">You can’t stop the waves, but you can learn to surf.— Jon Kabat-Zinn
+        <span>我總能在生命的浪潮裡找到樂趣，從挑戰中學習；像個百變怪，在一百種生活裡，拼湊出自己的模樣。</span></p>
+    </div>
+  </div>
+  <a class="scroll-down" href="#about">Scroll<br>down<span class="arr" aria-hidden="true">↓</span></a>
+</section>
+
+<!-- ================= ABOUT ================= -->
+<section id="about" aria-labelledby="about-h">
+  <div class="container">
+    <div class="about-copy reveal">
+      <p class="eyebrow">About</p>
+      <h2 id="about-h">Hello,<br>I'm Sonia !</h2>
+      <p class="lead">用法律人的邏輯拆解問題，用 PM 的視野帶領團隊，用 AI 與自動化把重複變簡單。</p>
+      <p>我是劉敏雯（Sonia）。從法律系、智權事務所商標專員，到澳洲打工度假、私人別墅管家、衝浪裁判與咖啡師，路徑看似分岔，做的是同一件事：在陌生環境裡快速上手，把混亂的資訊整理成清楚、可執行的做法。現在，我把這個習慣帶進軟體專案管理。</p>
+      <div class="about-btns">
+      <a class="pill coral small" href="https://www.linkedin.com/in/thisissonialiu" target="_blank" rel="noopener">↗ linkedin <img class="in" src="assets/linkedin.svg" alt=""></a>
+      <a class="pill ghost small" href="about.html">完整自傳 →</a>
+      </div>
+    </div>
+  </div>
+  <div class="collage" aria-hidden="true">
+    <img class="mt" src="assets/mt_jade.webp" alt="">
+    <div class="bar"></div>
+    <div class="me"><img src="assets/sonia.webp" alt=""></div>
+  </div>
+</section>
+
+<!-- ================= WORK ================= -->
+<section id="work" aria-labelledby="work-h">
+  <div class="container">
+    <div class="work-head">
+      <h2 id="work-h">Work</h2>
+      <div class="tabs" role="tablist" aria-label="選擇作品">
+        <button class="tab" role="tab" id="tab-0" aria-selected="true" aria-controls="s0"><span class="n">01</span>GoLand</button>
+        <button class="tab" role="tab" id="tab-1" aria-selected="false" aria-controls="s1"><span class="n">02</span>Habitcat</button>
+        <button class="tab" role="tab" id="tab-2" aria-selected="false" aria-controls="s2"><span class="n">03</span>求職筆記</button>
+        <button class="tab" role="tab" id="tab-3" aria-selected="false" aria-controls="s3"><span class="n">04</span>翻譯</button>
+      </div>
+    </div>
+    <div class="track" id="track">
+      <article class="slide" style="--i:0" data-tab="PROJECT 01" id="s0" role="tabpanel" aria-labelledby="tab-0">
+        <a class="shot" href="work-1.html" aria-label="<span class="cjk">夠練</span> GoLand">
+          <div class="frames" data-autoplay>
+            <div class="frame on"><img src="assets/work/cover-goland-1.webp" alt="首頁：用運動、地點與時間找課" width="1800" height="1012"></div>
+            <div class="frame"><img src="assets/work/cover-goland-2.webp" alt="依運動與地區瀏覽推薦課程" loading="lazy" width="1800" height="1012"></div>
+            <div class="frame"><img src="assets/work/cover-goland-3.webp" alt="課程詳情與報名" loading="lazy" width="1800" height="1012"></div>
+            <div class="frame"><img src="assets/work/cover-goland-4.webp" alt="報名成功與開課進度" loading="lazy" width="1800" height="1012"></div>
+            <div class="frame"><img src="assets/work/cover-goland-5.webp" alt="教練工作臺：收益與撥款" loading="lazy" width="1800" height="1012"></div>
+            <div class="frame"><img src="assets/work/cover-goland-6.webp" alt="教練檔案與評價" loading="lazy" width="1800" height="1012"></div>
+          </div>
+          <span class="hover-cta">查看作品 ↗</span>
+        </a>
+        <div class="story">
+          <div class="meta"><span class="date">2026.10.22</span><span class="kind">團隊專題・組長／PM</span><span class="idx">01 / 04</span></div>
+          <h2><span class="cjk">夠練</span> GoLand</h2>
+          <p class="lede">讓教練輕鬆上架找到學員，讓學員用透明的價格找到適合的團課</p>
+          <div class="chips"><span class="chip">使用者研究</span><span class="chip">PRD</span><span class="chip">範疇控管</span></div>
+          <div class="actions"><a class="pill coral" href="work-1.html">查看作品 ↗</a></div>
+        </div>
+      </article>
+      <article class="slide" style="--i:1" data-tab="PROJECT 02" id="s1" role="tabpanel" aria-labelledby="tab-1">
+        <a class="shot" href="work-2.html" aria-label="Habitcat">
+          <div class="frames" data-autoplay>
+            <div class="frame on"><img src="assets/work/cover-habitcat-1.webp" alt="小屋：每日習慣與打卡" width="1800" height="1012"></div>
+            <div class="frame"><img src="assets/work/cover-habitcat-2.webp" alt="AI NPC 阿爾法對話" loading="lazy" width="1800" height="1012"></div>
+            <div class="frame"><img src="assets/work/cover-habitcat-3.webp" alt="打卡成功：經驗與成就" loading="lazy" width="1800" height="1012"></div>
+            <div class="frame"><img src="assets/work/cover-habitcat-4.webp" alt="能力升級" loading="lazy" width="1800" height="1012"></div>
+            <div class="frame"><img src="assets/work/cover-habitcat-5.webp" alt="角色屬性" loading="lazy" width="1800" height="1012"></div>
+            <div class="frame"><img src="assets/work/cover-habitcat-6.webp" alt="道具與背包" loading="lazy" width="1800" height="1012"></div>
+          </div>
+          <span class="hover-cta">查看作品 ↗</span>
+        </a>
+        <div class="story">
+          <div class="meta"><span class="date">2026.08</span><span class="kind">個人專題・獨立完成</span><span class="idx">02 / 04</span></div>
+          <h2>Habitcat</h2>
+          <p class="lede">用遊戲化和 AI 陪伴，讓習慣養成不再半途而廢</p>
+          <div class="chips"><span class="chip">AI 協作開發</span><span class="chip">遊戲化設計</span><span class="chip">效能優化</span></div>
+          <div class="actions"><a class="pill coral" href="work-2.html">查看作品 ↗</a></div>
+        </div>
+      </article>
+      <article class="slide" style="--i:2" data-tab="PROJECT 03" id="s2" role="tabpanel" aria-labelledby="tab-2">
+        <a class="shot" href="work-3.html" aria-label="<span class="cjk">求職攻略系統</span>">
+          <div class="frames" data-autoplay>
+            <div class="frame on"><img src="assets/work/cover-notion-1.webp" alt="公開版 Notion：README 使用說明" width="1800" height="1012"></div>
+            <div class="frame"><img src="assets/work/cover-notion-2.webp" alt="RESUME：履歷版本與投遞次數" loading="lazy" width="1800" height="1012"></div>
+            <div class="frame"><img src="assets/work/cover-notion-3.webp" alt="作品集資料庫" loading="lazy" width="1800" height="1012"></div>
+            <div class="frame"><img src="assets/work/cover-notion-4.webp" alt="準備攻略資料庫" loading="lazy" width="1800" height="1012"></div>
+            <div class="frame"><img src="assets/work/cover-notion-5.webp" alt="待辦事項：Sprint 管理" loading="lazy" width="1800" height="1012"></div>
+          </div>
+          <span class="hover-cta">查看作品 ↗</span>
+        </a>
+        <div class="story">
+          <div class="meta"><span class="date">2026.10</span><span class="kind">個人專案・Notion</span><span class="idx">03 / 04</span></div>
+          <h2><span class="cjk">求職攻略系統</span></h2>
+          <p class="lede">找工作也能敏捷？用 PM 思維與 AI 協作打造的求職系統</p>
+          <div class="chips"><span class="chip">Notion</span><span class="chip">知識庫管理</span><span class="chip">AI 協作</span></div>
+          <div class="actions"><a class="pill coral" href="work-3.html">查看作品 ↗</a></div>
+        </div>
+      </article>
+      <article class="slide" style="--i:3" data-tab="PROJECT 04" id="s3" role="tabpanel" aria-labelledby="tab-3">
+        <a class="shot" href="https://www.betelnut.co/tatsuo-takei/chinese" target="_blank" rel="noopener" aria-label="<span class="cjk">衝浪文化翻譯</span>">
+          <div class="frames" data-autoplay>
+            <div class="frame on"><img src="assets/work/cover-betelnut-1.webp" alt="人物專訪 Tatsuo Takei：頁首" width="1800" height="1012"></div>
+            <div class="frame"><img src="assets/work/cover-betelnut-2.webp" alt="人物專訪譯文與譯者署名" loading="lazy" width="1800" height="1012"></div>
+            <div class="frame"><img src="assets/work/cover-betelnut-3.webp" alt="電影介紹《The Seedling》譯文" loading="lazy" width="1800" height="1012"></div>
+          </div>
+          <span class="hover-cta">閱讀譯文 ↗</span>
+        </a>
+        <div class="story">
+          <div class="meta"><span class="date">2022.12</span><span class="kind">筆譯作品・英翻中</span><span class="idx">04 / 04</span></div>
+          <h2><span class="cjk">衝浪文化翻譯</span></h2>
+          <p class="lede">斜槓人生：衝浪 × 英翻中，把衝浪文化帶給中文讀者</p>
+          <div class="chips"><span class="chip">英翻中</span><span class="chip">衝浪文化</span><span class="chip">在地化</span></div>
+          <div class="actions"><a class="pill coral" href="https://www.betelnut.co/tatsuo-takei/chinese" target="_blank" rel="noopener" title="「人物專訪」Tatsuo Takei（竹井達男）">人物專訪 ↗</a><a class="pill ghost" href="https://www.betelnut.co/theseedling" target="_blank" rel="noopener" title="電影介紹：The Seedling by Thomas Campbell">電影介紹 ↗</a></div>
+        </div>
+      </article>
+    </div>
+    <div class="controls">
+      <div class="pdots" aria-hidden="true"><span class="pdot on"></span><span class="pdot"></span><span class="pdot"></span><span class="pdot"></span></div>
+      <div class="arrows">
+        <span class="count" id="count" aria-live="polite">01 / 04</span>
+        <button class="arrow" id="prev" aria-label="上一個作品">←</button>
+        <button class="arrow" id="next" aria-label="下一個作品">→</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= RÉSUMÉ ================= -->
+<section id="resume" aria-label="Résumé">
+  <div class="band">
+  <div class="resume-mark" aria-hidden="true"><span>RESUME</span><span>RESUME</span><span>RESUME</span></div>
+  <div class="container">
+    <div class="resume-grid" id="resume-start">
+      <div>
+        <div class="edu reveal">
+          <h3 class="sec">Education</h3>
+          <ul class="tl">
+            <li><svg class="star"><use href="#star"/></svg><span class="yr">2026</span><div><div class="what">緯育 TibaMe</div><div class="sub">AI 時代的專案管理人才養成班</div></div></li>
+            <li><svg class="star"><use href="#star"/></svg><span class="yr">2017</span><div><div class="what">國立臺北大學</div><div class="sub">法律學系 財經法學組</div></div></li>
+          </ul>
+        </div>
+        <div class="lang-wrap reveal">
+        <h3 class="sec">Language</h3>
+        <div class="langs">
+          <div><b>中文</b><span>母語</span></div>
+          <div><b>English</b><span>精通</span></div>
+          <div><b>法・日・韓</b><span>基礎</span></div>
+          <div><b>泰・德・西・義</b><span>基礎會話</span></div>
+        </div>
+      </div>
+      </div>
+      <div class="exp reveal">
+        <h3 class="sec">Experience</h3>
+        <p class="exp-hint">點選經歷查看詳細內容</p>
+        <ul class="tl" id="jobs">
+          <li class="job" data-i="0" tabindex="0" role="button" aria-expanded="false"><svg class="star"><use href="#star"/></svg><span class="yr">2026</span><div><div class="what">團隊專題 PM / 組長<i>|</i>緯育 TibaMe<span class="more-hint" aria-hidden="true">詳細 →</span></div><div class="sub">主責問卷設計、產品定位、PRD；帶 6 人團隊提前交付</div><div class="more" data-period="2026/09 – 2026/10" data-title="專案經理 PM（職訓團隊專題組長）" data-org="緯育 TibaMe｜AI 時代的專案管理人才養成班（職訓團隊專題，非受僱）"><p class="intro">6 人團隊專題組長／PM，負責專案規劃、需求與團隊協作。</p><ul class="dl"><li><b>專案規劃</b>：以 WBS 拆出 6 個階段（需求收斂→設計→開發→測試迭代→交付準備→彩排發表），設定里程碑 M1–M5 與 Scope Freeze、Feature Freeze</li><li><b>使用者研究</b>：主責問卷設計（回收 54 份），與團隊分工完成 24 位使用者訪談；依數據（僅 7% 學員把「找不到人一起上課」視為困難）帶領團隊調整產品定位</li><li><b>產品定位與商業模式</b>：主責規劃，將產品轉為「教練開課、學員報名」</li><li><b>需求規格</b>：主責 PRD（兩週 18 版），轉成 AC 總表，作為開發與 QA 雙重把關的共同依據</li><li><b>法規遵循</b>：主責檢視個資與退款等規則，並納入 PRD</li><li><b>範疇控管</b>：9/29 鎖定 MVP 範疇後核心功能未再變動；Demo 前評估規則大改的風險後決定延後處理</li><li><b>驗收與發表</b>：規劃並執行 5 人使用者測試（4 位同學與我自己），以及 Demo 影片錄製、字幕、剪輯與配音</li><li><b>團隊協作</b>：建置團隊知識庫（Notion：WBS、任務看板、會議紀錄），將溝通從 LINE 遷移至 Discord 並依工作流程分頻道；設計 AI 進度公告格式，被全組採用</li><li><b>成果</b>：團隊 3 週累計合併 114 個 PR（其中 12 個由我負責），比預定時程提早完成簡報與 Demo</li></ul><a class="pill coral small" href="work-1.html">看 GoLand 完整案例 →</a></div></div></li>
+          <li class="job" data-i="1" tabindex="0" role="button" aria-expanded="false"><svg class="star"><use href="#star"/></svg><span class="yr">2025</span><div><div class="what">咖啡師<i>|</i>興波咖啡<span class="more-hint" aria-hidden="true">詳細 →</span></div><div class="sub">尖峰調度；自製便當營業查詢工具</div><div class="more" data-period="2025/04 – 2026/06" data-title="咖啡師" data-org="興波咖啡 Simple Kaffa｜台北市中正區"><ul class="dl"><li>擔任內外場溝通樞紐，於尖峰時段調度出餐順序與時間分配，維持餐點品質；團隊單日營收最高達 35 萬元（團隊 12 人）</li><li>負責收銀帳務、庫存監控、叫貨管理與日／週報表製作</li><li>主動整理 30 家便當店的營業時間、外送條件與付款方式，以 Google 試算表建立自動判斷「今天有沒有開」的查詢表，並以 AppSheet 製作手機查詢原型，解決同事每天訂餐資訊雜亂的問題</li></ul></div></div></li>
+          <li class="job" data-i="2" tabindex="0" role="button" aria-expanded="false"><svg class="star"><use href="#star"/></svg><span class="yr">2024</span><div><div class="what">商標專員<i>|</i>博觀智權<span class="more-hint" aria-hidden="true">詳細 →</span></div><div class="sub">以英文服務歐美客戶；事務所首件成功評定案</div><div class="more" data-period="2024/06 – 2025/03" data-title="商標專員" data-org="博觀智權有限公司｜台北市松山區"><ul class="dl"><li>協助歐美企業在台進行商標布局，確保品牌合法性與獨特性</li><li>商標權益檢索與風險評估，提供精準的英文法律分析報告與建議</li><li>商標策略性擬定，爭議案件分析、評估並草擬意見書及答辯書</li><li>與國外律師事務所協作，書面溝通確認案件進度</li><li>與 IT 團隊合作改善文件模板，提升事務所內部資料編寫效率</li><li>曾負責事務所第一件評定案，並成功對惡意商標提出撤銷註冊</li><li>優化工作流程並製作 SOP 教學手冊，負責教導 4 位新同事</li></ul></div></div></li>
+          <li class="job" data-i="3" tabindex="0" role="button" aria-expanded="false"><svg class="star"><use href="#star"/></svg><span class="yr">2023</span><div><div class="what">咖啡師<i>|</i>澳洲打工度假<span class="more-hint" aria-hidden="true">詳細 →</span></div><div class="sub">墨爾本・黃金海岸，全英文多元團隊</div><div class="more" data-period="2023/07 – 2024/05" data-title="咖啡師（打工度假）" data-org="黃金海岸、墨爾本咖啡館（含 Abacus）｜澳洲"><p class="intro">第二次赴澳洲打工度假，先後於黃金海岸、墨爾本的咖啡館擔任咖啡師。</p><ul class="dl"><li>於全英文工作環境與多元文化團隊協作，負責製作飲品、點餐與顧客溝通</li><li>期間取得 ISA 國際衝浪協會（International Surfing Association）一級裁判資格</li></ul></div></div></li>
+          <li class="job" data-i="4" tabindex="0" role="button" aria-expanded="false"><svg class="star"><use href="#star"/></svg><span class="yr">2020</span><div><div class="what">住宅管家<i>|</i>台東私人別墅<span class="more-hint" aria-hidden="true">詳細 →</span></div><div class="sub">酒窖管理、貴賓接待</div><div class="more" data-period="2020/09 – 2022/10" data-title="住宅管家" data-org="企業家私人別墅｜台東"><p class="intro">負責兩棟住宅的日常營運，工作範圍廣，需同時兼顧多項任務。</p><ul class="dl"><li><b>酒窖管理（主要職責）</b>：管理紅酒收藏，配合拍賣需求整理並親自將酒款運送至機場</li><li><b>貴賓接待</b>：接待來訪貴賓並進行場館介紹</li><li><b>住宅維護</b>：負責兩棟住宅的清潔與環境維護</li><li><b>特助事務</b>：協助安排行程間的餐食、準備早餐等主人日常需求</li></ul></div></div></li>
+          <li class="job" data-i="5" tabindex="0" role="button" aria-expanded="false"><svg class="star"><use href="#star"/></svg><span class="yr">2018</span><div><div class="what">澳洲打工度假<span class="more-hint" aria-hidden="true">詳細 →</span></div><div class="sub">農場採收與工廠作業</div><div class="more" data-period="2018/03 – 2020/04" data-title="農場採收／工廠作業員（打工度假）" data-org="澳洲打工度假（第一次）"><p class="intro">第一次赴澳洲打工度假，在英語系國家獨立生活與工作約兩年。</p><ul class="dl"><li>於多地農場從事採收工作，也曾在工廠擔任作業員</li><li>在陌生環境中多次從零開始找工作、適應新團隊，培養獨立解決問題與跨文化溝通的能力</li></ul></div></div></li>
+          <li class="job" data-i="6" tabindex="0" role="button" aria-expanded="false"><svg class="star"><use href="#star"/></svg><span class="yr">2017</span><div><div class="what">工讀生<i>|</i>法律扶助基金會<span class="more-hint" aria-hidden="true">詳細 →</span></div><div class="sub">案件紀錄、客戶接待</div><div class="more" data-period="2017/09 – 2018/03" data-title="工讀生" data-org="財團法人法律扶助基金會 台北分會｜台北市大安區"><p class="intro">支援扶助律師的案件作業。</p><ul class="dl"><li>協助律師記錄案件內容、整理案件資料</li><li>接待前來申請法律扶助的民眾</li></ul></div></div></li>
+        </ul>
+        <div class="tags"><span class="tag-dark">#邏輯整合</span><span class="tag-dark">#跨文化</span><span class="tag-dark">#溝通協調</span><span class="tag-dark">#靈活敏捷</span></div>
+      </div>
+    </div>
+  </div>
+  </div>
+  <div class="container">
+
+    <div class="skills-wrap reveal">
+      <h3 class="sec">Skills</h3>
+      <div class="skills-grid">
+        <div class="group"><h4>專案管理</h4>
+          <div class="subh">需求與規格</div><div class="chips"><span class="chip">需求訪談</span><span class="chip">問卷設計</span><span class="chip">PRD</span><span class="chip">AC／使用者測試</span></div>
+          <div class="subh">規劃與控管</div><div class="chips"><span class="chip">WBS</span><span class="chip">Scope 控管</span><span class="chip">Agile／Scrum</span></div></div>
+        <div class="group"><h4>工具</h4>
+          <div class="tool-cats"><div><div class="subh">AI 協作</div><ul class="tool-grid"><li title="Claude Code"><img src="assets/tools/claude.png" alt="Claude Code" loading="lazy"><span>Claude Code</span></li><li title="ChatGPT"><img src="assets/tools/chatgpt.png" alt="ChatGPT" loading="lazy"><span>ChatGPT</span></li><li title="Gemini"><img src="assets/tools/gemini.png" alt="Gemini" loading="lazy"><span>Gemini</span></li><li title="NotebookLM"><img src="assets/tools/notebooklm.svg" alt="NotebookLM" loading="lazy"><span>NotebookLM</span></li></ul></div><div><div class="subh">開發</div><ul class="tool-grid"><li title="GitHub"><img src="assets/tools/github.png" alt="GitHub" loading="lazy"><span>GitHub</span></li><li title="VS Code"><img src="assets/tools/vscode.svg" alt="VS Code" loading="lazy"><span>VS Code</span></li><li title="Python"><img src="assets/tools/python.png" alt="Python" loading="lazy"><span>Python</span></li></ul></div><div><div class="subh">文件與管理</div><ul class="tool-grid"><li title="Notion"><img src="assets/tools/notion.png" alt="Notion" loading="lazy"><span>Notion</span></li><li title="Jira"><img src="assets/tools/jira.png" alt="Jira" loading="lazy"><span>Jira</span></li></ul></div><div><div class="subh">設計</div><ul class="tool-grid"><li title="Figma（UI 設計、Prototype）"><img src="assets/tools/figma.png" alt="Figma（UI 設計、Prototype）" loading="lazy"><span>Figma（UI 設計、Prototype）</span></li><li title="Canva"><img src="assets/tools/canva.png" alt="Canva" loading="lazy"><span>Canva</span></li><li title="Affinity"><img src="assets/tools/affinity.png" alt="Affinity" loading="lazy"><span>Affinity</span></li></ul></div></div></div>
+      </div>
+    </div>
+
+    <div class="lower">
+      <div class="reveal">
+        <h3 class="sec">Certifications</h3>
+        <div class="certs tags">
+          <button type="button" class="tag-dark" data-cert="assets/certs/toeic.webp" data-title="TOEIC 聽力與閱讀 865 分" data-note="2022/06 應考">TOEIC | 865</button><button type="button" class="tag-dark" data-cert="assets/certs/google-ai-zh.webp|assets/certs/google-ai.webp" data-labels="中文版|English" data-title="Google數位人才探索計畫｜AI職場通識" data-note="AI for Generalists・2026・證書編號 G8AGTRWZ">Google數位人才探索計畫｜AI職場通識</button><button type="button" class="tag-dark" data-cert="assets/certs/codedex-python.webp" data-title="Codédex：The Legend of Python" data-note="Python 基礎課程結業・2026/08/08">Codédex：The Legend of Python</button><button type="button" class="tag-dark" data-cert="assets/certs/isa-surf-judge.webp" data-title="ISA Registered International Surf Judge｜Level One" data-note="2023 認證・效期至 2024/06/30">ISA Registered International Surf Judge｜Level One</button><span class="tag-dark">師大筆譯推廣班結業</span><span class="tag-dark">iPAS AI 應用規劃師 (11/7 應考)</span>
+        </div>
+      </div>
+      <div class="reveal">
+        <h3 class="sec">Hobbies &amp; Interests</h3>
+        <div class="hobby-card">
+          <ul>
+            <li><b>衝浪</b><i>|</i>ISA 裁判</li>
+            <li><b>排球</b><i>|</i>舉球員</li>
+            <li><b>登山</b><i>|</i>百岳進度（4/100）<small>玉山主峰、玉山北峰、向陽山、三叉山</small></li>
+            <li><b>抱石</b></li>
+            <li><b>重訓</b></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CONTACT ================= -->
+<section id="contact" aria-labelledby="contact-h">
+  <div class="container">
+    <h2 id="contact-h">LET'S WORK<br>TOGETHER</h2>
+    <p class="hi">這邊能找到我 :D</p>
+    <div class="cta-row">
+      <button class="pill lime" id="copy-email" type="button" title="點一下複製 email">ocean50117@gmail.com</button>
+      <a class="pill coral pdf" href="#" target="_blank" rel="noopener" data-todo="resume-pdf">履歷 PDF</a>
+      <a class="pill ghost" href="https://github.com/ocean50117" target="_blank" rel="noopener">GitHub</a>
+      <a class="pill ghost" href="#" target="_blank" rel="noopener" data-todo="instagram">Instagram</a>
+      <a class="pill ghost" href="https://www.linkedin.com/in/thisissonialiu" target="_blank" rel="noopener">LinkedIn</a>
+    </div>
+    <span class="copy-ok" id="copy-ok" aria-live="polite"></span>
+    <p class="copyright">© 2026 Sonia Liu</p>
+  </div>
+</section>
+</main>
+
+
+
+<div class="scrim" id="scrim"></div>
+<aside class="drawer" id="drawer" role="dialog" aria-modal="true" aria-labelledby="drawer-h" aria-hidden="true">
+  <div class="drawer-head"><h3 id="drawer-h">Experience</h3><button class="x" id="drawer-x" type="button" aria-label="關閉">✕</button></div>
+  <div class="scrub" id="scrub">
+    <div class="rail"></div><div class="fill" id="scrub-fill"></div>
+    <div class="stops" id="stops"></div>
+    <input type="range" id="scrub-range" min="0" max="6" step="1" value="0" aria-label="拖曳時間軸選擇經歷">
+  </div>
+  <div class="dtrack" id="dtrack"></div>
+  <div class="drawer-foot"><span class="count" id="dcount">01 / 07</span><button class="arrow" id="dprev" aria-label="上一段經歷">←</button><button class="arrow" id="dnext" aria-label="下一段經歷">→</button></div>
+</aside>
+
+<dialog class="cert-modal" id="certModal" aria-label="證照">
+  <button class="x" type="button" aria-label="關閉">✕</button>
+  <figure><div class="cm-wrap"><div class="cm-track"></div><button class="cm-nav prev" type="button" aria-label="上一張">←</button><button class="cm-nav next" type="button" aria-label="下一張">→</button></div><div class="cm-dots"></div><figcaption><span></span><small></small></figcaption></figure>
+</dialog>
+<script>
+(function(){
+  const d=document.getElementById('certModal'); if(!d||!d.showModal) return;
+  const track=d.querySelector('.cm-track'), dots=d.querySelector('.cm-dots'), prev=d.querySelector('.cm-nav.prev'), next=d.querySelector('.cm-nav.next');
+  const t=d.querySelector('figcaption span'), n=d.querySelector('figcaption small');
+  let cur=0, cnt=1;
+  function go(i){ cur=Math.max(0,Math.min(cnt-1,i)); track.scrollTo({left:cur*track.clientWidth,behavior:'smooth'}); mark(); }
+  function mark(){ [...dots.children].forEach((x,k)=>x.classList.toggle('on',k===cur)); prev.style.visibility=cur?'visible':'hidden'; next.style.visibility=cur<cnt-1?'visible':'hidden'; }
+  track.addEventListener('scroll',()=>{ const k=Math.round(track.scrollLeft/(track.clientWidth||1)); if(k!==cur){cur=k;mark();} });
+  prev.onclick=()=>go(cur-1); next.onclick=()=>go(cur+1);
+  d.addEventListener('keydown',e=>{ if(e.key==='ArrowRight') go(cur+1); if(e.key==='ArrowLeft') go(cur-1); });
+  document.querySelectorAll('[data-cert]').forEach(b=>b.addEventListener('click',()=>{
+    const srcs=b.dataset.cert.split('|'), labels=(b.dataset.labels||'').split('|');
+    cnt=srcs.length; cur=0; track.innerHTML=''; dots.innerHTML='';
+    srcs.forEach((src,k)=>{ const f=document.createElement('div'); f.className='cm-slide'; const im=document.createElement('img'); im.src=src; im.alt=b.dataset.title+(labels[k]?'（'+labels[k]+'）':'')+' 證書'; f.appendChild(im); track.appendChild(f);
+      if(cnt>1){ const bt=document.createElement('button'); bt.type='button'; bt.textContent=labels[k]||('第 '+(k+1)+' 張'); bt.onclick=()=>go(k); dots.appendChild(bt); } });
+    dots.hidden=cnt<2; prev.hidden=next.hidden=cnt<2; t.textContent=b.dataset.title; n.textContent=b.dataset.note||'';
+    d.showModal(); track.scrollLeft=0; mark();
+  }));
+  d.querySelector('.x').onclick=()=>d.close();
+  d.addEventListener('click',e=>{ if(e.target===d) d.close(); });
+})();
+</script>
+<script>
+document.documentElement.classList.add('js');
+(function(){
+  /* nav state + active section */
+  const nav=document.getElementById('nav');
+  const secs=[...document.querySelectorAll('main > section')];
+  const dotLinks=[...document.querySelectorAll('#dots a')];
+  const navLinks=[...document.querySelectorAll('.navlink')];
+  const dots=document.getElementById('dots');
+  function onScroll(){
+    nav.classList.toggle('scrolled', scrollY>20);
+    const mid=scrollY+innerHeight*0.45;
+    let cur=secs[0];
+    for(const s of secs){ if(s.offsetTop<=mid) cur=s; }
+    dotLinks.forEach(a=>a.classList.toggle('on',a.dataset.sec===cur.id));
+    navLinks.forEach(a=>a.classList.toggle('active',a.dataset.sec===cur.id));
+    dots.classList.toggle('on-dark', cur.id==='contact');
+  }
+  addEventListener('scroll',onScroll,{passive:true}); onScroll();
+
+  /* reveal on scroll (content stays visible if JS/observer is unavailable) */
+  const rev=document.querySelectorAll('.reveal');
+  if('IntersectionObserver' in window){
+    const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{rootMargin:'0px 0px -10% 0px'});
+    rev.forEach(el=>io.observe(el));
+    setTimeout(()=>rev.forEach(el=>el.classList.add('in')),2500);
+  } else rev.forEach(el=>el.classList.add('in'));
+
+  /* work deck */
+  const track=document.getElementById('track');
+  const slides=[...track.children];
+  const tabs=[...document.querySelectorAll('.tab')];
+  const pdots=[...document.querySelectorAll('.pdot')];
+  const prev=document.getElementById('prev'), next=document.getElementById('next');
+  const count=document.getElementById('count');
+  let cur=0; const pad=n=>String(n).padStart(2,'0');
+  function go(i){ i=Math.max(0,Math.min(slides.length-1,i)); track.scrollTo({left:slides[i].offsetLeft-track.offsetLeft}); }
+  function mark(i){ cur=i;
+    tabs.forEach((t,k)=>{t.setAttribute('aria-selected',k===i);t.tabIndex=k===i?0:-1});
+    pdots.forEach((d,k)=>d.classList.toggle('on',k===i));
+    count.textContent=pad(i+1)+' / '+pad(slides.length);
+    prev.disabled=i===0; next.disabled=i===slides.length-1; }
+  track.addEventListener('scroll',()=>{ const i=Math.round(track.scrollLeft/(slides[0].offsetWidth+24)); if(i!==cur) mark(Math.max(0,Math.min(slides.length-1,i))); },{passive:true});
+  prev.onclick=()=>go(cur-1); next.onclick=()=>go(cur+1);
+  tabs.forEach((t,k)=>t.onclick=()=>go(k));
+  document.querySelector('.tabs').addEventListener('keydown',e=>{
+    if(e.key==='ArrowRight'){go(cur+1);tabs[Math.min(cur+1,3)].focus()}
+    if(e.key==='ArrowLeft'){go(cur-1);tabs[Math.max(cur-1,0)].focus()} });
+  mark(0);
+
+  /* card image autoplay: crossfade frames every 3s, pause on hover, off for reduced motion */
+  if(!matchMedia('(prefers-reduced-motion: reduce)').matches){
+    document.querySelectorAll('.frames[data-autoplay]').forEach(f=>{
+      const fr=[...f.children]; if(fr.length<2) return;
+      let k=0, paused=false; const shot=f.closest('.shot');
+      shot.addEventListener('mouseenter',()=>paused=true); shot.addEventListener('mouseleave',()=>paused=false);
+      setInterval(()=>{ if(paused||document.hidden) return; fr[k].classList.remove('on'); k=(k+1)%fr.length; fr[k].classList.add('on'); },3000);
+    });
+  }
+
+  /* experience: drawer on desktop, accordion on mobile */
+  (function(){
+    const jobs=[...document.querySelectorAll('#jobs .job')];
+    const drawer=document.getElementById('drawer'), scrim=document.getElementById('scrim');
+    const dtrack=document.getElementById('dtrack'), stops=document.getElementById('stops');
+    const range=document.getElementById('scrub-range'), fill=document.getElementById('scrub-fill');
+    const dcount=document.getElementById('dcount'), dprev=document.getElementById('dprev'), dnext=document.getElementById('dnext');
+    const n=jobs.length; range.max=n-1; let cur=0, lastFocus=null;
+    const pad=k=>String(k).padStart(2,'0');
+    jobs.forEach((j,k)=>{
+      const m=j.querySelector('.more');
+      const sl=document.createElement('section'); sl.className='dslide';
+      sl.innerHTML='<div class="period">'+m.dataset.period+'</div><h4>'+m.dataset.title+'</h4><p class="org">'+m.dataset.org+'</p>'+m.innerHTML;
+      dtrack.appendChild(sl);
+      const b=document.createElement('button'); b.className='stop'; b.type='button';
+      b.innerHTML='<span>'+j.querySelector('.yr').textContent+'</span>'; b.setAttribute('aria-label',j.querySelector('.yr').textContent+' '+m.dataset.title);
+      b.onclick=()=>go(k); stops.appendChild(b);
+    });
+    const slides=[...dtrack.children], stopBtns=[...stops.children];
+    function mark(k){ cur=k; stopBtns.forEach((b,i)=>b.classList.toggle('on',i===k)); range.value=k;
+      fill.style.width=(n>1?k/(n-1)*100:0)+'%'; dcount.textContent=pad(k+1)+' / '+pad(n); dprev.disabled=k===0; dnext.disabled=k===n-1; }
+    function go(k,instant){ k=Math.max(0,Math.min(n-1,k)); dtrack.scrollTo({left:slides[k].offsetLeft-dtrack.offsetLeft,behavior:instant?'auto':'smooth'}); mark(k); }
+    dtrack.addEventListener('scroll',()=>{ const k=Math.round(dtrack.scrollLeft/(slides[0].offsetWidth+24)); if(k!==cur) mark(Math.max(0,Math.min(n-1,k))); },{passive:true});
+    range.addEventListener('input',()=>go(+range.value));
+    dprev.onclick=()=>go(cur-1); dnext.onclick=()=>go(cur+1);
+    const mobile=()=>matchMedia('(max-width:760px)').matches;
+    function open(k){ lastFocus=document.activeElement; drawer.classList.add('is-open'); scrim.classList.add('is-open'); drawer.setAttribute('aria-hidden','false');
+      document.documentElement.style.overflow='hidden'; requestAnimationFrame(()=>go(k,true)); setTimeout(()=>document.getElementById('drawer-x').focus(),50); }
+    function close(){ drawer.classList.remove('is-open'); scrim.classList.remove('is-open'); drawer.setAttribute('aria-hidden','true'); document.documentElement.style.overflow=''; if(lastFocus) lastFocus.focus(); }
+    jobs.forEach((j,k)=>{
+      const act=e=>{ if(e.target.closest('a')) return;
+        if(mobile()){ const o=j.classList.toggle('is-open'); j.setAttribute('aria-expanded',o); } else open(k); };
+      j.addEventListener('click',act);
+      j.addEventListener('keydown',e=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); act(e);} });
+    });
+    document.getElementById('drawer-x').onclick=close; scrim.onclick=close;
+    document.addEventListener('keydown',e=>{ if(!drawer.classList.contains('is-open')) return;
+      if(e.key==='Escape') close(); if(e.key==='ArrowRight') go(cur+1); if(e.key==='ArrowLeft') go(cur-1); });
+    mark(0);
+  })();
+
+  /* résumé blue band：登陸時整個視窗都是藍色，底部再柔和淡出（桌面） */
+  (function(){
+    const band=document.querySelector('#resume .band'), grid=document.getElementById('resume-start');
+    function set(){
+      if(!band||!grid) return;
+      band.style.removeProperty('--band-pb');
+      if(matchMedia('(max-width:1024px)').matches) return;
+      const sm=parseFloat(getComputedStyle(grid).scrollMarginTop)||0;
+      const L=grid.getBoundingClientRect().top+scrollY-sm;           // 點 Résumé 後的捲動位置
+      const need=L+innerHeight+140;                                    // 藍色要延伸到視窗底部之後再淡出
+      const bottom=band.getBoundingClientRect().bottom+scrollY;
+      const pb=Math.max(56,Math.round(56+need-bottom));
+      band.style.setProperty('--band-pb',pb+'px');
+    }
+    set(); addEventListener('resize',set); addEventListener('load',set); if(document.fonts) document.fonts.ready.then(()=>{set();});
+  })();
+
+  /* copy email */
+  const btn=document.getElementById('copy-email'), ok=document.getElementById('copy-ok');
+  btn.addEventListener('click',()=>{
+    const t='ocean50117@gmail.com';
+    const done=()=>{ok.textContent='已複製 email'; setTimeout(()=>ok.textContent='',2200)};
+    if(navigator.clipboard){ navigator.clipboard.writeText(t).then(done).catch(()=>{ const r=document.createRange(); r.selectNodeContents(btn); const s=getSelection(); s.removeAllRanges(); s.addRange(r); ok.textContent='已選取，按 Ctrl+C 複製'; }); }
+  });
+})();
+</script>
+<script>
+/* Work 卡片：依視窗高度，讓「分頁＋卡片」在導覽列下方上下置中 */
+(function(){
+  const w=document.getElementById('work'); if(!w) return;
+  const mq=matchMedia('(min-width:1025px)');
+  function fit(){
+    if(!mq.matches){w.style.removeProperty('--top');return;}
+    const NAV=72,TAB=72;
+    const gap=Math.min(68,Math.max(14,Math.round((innerHeight-440)*.25)));
+    const top=NAV+TAB+gap;
+    w.style.setProperty('--top',top+'px');w.style.setProperty('--gap',gap+'px');
+    const ab=document.querySelector('#about .eyebrow'),hd=w.querySelector('.work-head'),ct=w.querySelector(':scope>.container');
+    if(ab&&hd&&ct) hd.style.paddingLeft=Math.round(ab.getBoundingClientRect().left-ct.getBoundingClientRect().left-16)+'px';
+  }
+  const hd=w.querySelector('.work-head'),last=w.querySelector('.slide:last-child');
+  function fade(){
+    if(!hd||!last||!mq.matches){if(hd)hd.style.opacity='';return;}
+    const t=last.getBoundingClientRect().top, top=parseFloat(getComputedStyle(w).getPropertyValue('--top'))||200;
+    hd.style.opacity=Math.max(0,Math.min(1,(t-110)/Math.max(30,top-110-20))).toFixed(2);
+  }
+  addEventListener('scroll',fade,{passive:true});
+  addEventListener('resize',()=>{fit();fade();}); addEventListener('load',()=>{fit();fade();}); fit(); fade();
+  setTimeout(fit,600);
+})();
+</script>
+<script>
+/* Work：點 PROJECT 分頁 → 捲動切換到該資料夾 */
+(function(){
+  const track=document.getElementById('track'), w=document.getElementById('work'); if(!track||!w) return;
+  const cards=[...track.querySelectorAll('.slide')];
+  const mq=matchMedia('(min-width:1025px)');
+  const TH=72; let TW=290;
+  let raf=0;
+  function tabAt(e){
+    if(!mq.matches) return -1;
+    const r=cards[0].getBoundingClientRect(); TW=Math.min(290,(r.width-TH)/4);
+    const x=e.clientX-r.left, t=-(e.clientY-r.top)/TH;   // t：0=分頁底、1=分頁頂
+    if(t<0||t>1||x<0) return -1;
+    let hit=-1;
+    cards.forEach((c,i)=>{
+      const l=i?i*TW+TH*t:0, rr=i*TW+TW+TH*(1-t);
+      if(x>=l&&x<=rr) hit=i;
+    });
+    return hit;
+  }
+  function targetY(i){
+    const top=parseFloat(getComputedStyle(cards[0]).top)||200;
+    const mb=parseFloat(getComputedStyle(cards[0]).marginBottom)||0;
+    let acc=track.getBoundingClientRect().top+scrollY;
+    for(let k=0;k<i;k++) acc+=cards[k].offsetHeight+mb;
+    return Math.max(0,Math.round(acc-top));
+  }
+  function go(i){
+    cancelAnimationFrame(raf);
+    const from=scrollY, to=targetY(i), d=to-from;
+    if(Math.abs(d)<2) return;
+    const dur=Math.min(1400,Math.max(700,Math.abs(d)*0.55)), t0=performance.now();
+    const ease=t=>t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;
+    const stop=()=>cancelAnimationFrame(raf);
+    addEventListener('wheel',stop,{once:true,passive:true}); addEventListener('touchstart',stop,{once:true,passive:true});
+    (function step(now){
+      const p=Math.min(1,(now-t0)/dur);
+      scrollTo({top:from+d*ease(p),behavior:'instant'});
+      if(p<1) raf=requestAnimationFrame(step);
+    })(t0);
+  }
+  document.addEventListener('click',e=>{ const i=tabAt(e); if(i>=0){ e.preventDefault(); go(i); } });
+  let on=false;
+  document.addEventListener('mousemove',e=>{ const h=tabAt(e)>=0; if(h!==on){ on=h; document.documentElement.style.cursor=h?'pointer':''; } },{passive:true});
+})();
+</script>
+<script>
+/* About：視窗不夠高時整體等比縮小，確保山、照片與按鈕都在畫面內，底下留一點空白 */
+(function(){
+  const a=document.getElementById('about'); if(!a) return;
+  const mq=matchMedia('(min-width:1025px)');
+  function fitAbout(){
+    if(!mq.matches){a.style.removeProperty('--az');return;}
+    const k=Math.min(1,innerHeight/820);
+    a.style.setProperty('--az',k.toFixed(3));
+  }
+  addEventListener('resize',fitAbout); addEventListener('load',fitAbout); fitAbout();
+})();
+</script>
+<script>
+/* Work：四張資料夾等高（內容長短不同時，避免下一張露出邊） */
+(function(){
+  const cards=[...document.querySelectorAll('#track .slide')]; if(!cards.length) return;
+  function eq(){
+    cards.forEach(c=>c.style.minHeight='');
+    if(!matchMedia('(min-width:1025px)').matches) return;
+    const h=Math.max(...cards.map(c=>c.offsetHeight));
+    cards.forEach(c=>c.style.minHeight=h+'px');
+  }
+  eq(); addEventListener('resize',eq); addEventListener('load',eq); if(document.fonts) document.fonts.ready.then(eq);
+})();
+</script>
+
+
+
+
+
+</body></html>
