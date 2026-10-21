@@ -103,12 +103,13 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 /* ---------- about ---------- */
 #about{min-height:780px;padding-top:120px;overflow:clip;background:var(--mist)}
 .eyebrow{font-family:var(--ui);font-weight:500;font-size:20px;letter-spacing:.2em;color:var(--coral);text-transform:uppercase;margin:20px 0 0}
-.about-copy{position:relative;z-index:3;max-width:700px}
+.about-copy{position:relative;z-index:3;max-width:max(440px,min(800px,calc(46vw - 12px)))}
 .about-copy h2{font-family:var(--display);font-weight:400;font-size:clamp(56px,7.4vw,106px);line-height:1.08;margin:22px 0 28px;text-wrap:balance}
-.about-copy p{font-size:20px;line-height:1.9;margin:0 0 34px;max-width:29em}
-.about-copy .lead{font-size:26px;font-weight:700;line-height:1.7;margin:0 0 18px;max-width:22em}
-.about-btns .pill{font-size:19px;padding:16px 34px}
-.about-btns .pill .in{width:22px;height:22px}
+.about-copy p{font-size:20px;line-height:1.9;margin:0 0 34px;max-width:none}
+.about-copy .lead{font-size:26px;font-weight:700;line-height:1.7;margin:0 0 18px;max-width:none}
+.about-copy .about-btns .pill{font-size:22px;padding:20px 42px;gap:10px}
+.about-copy .about-btns .pill .in{width:26px;height:26px}
+.about-btns{gap:16px}
 .about-btns{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
 .about-copy .pill.ghost{border-color:var(--ink);color:var(--ink)}
 .pill.small{font-size:13px;padding:8px 18px}
@@ -240,6 +241,7 @@ button.tag-dark:hover{transform:translateY(-2px);background:#3A3F47}
 .a2{background:linear-gradient(135deg,var(--butter),var(--blush))}
 .a3{background:linear-gradient(135deg,var(--sage),var(--powder))}
 .a4{background:linear-gradient(135deg,var(--blue),var(--powder))}
+.a5{background:linear-gradient(135deg,var(--lavender),var(--powder))}
 .story{position:absolute;right:20px;bottom:20px;width:min(350px,36%);background:var(--white);border-radius:10px;box-shadow:0 14px 30px -12px rgba(38,42,48,.45);min-width:0;display:flex;flex-direction:column;justify-content:center;gap:12px;padding:22px 24px}
 .meta{display:flex;justify-content:space-between;align-items:baseline;gap:12px;font-family:var(--ui);font-size:12px;font-weight:600;color:var(--coral);letter-spacing:.04em}
 .meta .idx{font-size:14px;color:var(--muted);font-variant-numeric:tabular-nums}
@@ -453,19 +455,20 @@ button.tag-dark:hover{transform:translateY(-2px);background:#3A3F47}
   #about{min-height:calc(780px*var(--az,1));padding-top:calc(120px*var(--az,1))}
   .work-head{display:block;position:sticky;top:calc(72px + (var(--gap,68px) - 20px)/2);height:0;z-index:6;margin:calc(-82px - var(--gap,68px)/2) 0 calc(82px + var(--gap,68px)/2);padding-left:16px;pointer-events:none}
   .work-head h2{font-family:var(--ui);font-weight:500;font-size:20px;line-height:1;letter-spacing:.2em;color:var(--coral);text-transform:uppercase;margin:0}
-  .slide{--tw:min(290px,calc((min(1480px,85vw) - 32px - 72px)/4));--th:72px;position:sticky;top:var(--top,185px);display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:72px;align-items:center;min-height:min(calc(100svh - var(--top,185px) - 24px),calc(min(1480px,85vw)*.36 + 40px));overflow:visible;margin-bottom:55vh;scroll-snap-align:none;border-radius:0;box-shadow:none;padding:clamp(48px,7.5svh,68px) 72px clamp(48px,7.5svh,68px) 80px;color:var(--ink)}
+  .slide{--tw:min(290px,calc((min(1480px,85vw) - 32px - 72px)/5));--th:72px;position:sticky;top:var(--top,185px);display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:72px;align-items:center;min-height:min(calc(100svh - var(--top,185px) - 24px),calc(min(1480px,85vw)*.36 + 40px));overflow:visible;margin-bottom:55vh;scroll-snap-align:none;border-radius:0;box-shadow:none;padding:clamp(48px,7.5svh,68px) 72px clamp(48px,7.5svh,68px) 80px;color:var(--ink)}
 
   #s0{background:#3175C6}
   #s1{background:#262A30}
   #s2{background:#F5C84C}
   #s3{background:#FF8662}
+  #s4{background:#CDBDF2}
   #s0,#s1{color:#fff}
   #s0 .story .meta,#s1 .story .meta,#s0 .story .lede,#s1 .story .lede,#s0 .story .actions .pill,#s1 .story .actions .pill{color:#fff}
   #s0 .story .meta .date::before,#s1 .story .meta .date::before{background:#fff}
   #s0 .story .actions .pill,#s1 .story .actions .pill{border-bottom-color:#fff}
   .slide::before{content:"";position:absolute;left:calc(var(--i) * var(--tw));top:calc(var(--th) * -1 + 1px);width:calc(var(--tw) + var(--th));height:var(--th);background:inherit;clip-path:polygon(0 100%,var(--th) 0,var(--tw) 0,calc(var(--tw) + var(--th)) 100%)}
   #s0::before{clip-path:polygon(0 100%,0 0,var(--tw) 0,calc(var(--tw) + var(--th)) 100%)}
-  .slide::after{content:"✦  " attr(data-tab);position:absolute;left:calc(var(--i) * var(--tw) + var(--th));top:calc(var(--th) * -1);height:var(--th);display:flex;align-items:center;font-family:'JetBrains Mono',ui-monospace,monospace;font-weight:700;font-size:18px;letter-spacing:.14em;white-space:nowrap;pointer-events:none}
+  .slide::after{content:"✦  " attr(data-tab);position:absolute;left:calc(var(--i) * var(--tw) + var(--th));top:calc(var(--th) * -1);height:var(--th);display:flex;align-items:center;font-family:'JetBrains Mono',ui-monospace,monospace;font-weight:700;font-size:min(18px,calc((var(--tw) - 50px)/9.6));letter-spacing:.14em;white-space:nowrap;pointer-events:none}
   #s0::after{left:48px}
   .story{order:-1;position:static;width:auto;background:none;box-shadow:none;border-radius:0;padding:0;gap:clamp(12px,2.6svh,24px);display:flex;flex-direction:column;align-items:flex-start;align-self:stretch;justify-content:center}
   .story .meta{justify-content:flex-start;gap:14px;font-family:'JetBrains Mono',ui-monospace,monospace;font-size:14px;font-weight:700;letter-spacing:.12em;color:var(--ink)}
@@ -597,11 +600,12 @@ button.tag-dark:hover{transform:translateY(-2px);background:#3A3F47}
         <button class="tab" role="tab" id="tab-1" aria-selected="false" aria-controls="s1"><span class="n">02</span>Habitcat</button>
         <button class="tab" role="tab" id="tab-2" aria-selected="false" aria-controls="s2"><span class="n">03</span>求職筆記</button>
         <button class="tab" role="tab" id="tab-3" aria-selected="false" aria-controls="s3"><span class="n">04</span>翻譯</button>
+        <button class="tab" role="tab" id="tab-4" aria-selected="false" aria-controls="s4"><span class="n">05</span>Python</button>
       </div>
     </div>
     <div class="track" id="track">
       <article class="slide" style="--i:0" data-tab="PROJECT 01" id="s0" role="tabpanel" aria-labelledby="tab-0">
-        <a class="shot" href="work-1.html" aria-label="<span class="cjk">夠練</span> GoLand">
+        <a class="shot" href="work-1.html" aria-label="夠練 GoLand">
           <div class="frames" data-autoplay>
             <div class="frame on"><img src="assets/work/cover-goland-1.webp" alt="首頁：用運動、地點與時間找課" width="1800" height="1012"></div>
             <div class="frame"><img src="assets/work/cover-goland-2.webp" alt="依運動與地區瀏覽推薦課程" loading="lazy" width="1800" height="1012"></div>
@@ -613,7 +617,7 @@ button.tag-dark:hover{transform:translateY(-2px);background:#3A3F47}
           <span class="hover-cta">查看作品 ↗</span>
         </a>
         <div class="story">
-          <div class="meta"><span class="date">2026.10.22</span><span class="kind">團隊專題・組長／PM</span><span class="idx">01 / 04</span></div>
+          <div class="meta"><span class="date">2026.10.22</span><span class="kind">團隊專題・組長／PM</span><span class="idx">01 / 05</span></div>
           <h2><span class="cjk">夠練</span> GoLand</h2>
           <p class="lede">讓教練輕鬆上架找到學員，讓學員用透明的價格找到適合的團課</p>
           <div class="chips"><span class="chip">使用者研究</span><span class="chip">PRD</span><span class="chip">範疇控管</span></div>
@@ -633,7 +637,7 @@ button.tag-dark:hover{transform:translateY(-2px);background:#3A3F47}
           <span class="hover-cta">查看作品 ↗</span>
         </a>
         <div class="story">
-          <div class="meta"><span class="date">2026.08</span><span class="kind">個人專題・獨立完成</span><span class="idx">02 / 04</span></div>
+          <div class="meta"><span class="date">2026.08</span><span class="kind">個人專題・獨立完成</span><span class="idx">02 / 05</span></div>
           <h2>Habitcat</h2>
           <p class="lede">用遊戲化和 AI 陪伴，讓習慣養成不再半途而廢</p>
           <div class="chips"><span class="chip">AI 協作開發</span><span class="chip">遊戲化設計</span><span class="chip">效能優化</span></div>
@@ -641,7 +645,7 @@ button.tag-dark:hover{transform:translateY(-2px);background:#3A3F47}
         </div>
       </article>
       <article class="slide" style="--i:2" data-tab="PROJECT 03" id="s2" role="tabpanel" aria-labelledby="tab-2">
-        <a class="shot" href="work-3.html" aria-label="<span class="cjk">求職攻略系統</span>">
+        <a class="shot" href="work-3.html" aria-label="求職攻略系統">
           <div class="frames" data-autoplay>
             <div class="frame on"><img src="assets/work/cover-notion-1.webp" alt="公開版 Notion：README 使用說明" width="1800" height="1012"></div>
             <div class="frame"><img src="assets/work/cover-notion-2.webp" alt="RESUME：履歷版本與投遞次數" loading="lazy" width="1800" height="1012"></div>
@@ -652,7 +656,7 @@ button.tag-dark:hover{transform:translateY(-2px);background:#3A3F47}
           <span class="hover-cta">查看作品 ↗</span>
         </a>
         <div class="story">
-          <div class="meta"><span class="date">2026.10</span><span class="kind">個人專案・Notion</span><span class="idx">03 / 04</span></div>
+          <div class="meta"><span class="date">2026.10</span><span class="kind">個人專案・Notion</span><span class="idx">03 / 05</span></div>
           <h2><span class="cjk">求職攻略系統</span></h2>
           <p class="lede">找工作也能敏捷？用 PM 思維與 AI 協作打造的求職系統</p>
           <div class="chips"><span class="chip">Notion</span><span class="chip">知識庫管理</span><span class="chip">AI 協作</span></div>
@@ -660,7 +664,7 @@ button.tag-dark:hover{transform:translateY(-2px);background:#3A3F47}
         </div>
       </article>
       <article class="slide" style="--i:3" data-tab="PROJECT 04" id="s3" role="tabpanel" aria-labelledby="tab-3">
-        <a class="shot" href="https://www.betelnut.co/tatsuo-takei/chinese" target="_blank" rel="noopener" aria-label="<span class="cjk">衝浪文化翻譯</span>">
+        <a class="shot" href="https://www.betelnut.co/tatsuo-takei/chinese" target="_blank" rel="noopener" aria-label="衝浪文化翻譯">
           <div class="frames" data-autoplay>
             <div class="frame on"><img src="assets/work/cover-betelnut-1.webp" alt="人物專訪 Tatsuo Takei：頁首" width="1800" height="1012"></div>
             <div class="frame"><img src="assets/work/cover-betelnut-2.webp" alt="人物專訪譯文與譯者署名" loading="lazy" width="1800" height="1012"></div>
@@ -669,18 +673,33 @@ button.tag-dark:hover{transform:translateY(-2px);background:#3A3F47}
           <span class="hover-cta">閱讀譯文 ↗</span>
         </a>
         <div class="story">
-          <div class="meta"><span class="date">2022.12</span><span class="kind">筆譯作品・英翻中</span><span class="idx">04 / 04</span></div>
+          <div class="meta"><span class="date">2022.12</span><span class="kind">筆譯作品・英翻中</span><span class="idx">04 / 05</span></div>
           <h2><span class="cjk">衝浪文化翻譯</span></h2>
           <p class="lede">斜槓人生：衝浪 × 英翻中，把衝浪文化帶給中文讀者</p>
           <div class="chips"><span class="chip">英翻中</span><span class="chip">衝浪文化</span><span class="chip">在地化</span></div>
           <div class="actions"><a class="pill coral" href="https://www.betelnut.co/tatsuo-takei/chinese" target="_blank" rel="noopener" title="「人物專訪」Tatsuo Takei（竹井達男）">人物專訪 ↗</a><a class="pill ghost" href="https://www.betelnut.co/theseedling" target="_blank" rel="noopener" title="電影介紹：The Seedling by Thomas Campbell">電影介紹 ↗</a></div>
         </div>
       </article>
+      <article class="slide" style="--i:4" data-tab="PROJECT 05" id="s4" role="tabpanel" aria-labelledby="tab-4">
+        <a class="shot" href="work-5.html" aria-label="30 天 Python 計畫">
+          <div class="frames" data-autoplay>
+            <div class="frame art a5 on"><div class="art-title" style="font-size:clamp(28px,3.6vw,56px)">#30Nites<br>OfCode<small>Python · Day 1–20</small></div></div>
+          </div>
+          <span class="hover-cta">查看作品 ↗</span>
+        </a>
+        <div class="story">
+          <div class="meta"><span class="date">2026.07</span><span class="kind">個人專案・Python</span><span class="idx">05 / 05</span></div>
+          <h2><span class="cjk">30 天 Python 計畫</span></h2>
+          <p class="lede">用 30 天、每天一個小練習，把 Python 學到能做出自己的小專案</p>
+          <div class="chips"><span class="chip">Python</span><span class="chip">AI 協作</span><span class="chip">小專案</span></div>
+          <div class="actions"><a class="pill coral" href="work-5.html">查看作品 ↗</a></div>
+        </div>
+      </article>
     </div>
     <div class="controls">
-      <div class="pdots" aria-hidden="true"><span class="pdot on"></span><span class="pdot"></span><span class="pdot"></span><span class="pdot"></span></div>
+      <div class="pdots" aria-hidden="true"><span class="pdot on"></span><span class="pdot"></span><span class="pdot"></span><span class="pdot"></span><span class="pdot"></span></div>
       <div class="arrows">
-        <span class="count" id="count" aria-live="polite">01 / 04</span>
+        <span class="count" id="count" aria-live="polite">01 / 05</span>
         <button class="arrow" id="prev" aria-label="上一個作品">←</button>
         <button class="arrow" id="next" aria-label="下一個作品">→</button>
       </div>
@@ -986,7 +1005,7 @@ document.documentElement.classList.add('js');
   let raf=0;
   function tabAt(e){
     if(!mq.matches) return -1;
-    const r=cards[0].getBoundingClientRect(); TW=Math.min(290,(r.width-TH)/4);
+    const r=cards[0].getBoundingClientRect(); TW=Math.min(290,(r.width-TH)/cards.length);
     const x=e.clientX-r.left, t=-(e.clientY-r.top)/TH;   // t：0=分頁底、1=分頁頂
     if(t<0||t>1||x<0) return -1;
     let hit=-1;
@@ -1029,7 +1048,7 @@ document.documentElement.classList.add('js');
   const mq=matchMedia('(min-width:1025px)');
   function fitAbout(){
     if(!mq.matches){a.style.removeProperty('--az');return;}
-    const k=Math.min(1,innerHeight/820);
+    const k=Math.min(1,innerHeight/900);
     a.style.setProperty('--az',k.toFixed(3));
   }
   addEventListener('resize',fitAbout); addEventListener('load',fitAbout); fitAbout();
