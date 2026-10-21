@@ -300,6 +300,26 @@ article section{padding-top:56px}
 .pk-slide{flex:0 0 100%;min-width:0;scroll-snap-align:start}
 .pk-slide h3.sh{margin-top:0}
 @media (max-width:640px){.pk-tabs{margin-left:0;justify-content:flex-start}.pk-track{gap:24px}}
+/* compact first section: header + controls + demo fit in one screen (desktop) */
+#picks{padding-top:0!important}
+#p3{scroll-margin-top:92px;margin-top:28px;padding-top:16px;column-gap:20px;row-gap:2px}
+#p3 b{font-size:clamp(54px,6vw,76px);-webkit-text-stroke-width:1.5px}
+#p3 h2{font-size:clamp(30px,3.4vw,44px)}
+#p3 p{font-size:15px}
+.pk-bar{margin:14px 0 12px}
+.pk-arrow{width:36px;height:36px;font-size:16px}
+.pk-tabs button{padding:5px 12px;font-size:12.5px}
+.pk-slide .live{margin-top:0}
+@media (min-width:1000px){
+  .pk-slide{display:grid;grid-template-columns:minmax(230px,290px) minmax(0,1fr);grid-template-rows:auto auto 1fr auto;column-gap:32px;align-items:start}
+  .pk-slide>h3.sh{grid-column:1;grid-row:1;font-size:clamp(22px,2vw,28px);margin:0 0 10px}
+  .pk-slide>p{grid-column:1;grid-row:2;margin:0;font-size:14.5px;line-height:1.7}
+  .pk-slide>.live,.pk-slide>figure{grid-column:2;grid-row:1/4;margin:0!important;max-width:none!important}
+  .pk-slide>details{grid-column:1/-1;grid-row:4}
+  .pk-slide .live-view{aspect-ratio:auto!important;height:clamp(300px,calc(100vh - 322px),680px)}
+  .pk-slide>figure{display:flex;flex-direction:column;align-items:center}
+  .pk-slide>figure img{width:auto!important;max-width:100%;max-height:calc(100vh - 340px);object-fit:contain}
+}
 
 details.codebox{margin-top:14px;background:var(--white);border-radius:16px;padding:4px 18px}details.codebox summary{cursor:pointer;font-family:var(--ui);font-weight:600;font-size:14px;padding:12px 0}details.codebox pre.code{margin:0 -18px -4px;border-radius:0 0 16px 16px}p code{font-family:"JetBrains Mono",ui-monospace,Consolas,monospace;font-size:.9em;background:rgba(38,42,48,.08);border-radius:6px;padding:1px 6px}
 .code{background:var(--ink);color:#EDEFF2;border-radius:16px;padding:18px 22px;overflow-x:auto;font:13.5px/1.7 "JetBrains Mono",ui-monospace,Consolas,monospace;margin:0}.code-cap{font-family:var(--ui);font-size:12px;font-weight:600;letter-spacing:.1em;color:var(--coral);margin:18px 0 8px}
