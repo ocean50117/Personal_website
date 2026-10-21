@@ -288,6 +288,19 @@ article section{padding-top:56px}
 @media (max-width:900px){.four,.steps{grid-template-columns:repeat(2,minmax(0,1fr))}.timeline{grid-template-columns:repeat(3,minmax(0,1fr))}.three{grid-template-columns:1fr}}
 @media (max-width:640px){.two,.ba,.matrix{grid-template-columns:1fr}.timeline{grid-template-columns:repeat(2,minmax(0,1fr))}.part{grid-template-columns:1fr;margin-top:96px}.part b{grid-row:auto;font-size:84px;margin-bottom:6px}.part p{font-size:15px}.ai{font-size:12px;border-spacing:3px}.ai td span{display:none}}
 /* tags */
+.pk-bar{display:flex;align-items:center;justify-content:space-between;gap:14px 20px;flex-wrap:wrap;margin-bottom:22px}
+.pk-nav{display:flex;align-items:center;gap:12px;font-family:var(--ui);font-weight:600;font-size:14px}
+.pk-arrow{width:42px;height:42px;border-radius:50%;border:1.5px solid var(--ink);background:none;font-size:18px;cursor:pointer;color:var(--ink);display:grid;place-items:center}
+.pk-arrow:hover:not(:disabled){background:var(--ink);color:var(--white)}.pk-arrow:disabled{opacity:.3;cursor:default}
+.pk-tabs{display:flex;flex-wrap:wrap;gap:6px;margin-left:auto;justify-content:flex-end}
+.pk-tabs button{font-family:var(--ui);font-weight:600;font-size:13px;border:1.5px solid var(--ink);background:none;color:var(--ink);border-radius:999px;padding:7px 14px;cursor:pointer}
+.pk-tabs button.on{background:var(--ink);color:var(--white)}
+.pk-track{display:flex;gap:40px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;scrollbar-width:none;align-items:flex-start;transition:height .3s ease;outline-offset:6px}
+.pk-track::-webkit-scrollbar{display:none}
+.pk-slide{flex:0 0 100%;min-width:0;scroll-snap-align:start}
+.pk-slide h3.sh{margin-top:0}
+@media (max-width:640px){.pk-tabs{margin-left:0;justify-content:flex-start}.pk-track{gap:24px}}
+
 details.codebox{margin-top:14px;background:var(--white);border-radius:16px;padding:4px 18px}details.codebox summary{cursor:pointer;font-family:var(--ui);font-weight:600;font-size:14px;padding:12px 0}details.codebox pre.code{margin:0 -18px -4px;border-radius:0 0 16px 16px}p code{font-family:"JetBrains Mono",ui-monospace,Consolas,monospace;font-size:.9em;background:rgba(38,42,48,.08);border-radius:6px;padding:1px 6px}
 .code{background:var(--ink);color:#EDEFF2;border-radius:16px;padding:18px 22px;overflow-x:auto;font:13.5px/1.7 "JetBrains Mono",ui-monospace,Consolas,monospace;margin:0}.code-cap{font-family:var(--ui);font-size:12px;font-weight:600;letter-spacing:.1em;color:var(--coral);margin:18px 0 8px}
 .tags{display:flex;flex-wrap:wrap;gap:8px}.tag-dark{display:inline-block;background:var(--ink);color:var(--white);font-family:var(--ui);font-weight:600;font-size:13.5px;border-radius:999px;padding:6px 16px}
@@ -368,87 +381,101 @@ details.codebox{margin-top:14px;background:var(--white);border-radius:16px;paddi
   <article>
     <div class="part" id="p3" data-toc="1" data-label="01 作品"><b>01</b><h2>作品</h2><p>用 AI 協作加快實作，但每一步都自己看懂、改過。</p></div>
     <section id="picks">
-      <h3 class="sh" data-toc="2" data-label="Day 9 GIF 迷因生產器">Day 9・GIF 迷因生產器</h3>
-      <p>用 <code>imageio</code> 把多張圖片合成 GIF，核心只有 6 行。過程中遇到圖片尺寸不一致的錯誤，學到怎麼除錯。<a href="https://www.linkedin.com/feed/update/urn:li:activity:7490753628501065728/" target="_blank" rel="noopener">看貼文 ↗</a></p>
-      <figure style="margin:18px 0 0;max-width:560px"><img src="assets/work/py-gif-meme.gif" alt="用 6 行 Python 合成的 GIF：3 張圖片輪播" width="800" height="450" style="width:100%;height:auto;border-radius:16px;display:block"><figcaption style="font-size:13px;color:var(--muted);margin-top:8px">成品：把 3 張圖片合成的 GIF（每張 0.5 秒、循環播放）</figcaption></figure>
-      <details class="codebox"><summary>看程式碼</summary><pre class="code">import imageio.v3 as iio
-
-filenames = [&#x27;IMG1.jpg&#x27;, &#x27;IMG2.jpg&#x27;, &#x27;IMG3.jpg&#x27;]
-images = [ ]
-for filename in filenames:
-    images.append(iio.imread(filename))
-
-iio.imwrite(&#x27;IMG.gif&#x27;, images, duration = 500, loop = 0)
-</pre></details>
-
-      <h3 class="sh" style="margin-top:56px" data-toc="2" data-label="Day 11 人生週曆">Day 11・人生週曆（Life in Weeks）</h3>
-      <p>先用巢狀迴圈在終端機畫出 90 年 × 52 週的方格，再把 Python 腳本交給 Gemini Canvas 做成可以輸入生日互動的網頁。<a href="https://www.linkedin.com/feed/update/urn:li:activity:7491404008075546624/" target="_blank" rel="noopener">看貼文 ↗</a></p>
-      <div class="live" style="margin-top:18px">
-        <div class="live-bar">
-          <span class="dots" aria-hidden="true"><i></i><i></i><i></i></span>
-          <span class="url">demos/life-in-weeks.html</span>
-          <a href="demos/life-in-weeks.html" target="_blank" rel="noopener">新分頁開啟 ↗</a>
-        </div>
-        <div class="live-view" style="aspect-ratio:16/10"><iframe src="demos/life-in-weeks.html" title="人生週曆" loading="lazy" sandbox="allow-scripts allow-same-origin allow-modals allow-popups"></iframe></div>
+      <div class="pk-bar">
+        <div class="pk-nav"><button type="button" class="pk-arrow" id="pkPrev" aria-label="上一個作品">←</button><span class="pk-count" id="pkCount" aria-live="polite">01 / 04</span><button type="button" class="pk-arrow" id="pkNext" aria-label="下一個作品">→</button></div>
+        <div class="pk-tabs" id="pkTabs" role="tablist" aria-label="快速切換作品"><button type="button" data-i="0" class="on">Day 9 GIF 生產器</button><button type="button" data-i="1">Day 11 人生週曆</button><button type="button" data-i="2">Day 13 Y2K 計時器</button><button type="button" data-i="3">Day 14 猜字遊戲</button></div>
       </div>
-      <details class="codebox"><summary>看 Python 原型（終端機版）</summary><pre class="code">import datetime
+      <div class="pk-track" id="pkTrack" tabindex="0" aria-label="作品展示，可左右滑動">
+      <div class="pk-slide" id="pk-9" role="group" aria-roledescription="slide" aria-label="Day 9 GIF 生產器">
+        <h3 class="sh">Day 9・GIF 迷因生產器</h3>
+        <p>用 <code>imageio</code> 把多張圖片合成 GIF，核心只有 6 行。過程中遇到圖片尺寸不一致的錯誤，學到怎麼除錯。<a href="https://www.linkedin.com/feed/update/urn:li:activity:7490753628501065728/" target="_blank" rel="noopener">看貼文 ↗</a></p>
+        <figure style="margin:18px 0 0;max-width:560px"><img src="assets/work/py-gif-meme.gif" alt="用 6 行 Python 合成的 GIF：3 張圖片輪播" width="800" height="450" style="width:100%;height:auto;border-radius:16px;display:block"><figcaption style="font-size:13px;color:var(--muted);margin-top:8px">成品：把 3 張圖片合成的 GIF（每張 0.5 秒、循環播放）</figcaption></figure>
+        <details class="codebox"><summary>看程式碼</summary><pre class="code">import imageio.v3 as iio
 
-# 1. 讓使用者輸入生日,格式是 yyyy-mm-dd
-birth_input = input(&quot;Enter your date of birth (yyyy-mm-dd): &quot;)
+  filenames = [&#x27;IMG1.jpg&#x27;, &#x27;IMG2.jpg&#x27;, &#x27;IMG3.jpg&#x27;]
+  images = [ ]
+  for filename in filenames:
+      images.append(iio.imread(filename))
 
-# 2. 用 .split() 把字串拆成三段,再用 int() 把每一段轉成數字
-birth_parts = birth_input.split(&quot;-&quot;)
-birth_year = int(birth_parts[0])
-birth_month = int(birth_parts[1])
-birth_day = int(birth_parts[2])
+  iio.imwrite(&#x27;IMG.gif&#x27;, images, duration = 500, loop = 0)
+  </pre></details>
 
-# 3. 建立生日的 date 物件
-birthday = datetime.date(birth_year, birth_month, birth_day)
-
-# 4. 計算活了幾天、幾週
-today = datetime.date.today()
-days_lived = (today - birthday).days
-weeks_lived = days_lived // 7
-
-# 5. 設定總共要畫幾行、每行幾格
-total_years = 90
-weeks_per_year = 52
-
-print(f&quot;\nYou have lived {weeks_lived} weeks so far.\n&quot;)
-
-# 6. 用巢狀迴圈畫出 90 行 x 52 格的方塊圖
-for row in range(total_years):
-    line = &quot;&quot;
-    for col in range(weeks_per_year):
-        week_number = row * weeks_per_year + col
-        if week_number &lt; weeks_lived:
-            line += &quot;■ &quot;
-        else:
-            line += &quot;□ &quot;
-    print(line)</pre></details>
-
-      <h3 class="sh" style="margin-top:56px" data-toc="2" data-label="Day 13 Y2K 倒數計時器">Day 13・Y2K 懷舊遊戲機倒數計時器</h3>
-      <p>以 GameBoy、Pip-Boy、翻頁鐘為風格的倒數計時器，內含打磚塊小遊戲。用兩段 Prompt 在 Gemini Canvas 生成，並部署到 GitHub Pages。<a href="https://www.linkedin.com/feed/update/urn:li:activity:7492578414701228032/" target="_blank" rel="noopener">看貼文 ↗</a></p>
-      <div class="live" style="margin-top:18px">
-        <div class="live-bar">
-          <span class="dots" aria-hidden="true"><i></i><i></i><i></i></span>
-          <span class="url">demos/y2k-timer.html</span>
-          <a href="demos/y2k-timer.html" target="_blank" rel="noopener">新分頁開啟 ↗</a>
-        </div>
-        <div class="live-view" style="aspect-ratio:16/10"><iframe src="demos/y2k-timer.html" title="Y2K 懷舊遊戲機倒數計時器" loading="lazy" sandbox="allow-scripts allow-same-origin allow-modals allow-popups"></iframe></div>
       </div>
-
-      <h3 class="sh" style="margin-top:56px" data-toc="2" data-label="Day 14 猜字遊戲">Day 14・猜字遊戲（Hangman 風格）</h3>
-      <p>跟著 Codédex 教學完成 Python 版，網頁介面由 Claude 生成，用 Copilot 補程式註解，比較不同 AI 的產出。<a href="https://www.linkedin.com/feed/update/urn:li:activity:7492963950725160960/" target="_blank" rel="noopener">看貼文 ↗</a></p>
-      <div class="live" style="margin-top:18px">
-        <div class="live-bar">
-          <span class="dots" aria-hidden="true"><i></i><i></i><i></i></span>
-          <span class="url">demos/word-guess.html</span>
-          <a href="demos/word-guess.html" target="_blank" rel="noopener">新分頁開啟 ↗</a>
+      <div class="pk-slide" id="pk-11" role="group" aria-roledescription="slide" aria-label="Day 11 人生週曆">
+        <h3 class="sh">Day 11・人生週曆（Life in Weeks）</h3>
+        <p>先用巢狀迴圈在終端機畫出 90 年 × 52 週的方格，再把 Python 腳本交給 Gemini Canvas 做成可以輸入生日互動的網頁。<a href="https://www.linkedin.com/feed/update/urn:li:activity:7491404008075546624/" target="_blank" rel="noopener">看貼文 ↗</a></p>
+        <div class="live" style="margin-top:18px">
+          <div class="live-bar">
+            <span class="dots" aria-hidden="true"><i></i><i></i><i></i></span>
+            <span class="url">demos/life-in-weeks.html</span>
+            <a href="demos/life-in-weeks.html" target="_blank" rel="noopener">新分頁開啟 ↗</a>
+          </div>
+          <div class="live-view" style="aspect-ratio:16/10"><iframe src="demos/life-in-weeks.html" title="人生週曆" loading="lazy" sandbox="allow-scripts allow-same-origin allow-modals allow-popups"></iframe></div>
         </div>
-        <div class="live-view" style="aspect-ratio:4/3"><iframe src="demos/word-guess.html" title="猜字遊戲" loading="lazy" sandbox="allow-scripts allow-same-origin allow-modals allow-popups"></iframe></div>
-      </div>
+        <details class="codebox"><summary>看 Python 原型（終端機版）</summary><pre class="code">import datetime
 
+  # 1. 讓使用者輸入生日,格式是 yyyy-mm-dd
+  birth_input = input(&quot;Enter your date of birth (yyyy-mm-dd): &quot;)
+
+  # 2. 用 .split() 把字串拆成三段,再用 int() 把每一段轉成數字
+  birth_parts = birth_input.split(&quot;-&quot;)
+  birth_year = int(birth_parts[0])
+  birth_month = int(birth_parts[1])
+  birth_day = int(birth_parts[2])
+
+  # 3. 建立生日的 date 物件
+  birthday = datetime.date(birth_year, birth_month, birth_day)
+
+  # 4. 計算活了幾天、幾週
+  today = datetime.date.today()
+  days_lived = (today - birthday).days
+  weeks_lived = days_lived // 7
+
+  # 5. 設定總共要畫幾行、每行幾格
+  total_years = 90
+  weeks_per_year = 52
+
+  print(f&quot;\nYou have lived {weeks_lived} weeks so far.\n&quot;)
+
+  # 6. 用巢狀迴圈畫出 90 行 x 52 格的方塊圖
+  for row in range(total_years):
+      line = &quot;&quot;
+      for col in range(weeks_per_year):
+          week_number = row * weeks_per_year + col
+          if week_number &lt; weeks_lived:
+              line += &quot;■ &quot;
+          else:
+              line += &quot;□ &quot;
+      print(line)</pre></details>
+
+      </div>
+      <div class="pk-slide" id="pk-13" role="group" aria-roledescription="slide" aria-label="Day 13 Y2K 計時器">
+        <h3 class="sh">Day 13・Y2K 懷舊遊戲機倒數計時器</h3>
+        <p>以 GameBoy、Pip-Boy、翻頁鐘為風格的倒數計時器，內含打磚塊小遊戲。用兩段 Prompt 在 Gemini Canvas 生成，並部署到 GitHub Pages。<a href="https://www.linkedin.com/feed/update/urn:li:activity:7492578414701228032/" target="_blank" rel="noopener">看貼文 ↗</a></p>
+        <div class="live" style="margin-top:18px">
+          <div class="live-bar">
+            <span class="dots" aria-hidden="true"><i></i><i></i><i></i></span>
+            <span class="url">demos/y2k-timer.html</span>
+            <a href="demos/y2k-timer.html" target="_blank" rel="noopener">新分頁開啟 ↗</a>
+          </div>
+          <div class="live-view" style="aspect-ratio:16/10"><iframe src="demos/y2k-timer.html" title="Y2K 懷舊遊戲機倒數計時器" loading="lazy" sandbox="allow-scripts allow-same-origin allow-modals allow-popups"></iframe></div>
+        </div>
+
+      </div>
+      <div class="pk-slide" id="pk-14" role="group" aria-roledescription="slide" aria-label="Day 14 猜字遊戲">
+        <h3 class="sh">Day 14・猜字遊戲（Hangman 風格）</h3>
+        <p>跟著 Codédex 教學完成 Python 版，網頁介面由 Claude 生成，用 Copilot 補程式註解，比較不同 AI 的產出。<a href="https://www.linkedin.com/feed/update/urn:li:activity:7492963950725160960/" target="_blank" rel="noopener">看貼文 ↗</a></p>
+        <div class="live" style="margin-top:18px">
+          <div class="live-bar">
+            <span class="dots" aria-hidden="true"><i></i><i></i><i></i></span>
+            <span class="url">demos/word-guess.html</span>
+            <a href="demos/word-guess.html" target="_blank" rel="noopener">新分頁開啟 ↗</a>
+          </div>
+          <div class="live-view" style="aspect-ratio:4/3"><iframe src="demos/word-guess.html" title="猜字遊戲" loading="lazy" sandbox="allow-scripts allow-same-origin allow-modals allow-popups"></iframe></div>
+        </div>
+
+      </div>
+      </div>
     </section>
 
     <div class="part" id="p1" data-toc="1" data-label="02 為什麼做"><b>02</b><h2>為什麼做</h2><p>想把「會看」變成「會做」，也讓自己能跟工程師更有效溝通。</p></div>
@@ -574,6 +601,31 @@ client.run(TOKEN)  # token 放環境變數，不寫進程式碼</pre></details>
     items.forEach((it,n)=>{ it.a.classList.toggle('on',n===k); it.i.classList.toggle('on',n===k); });
   }
   addEventListener('scroll',on,{passive:true}); on();
+})();
+</script>
+<script>
+(function(){
+  const track=document.getElementById('pkTrack'); if(!track) return;
+  const slides=[...track.querySelectorAll('.pk-slide')], tabs=[...document.querySelectorAll('#pkTabs button')];
+  const prev=document.getElementById('pkPrev'), next=document.getElementById('pkNext'), count=document.getElementById('pkCount');
+  let cur=0;
+  function pad(n){return String(n).padStart(2,'0');}
+  function fit(){ track.style.height=slides[cur].offsetHeight+'px'; }
+  function ui(){
+    tabs.forEach((t,i)=>{t.classList.toggle('on',i===cur);t.setAttribute('aria-selected',i===cur);});
+    count.textContent=pad(cur+1)+' / '+pad(slides.length);
+    prev.disabled=cur===0; next.disabled=cur===slides.length-1; fit();
+  }
+  function go(i){ cur=Math.max(0,Math.min(slides.length-1,i)); track.scrollTo({left:slides[cur].offsetLeft-track.offsetLeft,behavior:'smooth'}); ui(); }
+  tabs.forEach((t,i)=>t.addEventListener('click',()=>go(i)));
+  prev.addEventListener('click',()=>go(cur-1)); next.addEventListener('click',()=>go(cur+1));
+  let t=0;
+  track.addEventListener('scroll',()=>{ clearTimeout(t); t=setTimeout(()=>{ const i=Math.round(track.scrollLeft/(slides[0].offsetWidth+parseFloat(getComputedStyle(track).columnGap||0))); if(i!==cur){cur=Math.max(0,Math.min(slides.length-1,i));ui();} },80); },{passive:true});
+  track.addEventListener('keydown',e=>{ if(e.target!==track) return; if(e.key==='ArrowRight'){e.preventDefault();go(cur+1);} if(e.key==='ArrowLeft'){e.preventDefault();go(cur-1);} });
+  addEventListener('resize',()=>{ track.scrollTo({left:slides[cur].offsetLeft-track.offsetLeft,behavior:'auto'}); fit(); });
+  addEventListener('load',fit); if(document.fonts) document.fonts.ready.then(fit);
+  slides.forEach(sl=>{ if(window.ResizeObserver) new ResizeObserver(()=>{ if(slides[cur]===sl) fit(); }).observe(sl); });
+  ui();
 })();
 </script>
 </body>
