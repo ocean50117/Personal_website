@@ -380,8 +380,18 @@ button.tag-dark:hover{transform:translateY(-2px);background:#3A3F47}
   .resume-grid{margin-top:60px}
   #resume-start{scroll-margin-top:132px}
   .edu{padding-top:0}
-  .shot{height:auto;aspect-ratio:16/10;min-height:0}
-  .story{position:relative;right:auto;bottom:auto;width:auto;margin:-28px 12px 12px;padding:18px 18px 20px}
+  .slide{padding:16px 16px 22px;border-radius:16px}
+  #s0{background:#3175C6;color:#fff}#s1{background:#262A30;color:#fff}#s2{background:#F5C84C}#s3{background:#FF8662}#s4{background:#CDBDF2}
+  .shot{height:auto;aspect-ratio:16/10;min-height:0;overflow:visible;border:4px solid var(--white);box-shadow:0 14px 24px -16px rgba(38,42,48,.5)}
+  .shot .frames{overflow:hidden}
+  .shot::before,.shot::after{content:"";position:absolute;top:-11px;width:76px;height:22px;background:rgba(255,255,255,.55);z-index:3;box-shadow:0 1px 2px rgba(38,42,48,.12)}
+  .shot::before{left:-10px;transform:rotate(-5deg)}
+  .shot::after{right:-10px;transform:rotate(5deg)}
+  .story{position:relative;right:auto;bottom:auto;width:auto;margin:0;padding:20px 4px 0;background:none;box-shadow:none;border-radius:0;color:inherit}
+  #s0 .story .lede,#s1 .story .lede,#s0 .story .meta,#s1 .story .meta,#s0 .story .meta .idx,#s1 .story .meta .idx{color:#fff}
+  #s0 .story .meta .idx,#s1 .story .meta .idx{opacity:.7}
+  #s3 .story .pill:not(.ghost){background:var(--ink);color:#fff}
+  #s0 .story .chips .chip,#s1 .story .chips .chip{color:#fff;border-color:rgba(255,255,255,.75)}
   #work{min-height:auto}
   .dots{display:none}
 }
