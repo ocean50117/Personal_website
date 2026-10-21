@@ -368,19 +368,20 @@ details.codebox{margin-top:14px;background:var(--white);border-radius:16px;paddi
   <article>
     <div class="part" id="p3" data-toc="1" data-label="01 作品"><b>01</b><h2>作品</h2><p>用 AI 協作加快實作，但每一步都自己看懂、改過。</p></div>
     <section id="picks">
-      <p class="eb">可以直接玩</p>
-      <h3 class="sh" data-toc="2" data-label="Day 13 Y2K 倒數計時器">Day 13・Y2K 懷舊遊戲機倒數計時器</h3>
-      <p>以 GameBoy、Pip-Boy、翻頁鐘為風格的倒數計時器，內含打磚塊小遊戲。用兩段 Prompt 在 Gemini Canvas 生成，並部署到 GitHub Pages。<a href="https://www.linkedin.com/feed/update/urn:li:activity:7492578414701228032/" target="_blank" rel="noopener">看貼文 ↗</a></p>
-      <div class="live" style="margin-top:18px">
-        <div class="live-bar">
-          <span class="dots" aria-hidden="true"><i></i><i></i><i></i></span>
-          <span class="url">demos/y2k-timer.html</span>
-          <a href="demos/y2k-timer.html" target="_blank" rel="noopener">新分頁開啟 ↗</a>
-        </div>
-        <div class="live-view" style="aspect-ratio:16/10"><iframe src="demos/y2k-timer.html" title="Y2K 懷舊遊戲機倒數計時器" loading="lazy" sandbox="allow-scripts allow-same-origin allow-modals allow-popups"></iframe></div>
-      </div>
+      <h3 class="sh" data-toc="2" data-label="Day 9 GIF 迷因生產器">Day 9・GIF 迷因生產器</h3>
+      <p>用 <code>imageio</code> 把多張圖片合成 GIF，核心只有 6 行。過程中遇到圖片尺寸不一致的錯誤，學到怎麼除錯。<a href="https://www.linkedin.com/feed/update/urn:li:activity:7490753628501065728/" target="_blank" rel="noopener">看貼文 ↗</a></p>
+      <figure style="margin:18px 0 0;max-width:560px"><img src="assets/work/py-gif-meme.gif" alt="用 6 行 Python 合成的 GIF：3 張圖片輪播" width="800" height="450" style="width:100%;height:auto;border-radius:16px;display:block"><figcaption style="font-size:13px;color:var(--muted);margin-top:8px">成品：把 3 張圖片合成的 GIF（每張 0.5 秒、循環播放）</figcaption></figure>
+      <details class="codebox"><summary>看程式碼</summary><pre class="code">import imageio.v3 as iio
 
-      <h3 class="sh" data-toc="2" data-label="Day 11 人生週曆" style="margin-top:56px">Day 11・人生週曆（Life in Weeks）</h3>
+filenames = [&#x27;IMG1.jpg&#x27;, &#x27;IMG2.jpg&#x27;, &#x27;IMG3.jpg&#x27;]
+images = [ ]
+for filename in filenames:
+    images.append(iio.imread(filename))
+
+iio.imwrite(&#x27;IMG.gif&#x27;, images, duration = 500, loop = 0)
+</pre></details>
+
+      <h3 class="sh" style="margin-top:56px" data-toc="2" data-label="Day 11 人生週曆">Day 11・人生週曆（Life in Weeks）</h3>
       <p>先用巢狀迴圈在終端機畫出 90 年 × 52 週的方格，再把 Python 腳本交給 Gemini Canvas 做成可以輸入生日互動的網頁。<a href="https://www.linkedin.com/feed/update/urn:li:activity:7491404008075546624/" target="_blank" rel="noopener">看貼文 ↗</a></p>
       <div class="live" style="margin-top:18px">
         <div class="live-bar">
@@ -426,7 +427,18 @@ for row in range(total_years):
             line += &quot;□ &quot;
     print(line)</pre></details>
 
-      <h3 class="sh" data-toc="2" data-label="Day 14 猜字遊戲" style="margin-top:56px">Day 14・猜字遊戲（Hangman 風格）</h3>
+      <h3 class="sh" style="margin-top:56px" data-toc="2" data-label="Day 13 Y2K 倒數計時器">Day 13・Y2K 懷舊遊戲機倒數計時器</h3>
+      <p>以 GameBoy、Pip-Boy、翻頁鐘為風格的倒數計時器，內含打磚塊小遊戲。用兩段 Prompt 在 Gemini Canvas 生成，並部署到 GitHub Pages。<a href="https://www.linkedin.com/feed/update/urn:li:activity:7492578414701228032/" target="_blank" rel="noopener">看貼文 ↗</a></p>
+      <div class="live" style="margin-top:18px">
+        <div class="live-bar">
+          <span class="dots" aria-hidden="true"><i></i><i></i><i></i></span>
+          <span class="url">demos/y2k-timer.html</span>
+          <a href="demos/y2k-timer.html" target="_blank" rel="noopener">新分頁開啟 ↗</a>
+        </div>
+        <div class="live-view" style="aspect-ratio:16/10"><iframe src="demos/y2k-timer.html" title="Y2K 懷舊遊戲機倒數計時器" loading="lazy" sandbox="allow-scripts allow-same-origin allow-modals allow-popups"></iframe></div>
+      </div>
+
+      <h3 class="sh" style="margin-top:56px" data-toc="2" data-label="Day 14 猜字遊戲">Day 14・猜字遊戲（Hangman 風格）</h3>
       <p>跟著 Codédex 教學完成 Python 版，網頁介面由 Claude 生成，用 Copilot 補程式註解，比較不同 AI 的產出。<a href="https://www.linkedin.com/feed/update/urn:li:activity:7492963950725160960/" target="_blank" rel="noopener">看貼文 ↗</a></p>
       <div class="live" style="margin-top:18px">
         <div class="live-bar">
@@ -436,19 +448,6 @@ for row in range(total_years):
         </div>
         <div class="live-view" style="aspect-ratio:4/3"><iframe src="demos/word-guess.html" title="猜字遊戲" loading="lazy" sandbox="allow-scripts allow-same-origin allow-modals allow-popups"></iframe></div>
       </div>
-
-      <h3 class="sh" data-toc="2" data-label="Day 9 GIF 迷因生產器" style="margin-top:56px">Day 9・GIF 迷因生產器</h3>
-      <p>用 <code>imageio</code> 把多張圖片合成 GIF，核心只有 6 行。過程中遇到圖片尺寸不一致的錯誤，學到怎麼除錯。<a href="https://www.linkedin.com/feed/update/urn:li:activity:7490753628501065728/" target="_blank" rel="noopener">看貼文 ↗</a></p>
-      <figure style="margin:18px 0 0;max-width:560px"><img src="assets/work/py-gif-meme.gif" alt="用 6 行 Python 合成的 GIF：3 張圖片輪播" width="800" height="450" style="width:100%;height:auto;border-radius:16px;display:block"><figcaption style="font-size:13px;color:var(--muted);margin-top:8px">成品：把 3 張圖片合成的 GIF（每張 0.5 秒、循環播放）</figcaption></figure>
-      <details class="codebox"><summary>看程式碼</summary><pre class="code">import imageio.v3 as iio
-
-filenames = [&#x27;IMG1.jpg&#x27;, &#x27;IMG2.jpg&#x27;, &#x27;IMG3.jpg&#x27;]
-images = [ ]
-for filename in filenames:
-    images.append(iio.imread(filename))
-
-iio.imwrite(&#x27;IMG.gif&#x27;, images, duration = 500, loop = 0)
-</pre></details>
 
     </section>
 
