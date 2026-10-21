@@ -1,0 +1,583 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Habitcat｜Sonia Liu</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 24 24%27%3E%3Cpath fill=%27%23FF8662%27 d=%27M12 0c.9 6.6 5.4 11.1 12 12-6.6.9-11.1 5.4-12 12-.9-6.6-5.4-11.1-12-12C6.6 11.1 11.1 6.6 12 0z%27/%3E%3C/svg%3E">
+<meta name="description" content="Habitcat 案例：個人專題，用 Claude Code 以 AI 協作約一個月獨立完成全端習慣養成 RPG，封測 5 天發布 17 版。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Poppins:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;700&family=Noto+Serif+TC:wght@700&display=swap">
+<style>
+/* Layout: same shell as index (nav, mist bg, glows); long-read case study; Notion-style dash rail fixed on the right */
+:root{
+  color-scheme:light;
+  --mist:#DDE3EA; --blue:#8DB4E2; --pink:#E9D3E6; --ink:#262A30; --muted:#5E6670; --white:#FFFFFF;
+  --coral:#FF8662; --lime:#EBFF3A; --butter:#FFF1B8; --blush:#FAD6DE; --lavender:#E2DAF6; --powder:#CFE0F5; --line:#C6CED8;
+  --display:"DM Serif Display", "Noto Serif TC", Georgia, serif;
+  --ui:"Poppins", "Noto Sans TC", system-ui, sans-serif;
+  --body:"Noto Sans TC", "PingFang TC", "Microsoft JhengHei", system-ui, sans-serif;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:96px}
+body{margin:0;background:var(--mist);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.8;overflow-x:hidden}
+body::after{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;
+  background:radial-gradient(560px 560px at 100% 0%, rgba(141,180,226,.85), rgba(141,180,226,0) 70%),
+             radial-gradient(560px 560px at 0% 100%, rgba(233,211,230,.9), rgba(233,211,230,0) 70%)}
+img{max-width:100%;display:block}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--coral);outline-offset:3px;border-radius:6px}
+.container{max-width:calc(1040px + 2*max(16px, env(safe-area-inset-left,0px)));margin:0 auto;padding-left:max(16px, env(safe-area-inset-left,0px));padding-right:max(16px, env(safe-area-inset-right,0px))}
+.star{display:block;fill:currentColor}
+.cjk{font-family:"Noto Serif TC",serif;font-size:.86em;margin-right:.12em}
+
+/* nav */
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:60;background:var(--mist)}
+.nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;background:color-mix(in srgb,var(--mist) 80%,transparent);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);box-shadow:0 1px 0 rgba(38,42,48,.06)}
+.nav .container{display:flex;align-items:center;justify-content:space-between;height:76px;gap:16px}
+.logo{display:flex;align-items:center;gap:8px;font-family:var(--display);font-size:24px;text-decoration:none}
+.logo .star{width:20px;height:20px;color:var(--coral)}
+.links{display:flex;align-items:center;gap:32px;font-family:var(--ui);font-weight:600;font-size:14px}
+.links a{text-decoration:none}
+.links a.active{color:var(--muted);position:relative}
+.links a.active::after{content:"";position:absolute;left:10%;right:10%;bottom:-6px;height:2px;border-radius:2px;background:var(--muted)}
+.pill{display:inline-flex;align-items:center;gap:8px;border-radius:999px;font-family:var(--ui);font-weight:600;font-size:14px;padding:10px 22px;text-decoration:none;border:1.5px solid transparent;transition:transform .2s ease;background:none;color:inherit;cursor:pointer}
+.pill:hover{transform:translateY(-2px)}
+.pill.coral{background:var(--coral);color:var(--ink)}
+.pill.dark{background:var(--ink);color:var(--white)}
+.pill.ghost{border-color:var(--ink)}
+
+/* hero */
+.back{display:inline-flex;align-items:center;gap:8px;margin-top:32px;font-family:var(--ui);font-weight:600;font-size:14px;text-decoration:none;padding:8px 16px 8px 12px;border:1.5px solid var(--ink);border-radius:999px;background:var(--white)}
+.back:hover{background:var(--ink);color:var(--white)}
+.hero{padding-block:36px 40px}
+.eyebrow{font-family:var(--ui);font-weight:600;font-size:13px;letter-spacing:.18em;text-transform:uppercase;color:var(--coral);margin:0}
+.hero h1{font-family:var(--display);font-weight:400;font-size:clamp(44px,6.4vw,84px);line-height:1.05;margin:10px 0 16px;text-wrap:balance}
+.lede{font-size:clamp(18px,1.8vw,21px);line-height:1.65;margin:0}
+.meta{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:24px;margin-top:32px;padding-top:24px;border-top:1px solid var(--line)}
+.meta dt{font-family:var(--ui);font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.meta dd{margin:4px 0 0;font-size:15px;line-height:1.55}
+.hero-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:28px}
+.live{margin-top:36px;background:var(--white);border-radius:22px;box-shadow:0 18px 50px rgba(38,42,48,.12);overflow:hidden}
+.live-bar{display:flex;align-items:center;gap:12px;padding:10px 14px;border-bottom:1px solid var(--mist)}
+.live-bar .dots{display:flex;gap:6px}.live-bar .dots i{width:11px;height:11px;border-radius:50%;background:var(--line)}
+.live-bar .dots i:nth-child(1){background:#FF8662}.live-bar .dots i:nth-child(2){background:#F2C94C}.live-bar .dots i:nth-child(3){background:#9BD27A}
+.live-bar .url{flex:1;min-width:0;background:var(--mist);border-radius:999px;padding:4px 14px;font-family:var(--ui);font-size:12.5px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.seg{display:flex;background:var(--mist);border-radius:999px;padding:3px}
+.seg button{font-family:var(--ui);font-size:12px;font-weight:600;border:0;background:none;border-radius:999px;padding:4px 12px;cursor:pointer;color:var(--muted)}
+.seg button.on{background:var(--white);color:var(--ink);box-shadow:0 1px 3px rgba(0,0,0,.12)}
+.live-bar a{font-family:var(--ui);font-size:12.5px;font-weight:600;text-decoration:none;white-space:nowrap}
+.live-view{position:relative;background:var(--powder);aspect-ratio:16/10;max-height:78vh;display:flex;justify-content:center}
+.live-view.mobile{aspect-ratio:auto;height:min(78vh,720px)}
+.live-view iframe{width:100%;height:100%;border:0;background:var(--white);transition:width .3s ease}
+.live-view.mobile iframe{width:390px;max-width:100%;border-left:1px solid var(--line);border-right:1px solid var(--line)}
+.poster{position:absolute;inset:0;border:0;padding:0;cursor:pointer;background:none}
+.poster img{width:100%;height:100%;object-fit:cover}
+.poster span{position:absolute;left:50%;bottom:24px;transform:translateX(-50%);display:inline-flex;align-items:center;gap:8px;background:var(--ink);color:var(--white);font-family:var(--ui);font-weight:600;font-size:15px;border-radius:999px;padding:12px 24px;box-shadow:0 8px 24px rgba(0,0,0,.25);transition:transform .2s}
+.poster:hover span{transform:translateX(-50%) scale(1.05)}
+@media (max-width:640px){.live-bar .url,.seg{display:none}.live-view{aspect-ratio:auto;height:70vh}}
+
+/* stats */
+.stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px;margin-block:56px 24px}
+.stat{background:var(--white);border-radius:20px;padding:22px 24px}
+.stat b{display:block;font-family:var(--ui);font-weight:700;font-size:44px;line-height:1.05;font-variant-numeric:tabular-nums}
+.stat span{display:block;margin-top:8px;font-size:14.5px;color:var(--muted);line-height:1.55}
+
+/* body */
+main.container{max-width:calc(880px + 2*max(16px, env(safe-area-inset-left,0px)))}
+article{padding-bottom:80px}
+article section{padding-top:64px}
+article section:first-child{padding-top:32px}
+.num{font-family:var(--ui);font-weight:600;font-size:13px;color:var(--coral);letter-spacing:.08em}
+article h2{font-family:var(--display);font-weight:400;font-size:clamp(30px,3.4vw,40px);line-height:1.2;margin:6px 0 18px;text-wrap:balance}
+article h3{font-family:var(--ui);font-weight:600;font-size:17px;margin:28px 0 10px}
+article p{margin:0 0 16px}
+.callout{background:var(--butter);border-radius:18px;padding:22px 26px;margin:22px 0}
+.callout .big{font-family:var(--ui);font-weight:700;font-size:56px;line-height:1;margin:0 0 6px}
+.callout p{margin:0}
+.bars{display:grid;gap:12px;margin:18px 0 8px;max-width:560px}
+.bar{display:grid;grid-template-columns:150px minmax(0,1fr) 44px;gap:12px;align-items:center;font-size:14.5px}
+.bar i{display:block;height:12px;border-radius:999px;background:var(--white);overflow:hidden}
+.bar i::before{content:"";display:block;height:100%;width:var(--v);background:var(--blue);border-radius:999px}
+.bar.hl i::before{background:var(--coral)}
+.bar em{font-style:normal;font-family:var(--ui);font-weight:600;font-variant-numeric:tabular-nums;text-align:right}
+.src{font-size:12.5px;color:var(--muted);margin-top:6px}
+.cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-top:8px}
+.card{background:var(--white);border-radius:18px;padding:20px 22px}
+.card h3{font-family:var(--ui);font-weight:600;font-size:16px;margin:0 0 6px;line-height:1.4}
+.card p{margin:0;font-size:14.5px;line-height:1.7;color:#3D434B}
+.tag{display:inline-block;font-family:var(--ui);font-size:11px;font-weight:600;letter-spacing:.06em;background:var(--lime);border-radius:6px;padding:2px 8px;margin-bottom:8px}
+.role{width:100%;border-collapse:collapse;background:var(--white);border-radius:18px;overflow:hidden;font-size:14.5px}
+.role th,.role td{text-align:left;padding:12px 18px;border-bottom:1px solid var(--mist);vertical-align:top}
+.role th{font-family:var(--ui);font-size:12px;letter-spacing:.08em;color:var(--muted);font-weight:600}
+.role td:first-child{font-weight:700;white-space:nowrap}
+.role tr:last-child td{border-bottom:0}
+.table-wrap{overflow-x:auto;border-radius:18px}
+.note{font-size:14px;color:var(--muted);margin-top:12px}
+.flow{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:14px 0;font-family:var(--ui);font-size:13.5px;font-weight:600}
+.flow span{background:var(--white);border-radius:999px;padding:6px 14px}
+.flow i{font-style:normal;color:var(--coral)}
+
+/* PRD preview */
+.prd{background:var(--white);border-radius:20px;padding:22px 22px 14px}
+.prd-head{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;padding:0 4px 18px}
+.prd-frame{display:block;width:100%;height:min(78vh,720px);border:0;border-radius:14px;background:#F2F7FC}
+.prd .ver{display:inline-block;font-family:var(--ui);font-size:12px;font-weight:600;background:var(--lime);border-radius:999px;padding:3px 12px}
+.prd b.t{display:block;font-family:var(--display);font-weight:400;font-size:26px;line-height:1.2;margin:10px 0 6px}
+.prd ol{list-style:none;margin:0;padding:0;columns:2;column-gap:24px;font-size:14px}
+.prd li{padding:4px 0;break-inside:avoid;display:flex;gap:8px}
+.prd li span{color:var(--coral);font-family:var(--ui);font-weight:600;min-width:2.2em}
+details.embed{background:var(--white);border-radius:16px;margin-top:12px}
+details.embed>summary{cursor:pointer;list-style:none;padding:14px 20px;font-family:var(--ui);font-weight:600;font-size:14px;display:flex;gap:10px;align-items:center}
+details.embed>summary::-webkit-details-marker{display:none}
+details.embed>summary::before{content:"▸";color:var(--coral);transition:transform .2s}
+details.embed[open]>summary::before{transform:rotate(90deg)}
+details.embed .bd{padding:0 12px 12px}
+details.embed iframe{width:100%;height:min(78vh,760px);border:0;border-radius:12px;background:#fff}
+
+/* slides carousel */
+.deck{background:var(--white);border-radius:20px;padding:14px}
+.stage{position:relative;aspect-ratio:16/9;border-radius:12px;overflow:hidden;background:var(--powder)}
+.stage img{width:100%;height:100%;object-fit:cover}
+.nav-btn{position:absolute;top:50%;transform:translateY(-50%);width:44px;height:44px;margin:0;padding:0;border-radius:50%;border:1.5px solid var(--ink);background:rgba(255,255,255,.92);color:var(--ink);cursor:pointer;display:grid;place-items:center;box-shadow:0 2px 10px rgba(38,42,48,.15)}
+.nav-btn svg{width:20px;height:20px}
+.nav-btn.go-prev{left:12px}.nav-btn.go-next{right:12px}
+.nav-btn:hover{background:var(--ink);color:var(--white)}
+.bar2{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px;margin:12px 2px 10px}
+.count{font-family:var(--ui);font-size:13px;font-weight:600;color:var(--muted);font-variant-numeric:tabular-nums}
+.parts{display:flex;flex-wrap:wrap;gap:6px}
+.parts button{font-family:var(--ui);font-size:12.5px;font-weight:600;border:1.5px solid var(--line);background:var(--white);color:var(--muted);border-radius:999px;padding:3px 12px;cursor:pointer}
+.parts button.on{background:var(--ink);border-color:var(--ink);color:var(--white)}
+.thumbs{display:flex;gap:8px;overflow-x:auto;scroll-snap-type:x mandatory;padding:2px 2px 8px}
+.thumbs button{flex:0 0 104px;aspect-ratio:16/9;border:2px solid transparent;border-radius:6px;padding:0;overflow:hidden;cursor:pointer;scroll-snap-align:start;background:var(--powder);opacity:.6}
+.thumbs button.on{border-color:var(--coral);opacity:1}
+.thumbs img{width:100%;height:100%;object-fit:cover}
+
+/* video + knowledge base */
+.vids{display:grid;grid-template-columns:minmax(0,2.2fr) minmax(0,1fr);gap:16px;align-items:start}
+.vid{position:relative;border-radius:18px;overflow:hidden;background:var(--ink)}
+.vid.wide{aspect-ratio:16/9}.vid.tall{aspect-ratio:9/16}
+.vid img{width:100%;height:100%;object-fit:cover;opacity:.55}
+.vid .lb{position:absolute;inset:auto 12px 12px 12px;color:#fff;font-family:var(--ui);font-size:13.5px;font-weight:600;display:flex;justify-content:space-between;gap:8px;align-items:end}
+.vid .soon{background:var(--lime);color:var(--ink);border-radius:999px;padding:2px 10px;font-size:12px;white-space:nowrap}
+.vid iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.kbs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.kb{background:var(--white);border-radius:18px;overflow:hidden}
+.kb .ph{aspect-ratio:16/10;background:linear-gradient(135deg,var(--white),var(--powder));display:grid;place-items:center;color:var(--muted);font-family:var(--ui);font-size:13px}
+.kb .tx{padding:12px 18px 16px}
+.kb b{display:block;font-family:var(--ui);font-weight:600;font-size:15px}
+.kb span{display:block;font-size:13.5px;color:var(--muted);line-height:1.6;margin-top:2px}
+
+/* screens */
+.shots{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.shot{margin:0;aspect-ratio:16/10;max-width:100%;border-radius:16px;background:linear-gradient(135deg,var(--white),var(--powder));position:relative;display:grid;place-items:center;color:var(--muted);font-family:var(--ui);font-size:14px;font-weight:500}
+.shot figcaption{position:absolute;left:14px;bottom:12px;font-size:12.5px}
+
+.reflect{list-style:none;padding:0;margin:0;display:grid;gap:14px;counter-reset:r}
+.reflect li{background:var(--white);border-radius:18px;padding:18px 22px 18px 54px;position:relative}
+.reflect li::before{content:counter(r);counter-increment:r;position:absolute;left:20px;top:17px;width:24px;height:24px;border-radius:50%;background:var(--coral);color:var(--ink);font-family:var(--ui);font-weight:700;font-size:13px;display:grid;place-items:center}
+.reflect b{display:block;margin-bottom:4px}
+.next{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-top:1px solid var(--line);margin-top:64px;padding-top:28px}
+footer{background:var(--ink);color:#9AA1AB;text-align:center;font-size:12px;padding-block:28px}
+
+/* Notion-style dash rail: one dash per heading (long = section, short = sub-heading); hover shows the outline */
+.rail{position:fixed;right:max(18px,env(safe-area-inset-right,0px));top:50%;transform:translateY(-50%);z-index:40;display:flex;align-items:center}
+.rail .dashes{list-style:none;margin:0;padding:10px 0 10px 16px;display:grid;gap:9px;justify-items:end}
+.rail .dashes i{display:block;height:3px;width:20px;border-radius:3px;background:#B4C0CD;transition:background .2s,width .2s}
+.rail .dashes i.sub{width:12px}
+.rail .dashes i.on{background:var(--ink);width:26px}
+.rail .dashes i.sub.on{width:16px}
+.rail .panel{position:absolute;right:calc(100% - 4px);top:50%;transform:translate(8px,-50%);opacity:0;pointer-events:none;transition:opacity .18s,transform .18s;
+  background:var(--white);border-radius:14px;box-shadow:0 12px 36px rgba(38,42,48,.16);padding:10px 8px;width:220px;max-height:76vh;overflow:auto}
+.rail:hover .panel,.rail:focus-within .panel{opacity:1;pointer-events:auto;transform:translate(0,-50%)}
+.panel a{display:block;text-decoration:none;font-size:13px;line-height:1.4;padding:6px 10px;border-radius:8px;color:var(--muted)}
+.panel a.sub{padding-left:22px;font-size:12.5px}
+.panel a:hover{background:var(--mist);color:var(--ink)}
+.panel a.on{color:var(--ink);font-weight:700}
+
+@media (max-width:1180px){ .rail{display:none} }
+@media (max-width:900px){ .meta{grid-template-columns:repeat(2,minmax(0,1fr))} .prd{grid-template-columns:1fr} }
+@media (max-width:640px){
+  .links a:not(.pill){display:none}
+  .stats,.cards,.shots,.kbs,.vids{grid-template-columns:1fr}
+  .vid.tall{max-width:300px}
+  .prd ol{columns:1}
+  .bar{grid-template-columns:110px minmax(0,1fr) 40px;font-size:13.5px}
+  .stat b{font-size:38px}
+  .nav-btn{width:36px;height:36px;font-size:16px}
+}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}
+/* tool icons in meta */
+.tools-ic{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px}
+.tools-ic li{list-style:none;position:relative}
+.tools-ic{padding:0;margin-bottom:0}
+.tools-ic img{width:34px;height:34px;object-fit:contain;display:block}
+.tools-ic span{position:absolute;bottom:-26px;left:50%;transform:translateX(-50%);white-space:nowrap;font-family:var(--ui);font-size:11px;background:var(--ink);color:var(--white);padding:1px 7px;border-radius:6px;opacity:0;pointer-events:none;transition:opacity .15s;z-index:3}
+.tools-ic li:hover span{opacity:1}
+.pill.soon{border:1.5px dashed var(--muted);color:var(--muted);cursor:default}
+.pill.soon:hover{transform:none}
+.pill.soon small{font-size:11px;background:var(--lime);color:var(--ink);border-radius:999px;padding:1px 8px}
+
+/* part headers (match the deck's four stages) */
+/* chapter heading: big outline numeral + large serif title with a lime highlight, ruled off from the content above */
+.part{margin-top:136px;padding-top:30px;border-top:2px solid var(--ink);color:var(--ink);display:grid;grid-template-columns:auto minmax(0,1fr);column-gap:32px;row-gap:6px;align-items:end}
+.part:first-child{margin-top:56px}
+.part b{grid-row:1/3;font-family:var(--ui);font-weight:700;font-size:clamp(92px,13vw,156px);line-height:.82;letter-spacing:-.03em;color:transparent;-webkit-text-stroke:2px var(--ink)}
+.part h2{margin:0;justify-self:start;font-family:var(--display);font-weight:400;font-size:clamp(42px,5.8vw,70px);line-height:1.15;color:var(--ink);background:linear-gradient(transparent 60%,var(--lime) 60%);padding:0 10px;margin-left:-10px}
+.part p{margin:0;color:var(--muted);font-size:17px;align-self:start}
+article section h3.sh{font-family:var(--display);font-weight:400;font-size:clamp(26px,2.8vw,32px);line-height:1.25;margin:4px 0 16px}
+.eb{font-family:var(--ui);font-weight:600;font-size:12.5px;letter-spacing:.1em;color:var(--coral);margin:0}
+article section{padding-top:56px}
+.two{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.three{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.four{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+.box{background:var(--white);border-radius:18px;padding:20px 22px}
+.box h4{font-family:var(--ui);font-weight:600;font-size:16px;margin:0 0 6px;line-height:1.4}
+.box p{margin:0;font-size:14.5px;line-height:1.7;color:#3D434B}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
+.chips span{font-size:12.5px;font-weight:500;border:1.5px solid var(--line);border-radius:999px;padding:2px 12px}
+.side{display:inline-block;font-family:var(--ui);font-size:12px;font-weight:600;background:var(--lime);border-radius:6px;padding:2px 10px;margin-bottom:10px}
+.bignum{display:grid;gap:10px;margin-top:12px}
+.bignum div{display:grid;grid-template-columns:86px 1fr;gap:10px;align-items:baseline}
+.bignum b{font-family:var(--ui);font-weight:700;font-size:28px;line-height:1.1;font-variant-numeric:tabular-nums}
+.bignum span{font-size:13.5px;color:var(--muted);line-height:1.5}
+.quote{margin-top:14px;padding-top:12px;border-top:1px solid var(--mist);font-size:14px;color:var(--muted)}
+.insight{display:inline-block;margin-top:12px;background:var(--ink);color:var(--white);border-radius:10px;padding:6px 14px;font-size:13.5px;font-weight:600}
+.matrix{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.matrix .box{padding:14px 18px}
+.matrix .me{background:var(--ink);color:var(--white)}
+.matrix .me p{color:#D6DAE0}
+.matrix small{display:block;font-family:var(--ui);font-size:11.5px;font-weight:600;color:var(--muted);margin-bottom:4px}
+.matrix .me small{color:var(--lime)}
+.steps{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;counter-reset:st}
+.steps li{background:var(--white);border-radius:18px;padding:18px;counter-increment:st}
+.steps li::before{content:"0" counter(st);display:block;font-family:var(--ui);font-weight:700;font-size:22px;color:var(--coral)}
+.steps b{display:block;font-family:var(--ui);font-weight:600;font-size:15.5px;margin:2px 0 4px}
+.steps span{font-size:13.5px;color:var(--muted);line-height:1.6}
+.ba{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.ba .box b{font-family:var(--ui);font-weight:700;font-size:36px;line-height:1.1}
+.ba .box b i{font-style:normal;color:var(--muted);font-weight:500;font-size:22px}
+.timeline{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:8px}
+.timeline div{background:var(--white);border-radius:14px;padding:12px 12px 14px;border-top:4px solid var(--blue)}
+.timeline div:last-child{border-top-color:var(--coral)}
+.timeline b{display:block;font-family:var(--ui);font-weight:600;font-size:14px;line-height:1.35}
+.timeline em{display:block;font-style:normal;font-family:var(--ui);font-size:11.5px;color:var(--muted);margin:2px 0 6px}
+.timeline span{display:block;font-size:12.5px;line-height:1.5;color:#3D434B}
+.progress{display:flex;height:34px;border-radius:10px;overflow:hidden;font-family:var(--ui);font-weight:700;font-size:13px;margin:10px 0 8px}
+.progress span{display:grid;place-items:center}
+.ai{width:100%;border-collapse:separate;border-spacing:6px;font-size:13.5px;table-layout:fixed}
+.ai th{font-family:var(--ui);font-size:13px;font-weight:600;color:var(--muted);text-align:center;padding:4px}
+.ai th small{display:block;font-weight:400;font-size:11.5px}
+.ai td{background:var(--white);border-radius:12px;padding:10px;text-align:center;line-height:1.5;vertical-align:top}
+.ai td b{display:block;font-family:var(--ui);font-weight:600}
+.ai td span{color:var(--muted);font-size:12.5px}
+.ai td.lab{background:var(--blue);color:var(--white);font-family:var(--ui);font-weight:700;font-size:18px;vertical-align:middle;width:56px}
+.ai tr.human td.lab{background:var(--lime);color:var(--ink)}
+.gitflow{display:flex;flex-wrap:wrap;gap:6px;align-items:center;font-family:var(--ui);font-size:13px;font-weight:600;margin:6px 0 16px}
+.gitflow span{background:var(--white);border-radius:999px;padding:6px 14px}
+.gitflow span:last-child{background:var(--ink);color:var(--white)}
+.gitflow i{font-style:normal;color:var(--coral)}
+.role tr.me td{background:#FFFBE3}
+.role td .lead{font-family:var(--ui);font-size:11px;font-weight:600;background:var(--lime);border-radius:6px;padding:1px 8px;margin-left:6px;white-space:nowrap}
+.src{font-size:12.5px;color:var(--muted);margin-top:8px}
+.live-note{font-size:12.5px;color:var(--muted);padding:8px 16px;margin:0;border-top:1px solid var(--mist)}
+@media (max-width:900px){.four,.steps{grid-template-columns:repeat(2,minmax(0,1fr))}.timeline{grid-template-columns:repeat(3,minmax(0,1fr))}.three{grid-template-columns:1fr}}
+@media (max-width:640px){.two,.ba,.matrix{grid-template-columns:1fr}.timeline{grid-template-columns:repeat(2,minmax(0,1fr))}.part{grid-template-columns:1fr;margin-top:96px}.part b{grid-row:auto;font-size:84px;margin-bottom:6px}.part p{font-size:15px}.ai{font-size:12px;border-spacing:3px}.ai td span{display:none}}
+</style>
+</head>
+<body>
+<style>
+/* work-2 additions */
+.poster2{position:absolute;inset:0;border:0;padding:0;cursor:pointer;background:linear-gradient(135deg,var(--butter),var(--blush));display:grid;place-items:center}
+.poster2 b{font-family:var(--display);font-weight:400;font-size:clamp(40px,7vw,88px);line-height:1;color:var(--ink)}
+.poster2 small{display:block;text-align:center;font-family:var(--ui);font-size:13px;letter-spacing:.2em;text-transform:uppercase;margin-top:10px;opacity:.7}
+.poster2 span{position:absolute;left:50%;bottom:24px;transform:translateX(-50%);display:inline-flex;align-items:center;gap:8px;background:var(--ink);color:var(--white);font-family:var(--ui);font-weight:600;font-size:15px;border-radius:999px;padding:12px 24px;box-shadow:0 8px 24px rgba(0,0,0,.25)}
+.shot.todo{border:1.5px dashed var(--muted);background:rgba(255,255,255,.55)}
+.shot.has{aspect-ratio:auto;display:block;background:none;overflow:hidden}
+.shot.has img{width:100%;height:auto;border-radius:16px;display:block}
+.shot.has figcaption{position:static;margin-top:8px;color:var(--muted)}
+.shot.todo{min-height:220px}
+
+.sub-h{font-family:var(--ui);font-weight:600;margin:26px 0 10px;font-size:17px}
+.layers{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.layers .box b.k{display:block;font-family:var(--ui);font-size:12px;letter-spacing:.1em;color:var(--coral);margin-bottom:4px}
+.day{display:flex;flex-wrap:wrap;gap:8px;align-items:center;font-family:var(--ui);font-size:13.5px;font-weight:600;margin:6px 0 16px}
+.day span{background:var(--white);border-radius:999px;padding:6px 14px}
+.day i{font-style:normal;color:var(--coral)}
+.vtable{width:100%;border-collapse:collapse;background:var(--white);border-radius:18px;overflow:hidden;font-size:14.5px}
+.vtable th,.vtable td{text-align:left;padding:11px 18px;border-bottom:1px solid var(--mist);vertical-align:top}
+.vtable th{font-family:var(--ui);font-size:12px;letter-spacing:.08em;color:var(--muted);font-weight:600}
+.vtable td:first-child{font-family:var(--ui);font-weight:600;white-space:nowrap}
+.vtable tr:last-child td{border-bottom:0}
+@media (max-width:640px){.layers{grid-template-columns:1fr}}
+</style>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><symbol id="star" viewBox="0 0 24 24"><path d="M12 0c.9 6.6 5.4 11.1 12 12-6.6.9-11.1 5.4-12 12-.9-6.6-5.4-11.1-12-12C6.6 11.1 11.1 6.6 12 0z"/></symbol></svg>
+
+<header class="nav">
+  <div class="container">
+    <a class="logo" href="index.html#home"><svg class="star"><use href="#star"/></svg>Sonia Liu</a>
+    <nav class="links" aria-label="主選單">
+      <a href="index.html#about">About</a>
+      <a href="index.html#work" class="active">Work</a>
+      <a href="index.html#resume-start">Résumé</a>
+      <a class="pill coral" href="index.html#contact">Get in touch</a>
+    </nav>
+  </div>
+</header>
+
+<main class="container">
+  <a class="back" href="index.html#work">← 回到 Work</a>
+
+  <section class="hero" aria-labelledby="title">
+    <p class="eyebrow">02 · 個人專題 · 獨立完成</p>
+    <h1 id="title">Habitcat</h1>
+    <p class="lede">用遊戲化和 AI 陪伴，讓習慣養成不再半途而廢。</p>
+    <dl class="meta">
+      <div><dt>角色</dt><dd>PM／產品負責人<br>AI 協作開發、測試</dd></div>
+      <div><dt>團隊</dt><dd>個人專題<br>獨立完成</dd></div>
+      <div><dt>期間</dt><dd>2026/08<br>約 1 個月・緯育 TibaMe</dd></div>
+      <div><dt>工具</dt><dd><ul class="tools-ic">
+        <li><img src="assets/tools/claude.png" alt="Claude Code"><span>Claude Code</span></li>
+        <li><img src="assets/tools/notion.png" alt="Notion"><span>Notion</span></li>
+        <li><img src="assets/tools/github.png" alt="GitHub"><span>GitHub</span></li>
+        <li><img src="assets/tools/supabase.png" alt="Supabase"><span>Supabase</span></li>
+        <li><img src="assets/tools/vercel.png" alt="Vercel"><span>Vercel</span></li>
+        <li><img src="assets/tools/python.png" alt="Python"><span>Python</span></li>
+      </ul></dd></div>
+    </dl>
+    <div class="hero-actions">
+      <a class="pill coral" href="https://habit-cat-rpg.vercel.app/" target="_blank" rel="noopener">作品網址 ↗</a>
+    </div>
+    <div class="live" id="live">
+      <div class="live-bar">
+        <span class="dots" aria-hidden="true"><i></i><i></i><i></i></span>
+        <span class="url">habit-cat-rpg.vercel.app</span>
+        <div class="seg" role="group" aria-label="顯示尺寸"><button type="button" data-mode="desktop">電腦</button><button type="button" class="on" data-mode="mobile">手機</button></div>
+        <a href="https://habit-cat-rpg.vercel.app/" target="_blank" rel="noopener">新分頁 ↗</a>
+      </div>
+      <div class="live-view mobile" id="liveView">
+        <button class="poster2" type="button" id="livePoster"><div><b>Habitcat</b><small>Habit tracker × RPG</small></div><span>▶ 直接在這裡試用</span></button>
+      </div>
+      <p class="live-note">這是手機優先（mobile-first）的遊戲。畫面沒有出現的話，請按右上角「新分頁 ↗」開啟。</p>
+    </div>
+  </section>
+
+  <div class="stats" aria-label="成果摘要">
+    <div class="stat"><b>約 1 個月</b><span>一人完成：遊戲設計文件 → 資料庫 → 前後端 → 雲端部署</span></div>
+    <div class="stat"><b>17 版</b><span>封測 5 天內發布（v0.1.0 → v0.2.13）</span></div>
+    <div class="stat"><b>72%</b><span>18 則玩家回饋於 24 小時內修正上線</span></div>
+  </div>
+
+  <article>
+    <!-- ============ PART 01 ============ -->
+    <div class="part" id="p1" data-toc="1" data-label="01 問題與想法"><b>01</b><h2>問題與想法</h2><p>為什麼做：記錄下來的努力，應該被看見。</p></div>
+
+    <section id="why">
+      <p class="eb">起點</p>
+      <h3 class="sh" data-toc="2" data-label="為什麼做">機制不錯，但回饋太少</h3>
+      <p>我一直有記錄日常習慣，也試過幾款習慣追蹤 App。其中一款把習慣遊戲化，機制我很喜歡，但美術與回饋太少，最後沒能堅持用下去。</p>
+      <div class="callout"><p><b>我的問題</b>：如果把「被記錄下來的努力」變成一個有溫度、有陪伴感的角色養成遊戲，會不會不一樣？</p></div>
+      <p>於是我以那款 App 為原型延伸，加入自己喜歡的 RPG 元素，以及 AI NPC 聊天陪伴的概念。</p>
+    </section>
+
+    <section id="concept">
+      <p class="eb">核心概念</p>
+      <h3 class="sh" data-toc="2" data-label="核心玩法">打卡 → 成長 → 隱藏要素 → 陪伴</h3>
+      <div class="day" aria-label="一個玩家的一天"><span>阿爾法問候</span><i>→</i><span>選擇習慣打卡</span><i>→</i><span>血條、經驗值跳動</span><i>→</i><span>解鎖轉職任務</span><i>→</i><span>觸發隱藏劇情</span></div>
+      <div class="two">
+        <div class="box"><span class="side">現實 → 遊戲</span><h4>自律變成角色成長</h4><p>玩家在現實中完成習慣，獲得小魚乾（Fish Coin）與經驗值，用來轉職、解鎖屬性，或購買服飾與裝飾。</p></div>
+        <div class="box"><span class="side">陪伴</span><h4>AI 貓咪 NPC「阿爾法」</h4><p>每次打開 App 由阿爾法問候；玩家可以跟它聊天、讓它辨識並確認當天的打卡活動。</p></div>
+      </div>
+    </section>
+
+    <!-- ============ PART 02 ============ -->
+    <div class="part" id="p2" data-toc="1" data-label="02 我怎麼做決策"><b>02</b><h2>我怎麼做決策</h2><p>程式碼主要由 AI 產生，需求、取捨與驗收由我負責。</p></div>
+
+    <section id="role">
+      <p class="eb">PM × AI 協作</p>
+      <h3 class="sh" data-toc="2" data-label="我的角色">AI 負責寫，我負責判斷</h3>
+      <p>我用 Claude Code 開發。我的工作是定義需求、做技術決策、驗收品質、邀請玩家測試，並決定除錯方向。這個專題讓我更確定：PM 在 AI 時代的價值，是判斷「這個功能值不值得做」「這個 bug 的優先度是什麼」。</p>
+      <div class="two">
+        <div class="box"><span class="side">AI</span><p>依規格產生程式碼、協助排查問題、撰寫與維護開發文件。</p></div>
+        <div class="box" style="background:#FFFBE3"><span class="side">我</span><p>寫遊戲設計文件、決定架構與取捨、驗收、判斷優先順序、蒐集並處理玩家回饋。</p></div>
+      </div>
+      <p class="note">開發過程累積約 2,400 行開發文件，規定每天的改動都要記錄，讓 AI 每次都能接上前一天的進度。</p>
+    </section>
+
+    <section id="scope">
+      <p class="eb">範疇與時程管理</p>
+      <h3 class="sh" data-toc="2" data-label="範疇管理">一個人身兼多職，所以持續砍範圍</h3>
+      <div class="three">
+        <div class="box"><span class="side">重排時程</span><h4>Sprint 1 就塞爆了</h4><p>原本把 WBS 拆成四個 Sprint，但一人兼 PM、UI/UX、美術與遊戲設計。我把緩衝日從集中在最後，改成分散在每個階段尾端。</p></div>
+        <div class="box"><span class="side">砍範圍</span><h4>維護「之後想做」清單</h4><p>漂流信、群組打王、真實金流串接，評估後主動延後。不是所有想做的都要塞進這次，持續排優先順序，就是 Product Backlog 的概念。</p></div>
+        <div class="box"><span class="side">優先順序</span><h4>能不能被使用，比功能多重要</h4><p>部署階段我暫停所有新功能，把時間全部投入資料庫遷移與雲端部署。</p></div>
+      </div>
+    </section>
+
+    <section id="ai-boundary">
+      <p class="eb">AI 邊界設計</p>
+      <h3 class="sh" data-toc="2" data-label="AI 邊界">AI 只理解語意，規則交給規則表</h3>
+      <div class="three">
+        <div class="box"><h4>判定交給規則表</h4><p>AI 負責理解玩家說了什麼；屬性判定由規則表決定，不讓 AI 自己給數值。</p></div>
+        <div class="box"><h4>回覆要過白名單</h4><p>AI 的回覆須通過白名單驗證，防止提示注入（prompt injection）。</p></div>
+        <div class="box"><h4>沒額度也能用</h4><p>沒有 API 額度時，自動降級為離線回覆，遊戲不中斷。</p></div>
+      </div>
+    </section>
+
+    <!-- ============ PART 03 ============ -->
+    <div class="part" id="p3" data-toc="1" data-label="03 技術與品質"><b>03</b><h2>技術與品質</h2><p>從 0 到上線，遇到問題就追到根因。</p></div>
+
+    <section id="arch">
+      <p class="eb">技術架構</p>
+      <h3 class="sh" data-toc="2" data-label="技術架構">三層式雲端架構</h3>
+      <div class="layers">
+        <div class="box"><b class="k">前端</b><h4>Vercel</h4><p>React＋Vite＋Tailwind，畫面呈現，全球 CDN 加速。</p></div>
+        <div class="box"><b class="k">後端</b><h4>Render</h4><p>Node.js＋Express 與 Python 混合環境，處理打卡計算與 AI 對話；以 Docker 部署。</p></div>
+        <div class="box"><b class="k">資料庫</b><h4>Supabase</h4><p>PostgreSQL，13 張資料表，儲存玩家所有進度。</p></div>
+      </div>
+      <p style="margin-top:16px"><b>為什麼是這個組合</b>：打卡需要跨表查詢對應的屬性，資料結構是關聯式的，PostgreSQL 最合適。若改用 NoSQL（如 Firestore）等於打掉重練，時間有限，我選擇維持技術一致、降低風險。</p>
+    </section>
+
+    <section id="perf">
+      <p class="eb">效能優化</p>
+      <h3 class="sh" data-toc="2" data-label="效能優化">玩家說卡，就追到根因</h3>
+      <div class="ba">
+        <div class="box"><h4>API 延遲</h4><b><i>最高 2.4 秒 →</i> 0.2 秒</b><p style="margin-top:8px">查出連線池問題：<code>/api/me</code> 原本在 204–2,448ms 間忽快忽慢，優化後穩定在 198–234ms。</p></div>
+        <div class="box"><h4>打卡流程</h4><b><i>3.2 秒 →</i> 約 1.8 秒</b><p style="margin-top:8px">把成就判定改為平行處理；前端 4 支 API 同時發出並合併重複請求。</p></div>
+      </div>
+      <p>另一個原因是跨地區延遲：後端預設架在美西，台灣操作時資料要飄洋過海。我把伺服器搬到新加坡，改善台灣玩家的流暢度。</p>
+    </section>
+
+    <section id="bugs">
+      <p class="eb">問題追查</p>
+      <h3 class="sh" data-toc="2" data-label="Bug 追查">最危險的 bug，是看起來沒事</h3>
+      <div class="two">
+        <div class="box"><span class="side">資料庫遷移</span><h4>兩個系統各講各的話（split-brain）</h4><p>從本機 SQLite 搬到 Supabase 時，Node.js 已連到新資料庫，但算經驗值與加成的 Python 還連著舊檔，加成悄悄失效、也沒有任何錯誤訊息。解法：讓兩邊連同一個資料庫，用連續打卡測試驗證一致。</p><span class="insight">跨系統遷移最怕的，是看起來沒事</span></div>
+        <div class="box"><span class="side">上線前冒煙測試</span><h4>時區 bug</h4><p>Smoke test 抓到台灣中午打卡被記成凌晨 4 點。另外也在部署前抓到 Python 讀不到環境變數的問題：本機能跑，上線會壞。</p><span class="insight">上線前一定要跑真實流程</span></div>
+      </div>
+    </section>
+
+    <section id="security">
+      <p class="eb">資安稽核</p>
+      <h3 class="sh" data-toc="2" data-label="資安稽核">不是等出事才想到</h3>
+      <p>我自己做了一輪資安稽核，涵蓋 SQL injection、API 權限、IDOR、CORS 與 npm audit，並依嚴重度分成四級處理。</p>
+      <div class="callout"><p><b>稽核中發現</b>：測試用的管理員（GM）密碼曾寫在說明文件裡，而那份文件在公開的 GitHub 上。</p></div>
+      <div class="flow"><span>倉庫改私人</span><i>→</i><span>密碼輪替</span><i>→</i><span>改用環境變數</span><i>→</i><span>建立 GM 協助重設密碼流程</span></div>
+      <p>這讓我明白，做產品不只是「功能能不能動」，還包括「安不安全」。這一塊 PM 不能完全交給工程師，自己也要有意識把關。</p>
+    </section>
+
+    <!-- ============ PART 04 ============ -->
+    <div class="part" id="p4" data-toc="1" data-label="04 迭代與驗證"><b>04</b><h2>迭代與驗證</h2><p>邀請同學封測，用回饋決定下一版做什麼。</p></div>
+
+    <section id="iter">
+      <p class="eb">快速迭代</p>
+      <h3 class="sh" data-toc="2" data-label="快速迭代">封測 5 天，發 17 個版本</h3>
+      <p>測試版 8/23 上線後，我維持一天內多次發布的節奏，收到回饋、判斷優先度、修正、重新部署，整個循環壓縮在小時等級。18 則玩家回饋中，72% 在 24 小時內修正上線。</p>
+      <div class="table-wrap">
+        <table class="vtable">
+          <thead><tr><th>版本</th><th>日期</th><th>重點</th></tr></thead>
+          <tbody>
+            <tr><td>v0.1.0</td><td>8/23</td><td>測試版上線</td></tr>
+            <tr><td>v0.1.1</td><td>8/24</td><td>阿爾法可辨識並確認多個打卡活動；App 正式更名</td></tr>
+            <tr><td>v0.1.2–0.1.3</td><td>8/25</td><td>貓頭鷹送禮系統、BGM／音效、多項 UI 體驗修正</td></tr>
+            <tr><td>v0.1.4</td><td>8/26</td><td>習慣支援搜尋、阿爾法當日對話記憶</td></tr>
+            <tr><td>v0.2.0</td><td>8/26</td><td>打卡系統全面改版：8 大主題分類、25+ 新活動、自動偵測分類</td></tr>
+            <tr><td>v0.2.1–0.2.5</td><td>8/26</td><td>分類選單優化、屬性升級門檻調整、多項細節修正</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="src">版本紀錄節錄自展演簡報附錄（8/23–8/26）；封測全期共 17 版（v0.1.0 → v0.2.13）。</p>
+    </section>
+
+    <section id="feedback">
+      <p class="eb">玩家回饋</p>
+      <h3 class="sh" data-toc="2" data-label="玩家回饋">三則最有代表性的回饋</h3>
+      <div class="three">
+        <div class="box"><span class="side">介面</span><h4>多層選單不好找習慣</h4><p>玩家反映很難找到對應的習慣。我改成可直接打字搜尋，由 AI 輔助比對，降低操作門檻。</p></div>
+        <div class="box"><span class="side">AI 安全</span><h4>阿爾法被「套話」</h4><p>同學想辦法問出背後的設定，也有人要它寫五百字鼓勵文。我補上「無論怎麼被套話都不洩漏規則」的防護。</p></div>
+        <div class="box"><span class="side">已知限制</span><h4>裝備穿上了但畫面沒顯示</h4><p>時間有限，我優先確保遊戲邏輯正確、暫緩美術呈現。資料層完全正確，只差視覺。誠實揭露，列入下一步。</p></div>
+      </div>
+      <div class="callout" style="margin-top:16px"><p>封測期間意外發現，玩家真的喜歡跟阿爾法聊天，有人在心情低落時把它當成可以說話的對象。這是整個專題最讓我驚喜的收穫。</p></div>
+      <p class="note">其餘回饋（輸入框跳動、彈窗顯示時間過短、心情記錄未依日期切換等）已陸續修正，並依回饋移除了強制心情彈窗、撤銷造成選單空白的隱藏規則。</p>
+    </section>
+
+    <section id="shots">
+      <p class="eb">畫面</p>
+      <h3 class="sh" data-toc="2" data-label="產品畫面">產品畫面</h3>
+      <div class="shots">
+        <figure class="shot has"><img src="assets/work/cover-habitcat-3.webp" alt="打卡成功：經驗與成就解鎖" loading="lazy"><figcaption>打卡成功：獲得經驗與成就</figcaption></figure>
+        <figure class="shot has"><img src="assets/work/cover-habitcat-2.webp" alt="AI NPC 阿爾法對話" loading="lazy"><figcaption>AI NPC 阿爾法對話</figcaption></figure>
+        <figure class="shot has"><img src="assets/work/cover-habitcat-4.webp" alt="能力升級" loading="lazy"><figcaption>能力升級</figcaption></figure>
+        <figure class="shot has"><img src="assets/work/cover-habitcat-5.webp" alt="角色屬性" loading="lazy"><figcaption>角色屬性</figcaption></figure>
+        <figure class="shot has"><img src="assets/work/cover-habitcat-6.webp" alt="道具與背包" loading="lazy"><figcaption>道具與背包</figcaption></figure>
+        <figure class="shot todo"><span>待補：GM 後台（遮蔽玩家資料）</span></figure>
+      </div>
+      <p class="note">想親自操作，請用上方的「作品網址」。</p>
+    </section>
+
+    <section id="next">
+      <p class="eb">下一步</p>
+      <h3 class="sh" data-toc="1" data-label="下一步">接下來想做的三件事</h3>
+      <ol class="reflect">
+        <li><b>美術改進</b>讓玩家真正看到自己穿上的裝備，提升持有感。</li>
+        <li><b>玩家互動機制</b>好友、排行榜、漂流信、組隊打 Boss，讓陪伴從 AI 延伸到社群。</li>
+        <li><b>職業系統深化</b>二階複合職業與稀有進化職業，強化長期遊戲性。</li>
+      </ol>
+    </section>
+
+    <div class="next">
+      <a class="pill ghost" href="work-1.html">← 上一個：夠練 GoLand</a>
+      <a class="pill coral" href="work-3.html">下一個：求職攻略系統 →</a>
+    </div>
+  </article>
+</main>
+
+<nav class="rail" aria-label="本頁目錄">
+  <div class="panel" id="railPanel"></div>
+  <ol class="dashes" id="railDashes" aria-hidden="true"></ol>
+</nav>
+<footer>© 2026 Sonia Liu</footer>
+
+<script>
+(function(){
+  try{ if('scrollRestoration' in history) history.scrollRestoration='manual'; }catch(e){}
+  if(location.hash) return;
+  var touched=false, root=document.documentElement;
+  ['wheel','touchstart','keydown','mousedown'].forEach(function(t){ addEventListener(t,function(){ touched=true; },{passive:true,once:true}); });
+  function top(){ if(touched||window.scrollY===0) return; root.style.scrollBehavior='auto'; window.scrollTo(0,0); root.style.scrollBehavior=''; }
+  top(); addEventListener('scroll',top,{passive:true}); addEventListener('pageshow',top); addEventListener('load',top);
+  setTimeout(function(){ touched=true; },4000);
+})();
+(function(){
+  const heads=[...document.querySelectorAll('[data-toc]')];
+  const panel=document.getElementById('railPanel'), dashes=document.getElementById('railDashes');
+  const items=heads.map(h=>{
+    const sub=h.dataset.toc==='2'; const target=h.closest('section')||h;
+    const a=document.createElement('a'); a.href='#'+target.id; a.textContent=h.dataset.label||h.textContent.trim(); if(sub) a.className='sub'; panel.appendChild(a);
+    const li=document.createElement('li'); const i=document.createElement('i'); if(sub) i.className='sub'; li.appendChild(i); dashes.appendChild(li);
+    return {target,a,i};
+  });
+  function on(){
+    const y=scrollY+160; let k=0;
+    items.forEach((it,n)=>{ if(it.target.getBoundingClientRect().top+scrollY<=y) k=n; });
+    items.forEach((it,n)=>{ it.a.classList.toggle('on',n===k); it.i.classList.toggle('on',n===k); });
+  }
+  addEventListener('scroll',on,{passive:true}); on();
+})();
+(function(){
+  const view=document.getElementById('liveView'), poster=document.getElementById('livePoster');
+  const URL_='https://habit-cat-rpg.vercel.app/';
+  const framed=(function(){ try{ return window.top!==window.self; }catch(e){ return true; } })();
+  if(framed){ poster.querySelector('span').textContent='▶ 開新分頁試用'; document.querySelector('.live-note').textContent='預覽環境不支援內嵌網站；正式上線後可直接在這裡操作。'; }
+  poster.addEventListener('click',()=>{
+    if(framed){ window.open(URL_,'_blank','noopener'); return; }
+    const f=document.createElement('iframe'); f.src=URL_; f.title='Habitcat 網站 Demo';
+    view.appendChild(f); poster.remove();
+  });
+  const btns=[...document.querySelectorAll('.seg button')];
+  btns.forEach(b=>b.addEventListener('click',()=>{ btns.forEach(x=>x.classList.toggle('on',x===b)); view.classList.toggle('mobile',b.dataset.mode==='mobile'); }));
+})();
+</script>
+</body>
+</html>

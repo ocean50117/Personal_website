@@ -1,0 +1,733 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>夠練 GoLand｜Sonia Liu</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 24 24%27%3E%3Cpath fill=%27%23FF8662%27 d=%27M12 0c.9 6.6 5.4 11.1 12 12-6.6.9-11.1 5.4-12 12-.9-6.6-5.4-11.1-12-12C6.6 11.1 11.1 6.6 12 0z%27/%3E%3C/svg%3E">
+<meta name="description" content="夠練 GoLand 案例：6 人團隊專題，Sonia 擔任組長／PM。從 54 份問卷與 24 位訪談，帶團隊轉向「教練開課、學員報名」。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Poppins:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;700&family=Noto+Serif+TC:wght@700&display=swap">
+<style>
+/* Layout: same shell as index (nav, mist bg, glows); long-read case study; Notion-style dash rail fixed on the right */
+:root{
+  color-scheme:light;
+  --mist:#DDE3EA; --blue:#8DB4E2; --pink:#E9D3E6; --ink:#262A30; --muted:#5E6670; --white:#FFFFFF;
+  --coral:#FF8662; --lime:#EBFF3A; --butter:#FFF1B8; --blush:#FAD6DE; --lavender:#E2DAF6; --powder:#CFE0F5; --line:#C6CED8;
+  --display:"DM Serif Display", "Noto Serif TC", Georgia, serif;
+  --ui:"Poppins", "Noto Sans TC", system-ui, sans-serif;
+  --body:"Noto Sans TC", "PingFang TC", "Microsoft JhengHei", system-ui, sans-serif;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:96px}
+body{margin:0;background:var(--mist);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.8;overflow-x:hidden}
+body::after{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;
+  background:radial-gradient(560px 560px at 100% 0%, rgba(141,180,226,.85), rgba(141,180,226,0) 70%),
+             radial-gradient(560px 560px at 0% 100%, rgba(233,211,230,.9), rgba(233,211,230,0) 70%)}
+img{max-width:100%;display:block}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--coral);outline-offset:3px;border-radius:6px}
+.container{max-width:calc(1040px + 2*max(16px, env(safe-area-inset-left,0px)));margin:0 auto;padding-left:max(16px, env(safe-area-inset-left,0px));padding-right:max(16px, env(safe-area-inset-right,0px))}
+.star{display:block;fill:currentColor}
+.cjk{font-family:"Noto Serif TC",serif;font-size:.86em;margin-right:.12em}
+
+/* nav */
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:60;background:var(--mist)}
+.nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;background:color-mix(in srgb,var(--mist) 80%,transparent);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);box-shadow:0 1px 0 rgba(38,42,48,.06)}
+.nav .container{display:flex;align-items:center;justify-content:space-between;height:76px;gap:16px}
+.logo{display:flex;align-items:center;gap:8px;font-family:var(--display);font-size:24px;text-decoration:none}
+.logo .star{width:20px;height:20px;color:var(--coral)}
+.links{display:flex;align-items:center;gap:32px;font-family:var(--ui);font-weight:600;font-size:14px}
+.links a{text-decoration:none}
+.links a.active{color:var(--muted);position:relative}
+.links a.active::after{content:"";position:absolute;left:10%;right:10%;bottom:-6px;height:2px;border-radius:2px;background:var(--muted)}
+.pill{display:inline-flex;align-items:center;gap:8px;border-radius:999px;font-family:var(--ui);font-weight:600;font-size:14px;padding:10px 22px;text-decoration:none;border:1.5px solid transparent;transition:transform .2s ease;background:none;color:inherit;cursor:pointer}
+.pill:hover{transform:translateY(-2px)}
+.pill.coral{background:var(--coral);color:var(--ink)}
+.pill.dark{background:var(--ink);color:var(--white)}
+.pill.ghost{border-color:var(--ink)}
+
+/* hero */
+.back{display:inline-flex;align-items:center;gap:8px;margin-top:32px;font-family:var(--ui);font-weight:600;font-size:14px;text-decoration:none;padding:8px 16px 8px 12px;border:1.5px solid var(--ink);border-radius:999px;background:var(--white)}
+.back:hover{background:var(--ink);color:var(--white)}
+.hero{padding-block:36px 40px}
+.eyebrow{font-family:var(--ui);font-weight:600;font-size:13px;letter-spacing:.18em;text-transform:uppercase;color:var(--coral);margin:0}
+.hero h1{font-family:var(--display);font-weight:400;font-size:clamp(44px,6.4vw,84px);line-height:1.05;margin:10px 0 16px;text-wrap:balance}
+.lede{font-size:clamp(18px,1.8vw,21px);line-height:1.65;margin:0}
+.meta{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:24px;margin-top:32px;padding-top:24px;border-top:1px solid var(--line)}
+.meta dt{font-family:var(--ui);font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.meta dd{margin:4px 0 0;font-size:15px;line-height:1.55}
+.hero-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:28px}
+.live{margin-top:36px;background:var(--white);border-radius:22px;box-shadow:0 18px 50px rgba(38,42,48,.12);overflow:hidden}
+.live-bar{display:flex;align-items:center;gap:12px;padding:10px 14px;border-bottom:1px solid var(--mist)}
+.live-bar .dots{display:flex;gap:6px}.live-bar .dots i{width:11px;height:11px;border-radius:50%;background:var(--line)}
+.live-bar .dots i:nth-child(1){background:#FF8662}.live-bar .dots i:nth-child(2){background:#F2C94C}.live-bar .dots i:nth-child(3){background:#9BD27A}
+.live-bar .url{flex:1;min-width:0;background:var(--mist);border-radius:999px;padding:4px 14px;font-family:var(--ui);font-size:12.5px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.seg{display:flex;background:var(--mist);border-radius:999px;padding:3px}
+.seg button{font-family:var(--ui);font-size:12px;font-weight:600;border:0;background:none;border-radius:999px;padding:4px 12px;cursor:pointer;color:var(--muted)}
+.seg button.on{background:var(--white);color:var(--ink);box-shadow:0 1px 3px rgba(0,0,0,.12)}
+.live-bar a{font-family:var(--ui);font-size:12.5px;font-weight:600;text-decoration:none;white-space:nowrap}
+.live-view{position:relative;background:var(--powder);aspect-ratio:16/10;max-height:78vh;display:flex;justify-content:center}
+.live-view.mobile{aspect-ratio:auto;height:min(78vh,720px)}
+.live-view iframe{width:100%;height:100%;border:0;background:var(--white);transition:width .3s ease}
+.live-view.mobile iframe{width:390px;max-width:100%;border-left:1px solid var(--line);border-right:1px solid var(--line)}
+.poster{position:absolute;inset:0;border:0;padding:0;cursor:pointer;background:none}
+.poster{background:linear-gradient(135deg,var(--powder),var(--pink))}.poster img{width:100%;height:100%;object-fit:cover}
+.poster span{position:absolute;left:50%;bottom:24px;transform:translateX(-50%);display:inline-flex;align-items:center;gap:8px;background:var(--ink);color:var(--white);font-family:var(--ui);font-weight:600;font-size:15px;border-radius:999px;padding:12px 24px;box-shadow:0 8px 24px rgba(0,0,0,.25);transition:transform .2s}
+.poster:hover span{transform:translateX(-50%) scale(1.05)}
+@media (max-width:640px){.live-bar .url,.seg{display:none}.live-view{aspect-ratio:auto;height:70vh}}
+
+/* stats */
+.stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px;margin-block:56px 24px}
+.stat{background:var(--white);border-radius:20px;padding:22px 24px}
+.stat b{display:block;font-family:var(--ui);font-weight:700;font-size:44px;line-height:1.05;font-variant-numeric:tabular-nums}
+.stat span{display:block;margin-top:8px;font-size:14.5px;color:var(--muted);line-height:1.55}
+
+/* body */
+main.container{max-width:calc(880px + 2*max(16px, env(safe-area-inset-left,0px)))}
+article{padding-bottom:80px}
+article section{padding-top:64px}
+article section:first-child{padding-top:32px}
+.num{font-family:var(--ui);font-weight:600;font-size:13px;color:var(--coral);letter-spacing:.08em}
+article h2{font-family:var(--display);font-weight:400;font-size:clamp(30px,3.4vw,40px);line-height:1.2;margin:6px 0 18px;text-wrap:balance}
+article h3{font-family:var(--ui);font-weight:600;font-size:17px;margin:28px 0 10px}
+article p{margin:0 0 16px}
+.callout{background:var(--butter);border-radius:18px;padding:22px 26px;margin:22px 0}
+.callout .big{font-family:var(--ui);font-weight:700;font-size:56px;line-height:1;margin:0 0 6px}
+.callout p{margin:0}
+.bars{display:grid;gap:12px;margin:18px 0 8px;max-width:560px}
+.bar{display:grid;grid-template-columns:150px minmax(0,1fr) 44px;gap:12px;align-items:center;font-size:14.5px}
+.bar i{display:block;height:12px;border-radius:999px;background:var(--white);overflow:hidden}
+.bar i::before{content:"";display:block;height:100%;width:var(--v);background:var(--blue);border-radius:999px}
+.bar.hl i::before{background:var(--coral)}
+.bar em{font-style:normal;font-family:var(--ui);font-weight:600;font-variant-numeric:tabular-nums;text-align:right}
+.src{font-size:12.5px;color:var(--muted);margin-top:6px}
+.cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-top:8px}
+.card{background:var(--white);border-radius:18px;padding:20px 22px}
+.card h3{font-family:var(--ui);font-weight:600;font-size:16px;margin:0 0 6px;line-height:1.4}
+.card p{margin:0;font-size:14.5px;line-height:1.7;color:#3D434B}
+.tag{display:inline-block;font-family:var(--ui);font-size:11px;font-weight:600;letter-spacing:.06em;background:var(--lime);border-radius:6px;padding:2px 8px;margin-bottom:8px}
+.role{width:100%;border-collapse:collapse;background:var(--white);border-radius:18px;overflow:hidden;font-size:14.5px}
+.role th,.role td{text-align:left;padding:12px 18px;border-bottom:1px solid var(--mist);vertical-align:top}
+.role th{font-family:var(--ui);font-size:12px;letter-spacing:.08em;color:var(--muted);font-weight:600}
+.role td:first-child{font-weight:700;white-space:nowrap}
+.role tr:last-child td{border-bottom:0}
+.table-wrap{overflow-x:auto;border-radius:18px}
+.note{font-size:14px;color:var(--muted);margin-top:12px}
+.flow{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:14px 0;font-family:var(--ui);font-size:13.5px;font-weight:600}
+.flow span{background:var(--white);border-radius:999px;padding:6px 14px}
+.flow i{font-style:normal;color:var(--coral)}
+
+/* PRD preview */
+.prd{background:var(--white);border-radius:20px;padding:22px 22px 14px}
+.prd-head{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;padding:0 4px 18px}
+.prd-frame{display:block;width:100%;height:min(78vh,720px);border:0;border-radius:14px;background:#F2F7FC}
+.prd .ver{display:inline-block;font-family:var(--ui);font-size:12px;font-weight:600;background:var(--lime);border-radius:999px;padding:3px 12px}
+.prd b.t{display:block;font-family:var(--display);font-weight:400;font-size:26px;line-height:1.2;margin:10px 0 6px}
+.prd ol{list-style:none;margin:0;padding:0;columns:2;column-gap:24px;font-size:14px}
+.prd li{padding:4px 0;break-inside:avoid;display:flex;gap:8px}
+.prd li span{color:var(--coral);font-family:var(--ui);font-weight:600;min-width:2.2em}
+details.embed{background:var(--white);border-radius:16px;margin-top:12px}
+details.embed>summary{cursor:pointer;list-style:none;padding:14px 20px;font-family:var(--ui);font-weight:600;font-size:14px;display:flex;gap:10px;align-items:center}
+details.embed>summary::-webkit-details-marker{display:none}
+details.embed>summary::before{content:"▸";color:var(--coral);transition:transform .2s}
+details.embed[open]>summary::before{transform:rotate(90deg)}
+details.embed .bd{padding:0 12px 12px}
+details.embed iframe{width:100%;height:min(78vh,760px);border:0;border-radius:12px;background:#fff}
+
+/* slides carousel */
+.deck{background:var(--white);border-radius:20px;padding:14px}
+.stage{position:relative;aspect-ratio:16/9;border-radius:12px;overflow:hidden;background:var(--powder)}
+.stage img{width:100%;height:100%;object-fit:cover}
+.nav-btn{position:absolute;top:50%;transform:translateY(-50%);width:44px;height:44px;margin:0;padding:0;border-radius:50%;border:1.5px solid var(--ink);background:rgba(255,255,255,.92);color:var(--ink);cursor:pointer;display:grid;place-items:center;box-shadow:0 2px 10px rgba(38,42,48,.15)}
+.nav-btn svg{width:20px;height:20px}
+.nav-btn.go-prev{left:12px}.nav-btn.go-next{right:12px}
+.nav-btn:hover{background:var(--ink);color:var(--white)}
+.bar2{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px;margin:12px 2px 10px}
+.count{font-family:var(--ui);font-size:13px;font-weight:600;color:var(--muted);font-variant-numeric:tabular-nums}
+.parts{display:flex;flex-wrap:wrap;gap:6px}
+.parts button{font-family:var(--ui);font-size:12.5px;font-weight:600;border:1.5px solid var(--line);background:var(--white);color:var(--muted);border-radius:999px;padding:3px 12px;cursor:pointer}
+.parts button.on{background:var(--ink);border-color:var(--ink);color:var(--white)}
+.thumbs{display:flex;gap:8px;overflow-x:auto;scroll-snap-type:x mandatory;padding:2px 2px 8px}
+.thumbs button{flex:0 0 104px;aspect-ratio:16/9;border:2px solid transparent;border-radius:6px;padding:0;overflow:hidden;cursor:pointer;scroll-snap-align:start;background:var(--powder);opacity:.6}
+.thumbs button.on{border-color:var(--coral);opacity:1}
+.thumbs img{width:100%;height:100%;object-fit:cover}
+
+/* video + knowledge base */
+.vids{display:grid;grid-template-columns:minmax(0,2.2fr) minmax(0,1fr);gap:16px;align-items:start}
+.vid{position:relative;border-radius:18px;overflow:hidden;background:var(--ink)}
+.vid.wide{aspect-ratio:16/9}.vid.tall{aspect-ratio:9/16}
+.vid img{width:100%;height:100%;object-fit:cover;opacity:.55}
+.vid .lb{position:absolute;inset:auto 12px 12px 12px;color:#fff;font-family:var(--ui);font-size:13.5px;font-weight:600;display:flex;justify-content:space-between;gap:8px;align-items:end}
+.vid .soon{background:var(--lime);color:var(--ink);border-radius:999px;padding:2px 10px;font-size:12px;white-space:nowrap}
+.vid iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.kbs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.kb{background:var(--white);border-radius:18px;overflow:hidden}
+.kb .ph{aspect-ratio:16/10;background:linear-gradient(135deg,var(--white),var(--powder));display:grid;place-items:center;color:var(--muted);font-family:var(--ui);font-size:13px}
+.kb .tx{padding:12px 18px 16px}
+.kb b{display:block;font-family:var(--ui);font-weight:600;font-size:15px}
+.kb span{display:block;font-size:13.5px;color:var(--muted);line-height:1.6;margin-top:2px}
+
+/* screens */
+.shots{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.shot{margin:0;aspect-ratio:16/10;max-width:100%;border-radius:16px;background:linear-gradient(135deg,var(--white),var(--powder));position:relative;display:grid;place-items:center;color:var(--muted);font-family:var(--ui);font-size:14px;font-weight:500}
+.shot figcaption{position:absolute;left:14px;bottom:12px;font-size:12.5px}
+
+.reflect{list-style:none;padding:0;margin:0;display:grid;gap:14px;counter-reset:r}
+.reflect li{background:var(--white);border-radius:18px;padding:18px 22px 18px 54px;position:relative}
+.reflect li::before{content:counter(r);counter-increment:r;position:absolute;left:20px;top:17px;width:24px;height:24px;border-radius:50%;background:var(--coral);color:var(--ink);font-family:var(--ui);font-weight:700;font-size:13px;display:grid;place-items:center}
+.reflect b{display:block;margin-bottom:4px}
+.next{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-top:1px solid var(--line);margin-top:64px;padding-top:28px}
+footer{background:var(--ink);color:#9AA1AB;text-align:center;font-size:12px;padding-block:28px}
+
+/* Notion-style dash rail: one dash per heading (long = section, short = sub-heading); hover shows the outline */
+.rail{position:fixed;right:max(18px,env(safe-area-inset-right,0px));top:50%;transform:translateY(-50%);z-index:40;display:flex;align-items:center}
+.rail .dashes{list-style:none;margin:0;padding:10px 0 10px 16px;display:grid;gap:9px;justify-items:end}
+.rail .dashes i{display:block;height:3px;width:20px;border-radius:3px;background:#B4C0CD;transition:background .2s,width .2s}
+.rail .dashes i.sub{width:12px}
+.rail .dashes i.on{background:var(--ink);width:26px}
+.rail .dashes i.sub.on{width:16px}
+.rail .panel{position:absolute;right:calc(100% - 4px);top:50%;transform:translate(8px,-50%);opacity:0;pointer-events:none;transition:opacity .18s,transform .18s;
+  background:var(--white);border-radius:14px;box-shadow:0 12px 36px rgba(38,42,48,.16);padding:10px 8px;width:220px;max-height:76vh;overflow:auto}
+.rail:hover .panel,.rail:focus-within .panel{opacity:1;pointer-events:auto;transform:translate(0,-50%)}
+.panel a{display:block;text-decoration:none;font-size:13px;line-height:1.4;padding:6px 10px;border-radius:8px;color:var(--muted)}
+.panel a.sub{padding-left:22px;font-size:12.5px}
+.panel a:hover{background:var(--mist);color:var(--ink)}
+.panel a.on{color:var(--ink);font-weight:700}
+
+@media (max-width:1180px){ .rail{display:none} }
+@media (max-width:900px){ .meta{grid-template-columns:repeat(2,minmax(0,1fr))} .prd{grid-template-columns:1fr} }
+@media (max-width:640px){
+  .links a:not(.pill){display:none}
+  .stats,.cards,.shots,.kbs,.vids{grid-template-columns:1fr}
+  .vid.tall{max-width:300px}
+  .prd ol{columns:1}
+  .bar{grid-template-columns:110px minmax(0,1fr) 40px;font-size:13.5px}
+  .stat b{font-size:38px}
+  .nav-btn{width:36px;height:36px;font-size:16px}
+}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}
+/* tool icons in meta */
+.tools-ic{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px}
+.tools-ic li{list-style:none;position:relative}
+.tools-ic{padding:0;margin-bottom:0}
+.tools-ic img{width:34px;height:34px;object-fit:contain;display:block}
+.tools-ic span{position:absolute;bottom:-26px;left:50%;transform:translateX(-50%);white-space:nowrap;font-family:var(--ui);font-size:11px;background:var(--ink);color:var(--white);padding:1px 7px;border-radius:6px;opacity:0;pointer-events:none;transition:opacity .15s;z-index:3}
+.tools-ic li:hover span{opacity:1}
+.pill.soon{border:1.5px dashed var(--muted);color:var(--muted);cursor:default}
+.pill.soon:hover{transform:none}
+.pill.soon small{font-size:11px;background:var(--lime);color:var(--ink);border-radius:999px;padding:1px 8px}
+
+/* part headers (match the deck's four stages) */
+/* chapter heading: big outline numeral + large serif title with a lime highlight, ruled off from the content above */
+.part{margin-top:136px;padding-top:30px;border-top:2px solid var(--ink);color:var(--ink);display:grid;grid-template-columns:auto minmax(0,1fr);column-gap:32px;row-gap:6px;align-items:end}
+.part:first-child{margin-top:56px}
+.part b{grid-row:1/3;font-family:var(--ui);font-weight:700;font-size:clamp(92px,13vw,156px);line-height:.82;letter-spacing:-.03em;color:transparent;-webkit-text-stroke:2px var(--ink)}
+.part h2{margin:0;justify-self:start;font-family:var(--display);font-weight:400;font-size:clamp(42px,5.8vw,70px);line-height:1.15;color:var(--ink);background:linear-gradient(transparent 60%,var(--lime) 60%);padding:0 10px;margin-left:-10px}
+.part p{margin:0;color:var(--muted);font-size:17px;align-self:start}
+article section h3.sh{font-family:var(--display);font-weight:400;font-size:clamp(26px,2.8vw,32px);line-height:1.25;margin:4px 0 16px}
+.eb{font-family:var(--ui);font-weight:600;font-size:12.5px;letter-spacing:.1em;color:var(--coral);margin:0}
+article section{padding-top:56px}
+.two{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.three{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.four{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+.box{background:var(--white);border-radius:18px;padding:20px 22px}
+.box h4{font-family:var(--ui);font-weight:600;font-size:16px;margin:0 0 6px;line-height:1.4}
+.box p{margin:0;font-size:14.5px;line-height:1.7;color:#3D434B}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
+.chips span{font-size:12.5px;font-weight:500;border:1.5px solid var(--line);border-radius:999px;padding:2px 12px}
+.side{display:inline-block;font-family:var(--ui);font-size:12px;font-weight:600;background:var(--lime);border-radius:6px;padding:2px 10px;margin-bottom:10px}
+.bignum{display:grid;gap:10px;margin-top:12px}
+.bignum div{display:grid;grid-template-columns:86px 1fr;gap:10px;align-items:baseline}
+.bignum b{font-family:var(--ui);font-weight:700;font-size:28px;line-height:1.1;font-variant-numeric:tabular-nums}
+.bignum span{font-size:13.5px;color:var(--muted);line-height:1.5}
+.quote{margin-top:14px;padding-top:12px;border-top:1px solid var(--mist);font-size:14px;color:var(--muted)}
+.insight{display:inline-block;margin-top:12px;background:var(--ink);color:var(--white);border-radius:10px;padding:6px 14px;font-size:13.5px;font-weight:600}
+.matrix{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.matrix .box{padding:14px 18px}
+.matrix .me{background:var(--ink);color:var(--white)}
+.matrix .me p{color:#D6DAE0}
+.matrix small{display:block;font-family:var(--ui);font-size:11.5px;font-weight:600;color:var(--muted);margin-bottom:4px}
+.matrix .me small{color:var(--lime)}
+.steps{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;counter-reset:st}
+.steps li{background:var(--white);border-radius:18px;padding:18px;counter-increment:st}
+.steps li::before{content:"0" counter(st);display:block;font-family:var(--ui);font-weight:700;font-size:22px;color:var(--coral)}
+.steps b{display:block;font-family:var(--ui);font-weight:600;font-size:15.5px;margin:2px 0 4px}
+.steps span{font-size:13.5px;color:var(--muted);line-height:1.6}
+.ba{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.ba .box b{font-family:var(--ui);font-weight:700;font-size:36px;line-height:1.1}
+.ba .box b i{font-style:normal;color:var(--muted);font-weight:500;font-size:22px}
+.timeline{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:8px}
+.timeline div{background:var(--white);border-radius:14px;padding:12px 12px 14px;border-top:4px solid var(--blue)}
+.timeline div:last-child{border-top-color:var(--coral)}
+.timeline b{display:block;font-family:var(--ui);font-weight:600;font-size:14px;line-height:1.35}
+.timeline em{display:block;font-style:normal;font-family:var(--ui);font-size:11.5px;color:var(--muted);margin:2px 0 6px}
+.timeline span{display:block;font-size:12.5px;line-height:1.5;color:#3D434B}
+.progress{display:flex;height:34px;border-radius:10px;overflow:hidden;font-family:var(--ui);font-weight:700;font-size:13px;margin:10px 0 8px}
+.progress span{display:grid;place-items:center}
+.ai{width:100%;border-collapse:separate;border-spacing:6px;font-size:13.5px;table-layout:fixed}
+.ai th{font-family:var(--ui);font-size:13px;font-weight:600;color:var(--muted);text-align:center;padding:4px}
+.ai th small{display:block;font-weight:400;font-size:11.5px}
+.ai td{background:var(--white);border-radius:12px;padding:10px;text-align:center;line-height:1.5;vertical-align:top}
+.ai td b{display:block;font-family:var(--ui);font-weight:600}
+.ai td span{color:var(--muted);font-size:12.5px}
+.ai td.lab{background:var(--blue);color:var(--white);font-family:var(--ui);font-weight:700;font-size:18px;vertical-align:middle;width:56px}
+.ai tr.human td.lab{background:var(--lime);color:var(--ink)}
+.gitflow{display:flex;flex-wrap:wrap;gap:6px;align-items:center;font-family:var(--ui);font-size:13px;font-weight:600;margin:6px 0 16px}
+.gitflow span{background:var(--white);border-radius:999px;padding:6px 14px}
+.gitflow span:last-child{background:var(--ink);color:var(--white)}
+.gitflow i{font-style:normal;color:var(--coral)}
+.role tr.me td{background:#FFFBE3}
+.role td .lead{font-family:var(--ui);font-size:11px;font-weight:600;background:var(--lime);border-radius:6px;padding:1px 8px;margin-left:6px;white-space:nowrap}
+.src{font-size:12.5px;color:var(--muted);margin-top:8px}
+.live-note{font-size:12.5px;color:var(--muted);padding:8px 16px;margin:0;border-top:1px solid var(--mist)}
+@media (max-width:900px){.four,.steps{grid-template-columns:repeat(2,minmax(0,1fr))}.timeline{grid-template-columns:repeat(3,minmax(0,1fr))}.three{grid-template-columns:1fr}}
+@media (max-width:640px){.two,.ba,.matrix{grid-template-columns:1fr}.timeline{grid-template-columns:repeat(2,minmax(0,1fr))}.part{grid-template-columns:1fr;margin-top:96px}.part b{grid-row:auto;font-size:84px;margin-bottom:6px}.part p{font-size:15px}.ai{font-size:12px;border-spacing:3px}.ai td span{display:none}}
+
+/* restructure additions */
+.glance{margin-block:48px 0}
+.glance .eb{margin-bottom:12px}
+.g3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.gc{background:var(--white);border-radius:22px;padding:22px 24px 24px;position:relative}
+.gc .gn{display:block;font-family:var(--ui);font-weight:700;font-size:clamp(40px,4.6vw,58px);line-height:1.05;margin:6px 0 8px;font-variant-numeric:tabular-nums}
+.gc .gn small{font-size:15px;font-weight:600;margin-left:6px;color:var(--muted)}
+.gc p{margin:0;font-size:15px;line-height:1.7;color:#3D434B}
+.gc:nth-child(1) .side{background:var(--coral)}
+.gc:nth-child(3){background:var(--butter)}
+.box.own{background:#FFFBE3;box-shadow:inset 0 0 0 1.5px var(--lime)}
+.beat{padding-top:44px}
+.beat .bn{display:inline-block;font-family:var(--ui);font-weight:700;font-size:13px;letter-spacing:.12em;background:var(--ink);color:var(--white);border-radius:999px;padding:3px 14px}
+.beat h3.sh{margin-top:10px}
+.more-wrap{padding-top:56px}
+details.more{margin-top:12px}
+details.more>summary small{font-weight:400;font-size:12.5px;color:var(--muted);margin-left:auto}
+details.more .bd{padding:4px 20px 20px}
+details.more .mini+.mini{margin-top:28px;padding-top:24px;border-top:1px solid var(--mist)}
+details.more .mini .tag-eb{display:none}
+@media (max-width:900px){.g3{grid-template-columns:1fr}}
+.shotgrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.shotgrid figure{margin:0}
+.shotgrid img{width:100%;height:auto;border-radius:14px;background:var(--powder)}
+.shotgrid figcaption{font-size:13px;color:var(--muted);margin-top:6px;line-height:1.5}
+@media (max-width:900px){.shotgrid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:520px){.shotgrid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><symbol id="star" viewBox="0 0 24 24"><path d="M12 0c.9 6.6 5.4 11.1 12 12-6.6.9-11.1 5.4-12 12-.9-6.6-5.4-11.1-12-12C6.6 11.1 11.1 6.6 12 0z"/></symbol></svg>
+
+<header class="nav">
+  <div class="container">
+    <a class="logo" href="index.html#home"><svg class="star"><use href="#star"/></svg>Sonia Liu</a>
+    <nav class="links" aria-label="主選單">
+      <a href="index.html#about">About</a>
+      <a href="index.html#work" class="active">Work</a>
+      <a href="index.html#resume-start">Résumé</a>
+      <a class="pill coral" href="index.html#contact">Get in touch</a>
+    </nav>
+  </div>
+</header>
+
+<main class="container">
+  <a class="back" href="index.html#work">← 回到 Work</a>
+
+  <section class="hero" aria-labelledby="title">
+    <p class="eyebrow">01 · 團隊專題 · 組長／PM</p>
+    <h1 id="title"><span class="cjk">夠練</span> GoLand</h1>
+    <p class="lede">讓教練輕鬆上架找到學員，讓學員用透明的價格找到適合的團課。</p>
+    <dl class="meta">
+      <div><dt>角色</dt><dd>組長／PM<br>教練端開發</dd></div>
+      <div><dt>團隊</dt><dd>6 人</dd></div>
+      <div><dt>期間</dt><dd>2026/09 – 10<br>緯育 TibaMe 職訓專題</dd></div>
+      <div><dt>工具</dt><dd><ul class="tools-ic">
+        <li><img src="assets/tools/notion.png" alt="Notion"><span>Notion</span></li>
+        <li><img src="assets/tools/discord.png" alt="Discord"><span>Discord</span></li>
+        <li><img src="assets/tools/figma.png" alt="Figma"><span>Figma</span></li>
+        <li><img src="assets/tools/github.png" alt="GitHub"><span>GitHub</span></li>
+        <li><img src="assets/tools/claude.png" alt="Claude Code"><span>Claude Code</span></li>
+        <li><img src="assets/tools/supabase.png" alt="Supabase"><span>Supabase</span></li>
+        <li><img src="assets/tools/vercel.png" alt="Vercel"><span>Vercel</span></li>
+      </ul></dd></div>
+    </dl>
+    <div class="hero-actions">
+      <a class="pill coral" href="https://coach-sharing-platform.vercel.app" target="_blank" rel="noopener">作品網址 ↗</a>
+      <span class="pill soon" id="talkVideo" aria-disabled="true">簡報影片 <small>即將公開</small></span>
+      <a class="pill dark" href="https://ocean50117.github.io/GoLand_PRD/" target="_blank" rel="noopener">完整 PRD ↗</a>
+    </div>
+    <div class="live" id="live">
+      <div class="live-bar">
+        <span class="dots" aria-hidden="true"><i></i><i></i><i></i></span>
+        <span class="url">coach-sharing-platform.vercel.app</span>
+        <div class="seg" role="group" aria-label="顯示尺寸"><button type="button" class="on" data-mode="desktop">電腦</button><button type="button" data-mode="mobile">手機</button></div>
+        <a href="https://coach-sharing-platform.vercel.app" target="_blank" rel="noopener">新分頁 ↗</a>
+      </div>
+      <div class="live-view" id="liveView">
+        <button class="poster" type="button" id="livePoster"><img src="assets/work/goland-01-home.webp" alt="夠練 GoLand 首頁" width="1600" height="900"><span>▶ 直接在這裡試用網站</span></button>
+      </div>
+      <p class="live-note">畫面沒有出現的話，請按右上角「新分頁 ↗」開啟。</p>
+    </div>
+  </section>
+
+  <article>
+  <section class="glance" id="glance" aria-label="30 秒看懂">
+    <p class="eb" data-toc="1" data-label="30 秒看懂">30 秒看懂</p>
+    <div class="g3">
+      <div class="gc"><span class="side">問題</span><b class="gn">7%</b><p>原本以為學員卡在「揪不到人」。研究發現，只有 7% 的學員這樣認為。</p></div>
+      <div class="gc"><span class="side">我的決策</span><b class="gn">轉向</b><p>依 54 份問卷與 24 位訪談，把產品從「幫學員揪團」轉為「教練開課、學員報名」。</p></div>
+      <div class="gc"><span class="side">結果</span><b class="gn">8.7→2.0<small>分鐘</small></b><p>5 位受測者找到並報名一堂課的時間；任務達成率 80% → 100%。</p></div>
+    </div>
+  </section>
+
+  <div class="part" id="p1" data-toc="1" data-label="01 我的貢獻"><b>01</b><h2>我的貢獻</h2><p>6 人團隊，我是組長／PM。</p></div>
+  <section id="contrib">
+    <h3 class="sub-h" style="margin-top:0">我主責</h3>
+    <div class="four">
+      <div class="box own"><h4>使用者問卷</h4><p>設計問卷主架構，回收 54 份（學員 41、教練 13）。</p></div>
+      <div class="box own"><h4>產品定位與商業模式</h4><p>決定做「教練開課、學員報名」，並設計抽成路徑。</p></div>
+      <div class="box own"><h4>需求規格 PRD</h4><p>兩週迭代 18 版（v1.0 → v4.11），並轉成驗收總表。</p></div>
+      <div class="box own"><h4>法規遵循</h4><p>訂定退款規則，草擬服務條款、隱私權政策、教練合作條款。</p></div>
+    </div>
+    <h3 class="sub-h">我參與</h3>
+    <div class="four">
+      <div class="box"><h4>教練端開發</h4><p>用 Claude Code 做教練申請、認證徽章、課後評價、通知中心等。</p></div>
+      <div class="box"><h4>UAT 驗收</h4><p>參與使用者驗收測試。</p></div>
+      <div class="box"><h4>Demo 影片</h4><p>錄影、字幕、剪輯與配音。</p></div>
+      <div class="box"><h4>團隊運作</h4><p>建 Notion 知識庫、溝通從 LINE 搬到 Discord、設計 AI 進度公告格式（全組採用）。</p></div>
+    </div>
+    <details class="embed more"><summary>完整分工表<small>6 位成員的 13 項工作</small></summary><div class="bd"><div class="table-wrap">
+        <table class="role">
+          <thead><tr><th>工作項目</th><th>主責</th><th>參與</th></tr></thead>
+          <tbody>
+            <tr><td>使用者研究與競品分析</td><td>陳諭柔</td><td>曹之沛</td></tr>
+            <tr class="me"><td>使用者問卷設計</td><td>劉敏雯<span class="lead">我</span></td><td>梁晉瑜、林威志；訪談由全員分頭執行</td></tr>
+            <tr class="me"><td>產品定位與商業模式</td><td>劉敏雯<span class="lead">我</span></td><td>梁晉瑜、陳諭柔（研究數據分析）</td></tr>
+            <tr class="me"><td>需求規格與 PRD</td><td>劉敏雯<span class="lead">我</span></td><td>梁晉瑜、楊坊于（技術可行性）</td></tr>
+            <tr><td>UX 設計</td><td>梁晉瑜</td><td>曹之沛</td></tr>
+            <tr><td>UI 及品牌視覺設計</td><td>曹之沛</td><td>梁晉瑜</td></tr>
+            <tr class="me"><td>AI 協作全端開發</td><td>楊坊于（架構與審核）</td><td>陳諭柔（學員端）、<b>劉敏雯（教練端）</b></td></tr>
+            <tr><td>品質驗收 QA</td><td>梁晉瑜</td><td>開發者自我驗收</td></tr>
+            <tr class="me"><td>使用者驗收測試（UAT）</td><td>陳諭柔</td><td><b>劉敏雯</b>、梁晉瑜</td></tr>
+            <tr><td>行銷策略</td><td>林威志</td><td>—</td></tr>
+            <tr class="me"><td>影片企劃</td><td>林威志</td><td><b>劉敏雯</b>（配音）</td></tr>
+            <tr class="me"><td>Demo 錄製</td><td>梁晉瑜（流程腳本設計）</td><td><b>劉敏雯</b>（錄影／字幕／剪輯）、楊坊于（配音）</td></tr>
+            <tr class="me"><td>法規遵循</td><td>劉敏雯<span class="lead">我</span></td><td>—</td></tr>
+          </tbody>
+        </table>
+      </div></div></details>
+  </section>
+
+  <div class="part" id="p2" data-toc="1" data-label="02 重點決策與成果"><b>02</b><h2>重點決策與成果</h2><p>四個轉折：發現、決策、驗證、交付。</p></div>
+
+  <section class="beat" id="b-find">
+    <span class="bn">發現</span>
+    <h3 class="sh" data-toc="2" data-label="發現">真正的阻礙不是揪團</h3>
+    <div class="two">
+      <div class="box">
+        <span class="side">學員：找課卡在哪裡</span>
+        <div class="bars" role="img" aria-label="找課困難：時間對不上 49%、地點太遠 41%、價格超出預算 41%、找不到人一起上課 7%" style="margin-top:4px">
+          <div class="bar"><span>時間對不上</span><i style="--v:49%"></i><em>49%</em></div>
+          <div class="bar"><span>地點太遠</span><i style="--v:41%"></i><em>41%</em></div>
+          <div class="bar"><span>價格超出預算</span><i style="--v:41%"></i><em>41%</em></div>
+          <div class="bar hl"><span>找不到人</span><i style="--v:7%"></i><em>7%</em></div>
+        </div>
+        <p class="src">學員問卷 n=41，可複選</p>
+      </div>
+      <div class="box">
+        <span class="side">教練：招生慢、靠介紹</span>
+        <div class="bignum">
+          <div><b>58%</b><span>要花 1–3 個月才招到學員</span></div>
+          <div><b>54%</b><span>招生多靠舊學員介紹</span></div>
+          <div><b>69%</b><span>每週招生時間不到 1 小時</span></div>
+        </div>
+      </div>
+    </div>
+    <p style="margin-top:14px">另外有 71% 的學員不介意和陌生人一起上課。需求不是「幫忙湊人」，而是「有現成的班可以報」。</p>
+  </section>
+
+  <section class="beat" id="b-decide">
+    <span class="bn">決策</span>
+    <h3 class="sh" data-toc="2" data-label="決策">從幫學員揪團，轉向教練開課</h3>
+    <div class="flow" aria-label="產品轉向"><span>幫學員揪團</span><i>→</i><span>教練開課、學員報名</span></div>
+    <div class="cards">
+      <div class="card"><span class="tag">範疇控管</span><h3>9/29 MVP Scope Freeze</h3><p>移除 Google 日曆整合、學員許願媒合、教練懲罰；鎖定後核心功能沒有再變動。</p></div>
+      <div class="card"><span class="tag">法規遵循</span><h3>用法律背景訂退款規則</h3><p>查《體育場館業服務定型化契約》訂取消退費規則，並草擬三份條款。</p></div>
+      <div class="card"><span class="tag">利害關係人</span><h3>違約金改成平台與教練拆帳</h3><p>避免教練覺得平台在從學員失約中獲利。</p></div>
+      <div class="card"><span class="tag">風險取捨</span><h3>Demo 前凍結大改</h3><p>退款規則大改需 1–2 天且有風險，聽取開發組員評估後，決定 Demo 後再做。</p></div>
+    </div>
+  </section>
+
+  <section class="beat" id="b-verify">
+    <span class="bn">驗證</span>
+    <h3 class="sh" data-toc="2" data-label="驗證">找一堂課，從 8.7 分鐘縮到 2.0 分鐘</h3>
+    <div class="ba">
+      <div class="box"><h4>任務達成率</h4><b><i>80% →</i> 100%</b></div>
+      <div class="box"><h4>找課耗時</h4><b><i>8.7 →</i> 2.0 分鐘</b></div>
+    </div>
+    <div class="two" style="margin-top:16px">
+      <div class="box"><span class="side">Before</span><p>Google → 官網 → 填寫表單 → 等待回覆<br>Facebook → 社團貼文 → 電話聯繫</p></div>
+      <div class="box"><span class="side">After</span><p>搜尋／篩選 → 課程詳情 → 報名</p></div>
+    </div>
+    <p class="src">5 位受測者（任務測試 4 位、回饋表單 1 位），樣本小，屬初步驗證；付費意願與冷啟動等仍待市場驗證。</p>
+  </section>
+
+  <section class="beat" id="b-deliver">
+    <span class="bn">交付</span>
+    <h3 class="sh" data-toc="2" data-label="交付">AI 寫得快，所以把關更嚴</h3>
+    <p>開發用 Claude Code。main 分支只有一個人能寫入，其他人一律透過 PR 與 Preview 驗證：</p>
+    <div class="gitflow"><span>個人分支</span><i>→</i><span>PR</span><i>→</i><span>Preview 自我驗收</span><i>→</i><span>QA 複查</span><i>→</i><span>負責人合併</span></div>
+    <div class="three">
+      <div class="stat"><b>3 週</b><span>完成開發（9/24–10/13）</span></div>
+      <div class="stat"><b>114 個</b><span>PR 累計合併（團隊 3 週；我負責其中 12 個）</span></div>
+      <div class="stat"><b>47 次</b><span>資料庫變更可追溯</span></div>
+    </div>
+  </section>
+
+  <section id="screens">
+    <p class="eb">產品畫面</p>
+    <h3 class="sh" data-toc="2" data-label="產品畫面">學員與教練兩端，都有完整流程</h3>
+    <div class="shotgrid">
+      <figure><img src="assets/work/goland-01-home.webp" alt="首頁：用運動、地點與時間找課" loading="lazy" width="1600" height="900"><figcaption>首頁：用運動、地點與時間找課</figcaption></figure>
+      <figure><img src="assets/work/goland-02-browse.webp" alt="依運動與地區瀏覽推薦課程" loading="lazy" width="1600" height="900"><figcaption>依運動與地區瀏覽推薦課程</figcaption></figure>
+      <figure><img src="assets/work/goland-03-detail.webp" alt="課程詳情與報名" loading="lazy" width="1600" height="900"><figcaption>課程詳情與報名</figcaption></figure>
+      <figure><img src="assets/work/goland-04-booked.webp" alt="報名成功與開課進度" loading="lazy" width="1600" height="900"><figcaption>報名成功與開課進度</figcaption></figure>
+      <figure><img src="assets/work/goland-05-coach-dashboard.webp" alt="教練工作臺：收益與撥款" loading="lazy" width="1600" height="900"><figcaption>教練工作臺：收益與撥款</figcaption></figure>
+      <figure><img src="assets/work/goland-06-coach-profile.webp" alt="教練檔案與評價" loading="lazy" width="1600" height="900"><figcaption>教練檔案與評價</figcaption></figure>
+    </div>
+  </section>
+
+  <section class="more-wrap" id="more">
+    <p class="eb">想看更多</p>
+    <details class="embed more"><summary>使用者與競品<small>Persona、競品定位</small></summary><div class="bd"><div class="mini"><div class="two">
+        <div class="box">
+          <span class="side">教練端｜招生／湊團困難型</span>
+          <h4>招生靠人脈，空檔補不回</h4>
+          <p><b>JTBD</b>：在每週不到 1 小時的招生時間內，把空出來的時段開成有人報名的小班課。</p>
+          <p class="quote">「……沒有額外的時間經營社群。」— 受訪教練</p>
+          <span class="insight">不缺能力，缺的是招生的時間</span>
+        </div>
+        <div class="box">
+          <span class="side">學員端｜共課分攤型</span>
+          <h4>想分攤學費，卻湊不到時間</h4>
+          <p><b>JTBD</b>：在可配合的時段，用負擔得起的價格上到教練課。85% 把價格列為首要條件，32% 同時符合「價格第一、時間配合不上、不介意共課」。</p>
+          <p class="quote">「……想說可以分攤費用，但最後時間一直對不上。」— 受訪學員</p>
+          <span class="insight">不缺共課意願，缺現成可報名的班</span>
+        </div>
+      </div></div><div class="mini"><div class="matrix">
+        <div class="box"><small>低精準・教練省力</small><p>PickleTown：揪團降負擔，未含教練</p></div>
+        <div class="box me"><small>高精準・教練省力｜我們的目標</small><p><b>夠練 GoLand</b>：地點／時段／價格疊加篩選，教練套用範本快速開課</p></div>
+        <div class="box"><small>低精準・教練費力</small><p>誰揪、練練、Trainge：篩選少、仍靠人工或 LINE 聯繫、價格不透明</p></div>
+        <div class="box"><small>高精準・教練費力</small><p>目前無代表性競品</p></div>
+      </div>
+      <div class="flow" aria-label="從幫學員揪團，轉向教練開課、學員報名" style="margin-top:22px"><span>幫學員揪團</span><i>→</i><span>教練開課、學員報名</span></div>
+      <p>我主責產品定位與商業模式：讓教練上架小班課，學員用價格、地點、時段篩選並直接報名，不用再自己揪人。</p></div></div></details>
+    <details class="embed more"><summary>商業模式與 90 天計畫<small>抽成路徑、護城河、成功指標</small></summary><div class="bd"><div class="mini"><div class="two">
+        <div class="box"><span class="side">Phase 1｜成交抽成</span><p>前三個月免上架費，成交才收 5% 媒合費。</p></div>
+        <div class="box"><span class="side">Phase 2｜進階月費</span><p>月費 NT$799＋5% 媒合費；活躍教練達 30 人、確定開課率逾 50% 才啟動。</p></div>
+      </div>
+      <h4 style="font-family:var(--ui);font-weight:600;margin:22px 0 10px">預期護城河</h4>
+      <div class="four">
+        <div class="box"><h4>雙邊網絡</h4><p>教練越多 × 學員越多</p></div>
+        <div class="box"><h4>交易累積</h4><p>開課越多 → 信任越深</p></div>
+        <div class="box"><h4>關係建立</h4><p>找到適合的教練，也找到運動夥伴</p></div>
+        <div class="box"><h4>運動生態</h4><p>教練 × 學員 × 場館持續流動</p></div>
+      </div></div><div class="mini"><div class="three">
+        <div class="box"><span class="side">0–30 天</span><h4>補齊驗證</h4><p>教練訪談與可用性測試</p></div>
+        <div class="box"><span class="side">30–60 天</span><h4>小規模試營運</h4><p>招募種子教練，跑通真實開課與履約</p></div>
+        <div class="box"><span class="side">60–90 天</span><h4>建立成長循環</h4><p>優化推薦、回購與供需密度</p></div>
+      </div>
+      <div class="callout" style="margin-top:16px"><p style="margin-bottom:8px"><b>成功指標</b>：看的是有沒有真的上課，不只是註冊數。</p><div class="three" style="gap:8px"><div><b style="font-family:var(--ui);font-size:30px">5</b> 位穩定開課教練</div><div><b style="font-family:var(--ui);font-size:30px">50</b> 位註冊會員</div><div><b style="font-family:var(--ui);font-size:30px">30%</b> 實際報名上課</div></div></div>
+      <details class="embed"><summary>行銷規劃：完整循環＋企業合作</summary><div class="bd" style="padding:4px 20px 18px">
+        <p>活動吸引 → 促成報名 → 分享推薦 → 更多報名 → 教練上架，形成循環。後續方案包含企業延伸合作、企業獎勵活動、一鍵分享素材、運動挑戰活動。</p>
+      </div></details></div></div></details>
+    <details class="embed more"><summary>專案時程與風險<small>5 週時程、風險對策、加權進度</small></summary><div class="bd"><div class="mini"><div class="timeline">
+        <div><b>需求研究</b><em>9/15–9/22</em><span>M1 訪談問卷結果彙整、需求收斂</span></div>
+        <div><b>產品規格</b><em>9/23–9/29</em><span>M2 鎖定 PRD 核心功能</span></div>
+        <div><b>UI／UX 設計</b><em>9/23–10/2</em><span>M3 UIUX 設計圖完稿</span></div>
+        <div><b>MVP 開發</b><em>10/1–10/8</em><span>M4 MVP 完成</span></div>
+        <div><b>測試驗證</b><em>10/9–10/13</em><span>M5 UAT 報告彙整</span></div>
+        <div><b>發表交付</b><em>10/14</em><span>M6 正式發表</span></div>
+      </div>
+      <h4 style="font-family:var(--ui);font-weight:600;margin:26px 0 10px">風險有對策，進度只算驗證過的</h4>
+      <div class="two">
+        <div class="box"><span class="side">風險 → 對策</span><p><b>課程與場次邏輯容易混淆</b> → 修改 UI 讓使用者更容易辨識；PRD 名詞分成課程、場次、報名三層。</p><p style="margin-top:10px"><b>PRD 改版頻繁</b> → 每一版標出受影響的組員；Demo 前凍結規格，只修正、不新增功能。</p></div>
+        <div class="box"><span class="side">加權進度</span>
+          <div class="progress"><span style="width:65%;background:var(--ink);color:#fff">開發 65%</span><span style="width:20%;background:var(--blue);color:#fff">UI 20%</span><span style="width:15%;background:var(--lime)">驗收 15%</span></div>
+          <p>程式寫完只算 65%，畫面對齊設計稿再加 20%，驗收通過、合併進主程式才補滿最後 15%。只算驗證過的部分，進度才不會灌水。</p>
+        </div>
+      </div></div></div></details>
+    <details class="embed more"><summary>已知限制<small>待市場驗證的四件事</small></summary><div class="bd"><div class="mini"><div class="two">
+        <div class="box"><h4>01 冷啟動</h4><p>初期用戶不足，影響課程數與開課率。→ 搭配行銷活動，聚焦特定運動邀請教練開課。</p></div>
+        <div class="box"><h4>02 教練品質</h4><p>良民證、證照人工審核仍無法保證教學品質。→ 累積真實評價，未來導入資深教練試教、面試。</p></div>
+        <div class="box"><h4>03 私下約課</h4><p>教練與學員可能轉向平台外交易。→ 確認開課並扣款後才開放聯絡。</p></div>
+        <div class="box"><h4>04 付費意願</h4><p>訪談與問卷呈正向意願，實際交易待驗證。→ 用 Phase 1 數據驗證抽成模式。</p></div>
+      </div></div></div></details>
+    <details class="embed more"><summary>AI 工作流與知識管理<small>分工、PR 流程、團隊知識庫</small></summary><div class="bd"><div class="mini"><div class="table-wrap">
+        <table class="ai">
+          <thead><tr><th></th><th>定義<small>Notion・NotebookLM</small></th><th>設計<small>Figma・Gemini</small></th><th>分工<small>Claude・Discord</small></th><th>開發<small>Claude Code・Supabase</small></th><th>上線<small>GitHub・Vercel</small></th></tr></thead>
+          <tbody>
+            <tr><td class="lab">AI</td><td><b>整理資料</b><span>檢查 PRD 一致性</span></td><td><b>畫面雛形</b><span>封面與視覺素材</span></td><td><b>分工看板</b><span>模組邊界</span></td><td><b>產生程式碼</b><span>讀白話 PRD</span></td><td><b>整理 PR</b><span>驗收清單</span></td></tr>
+            <tr class="human"><td class="lab">人</td><td><b>取捨決策</b><span>撰寫 PRD</span></td><td><b>風格定稿</b><span>色調與 UI</span></td><td><b>切模組</b><span>指派負責人</span></td><td><b>審核 schema</b><span>組員確認才合併</span></td><td><b>驗收上線</b><span>承擔風險</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <h4 style="font-family:var(--ui);font-weight:600;margin:26px 0 8px">AI 寫得快，所以把關更嚴</h4>
+      <p>main 分支只有一個人能寫入，其他人一律透過 PR 與 Preview 驗證：</p>
+      <div class="gitflow"><span>個人分支</span><i>→</i><span>PR</span><i>→</i><span>Preview 自我驗收</span><i>→</i><span>QA 複查</span><i>→</i><span>負責人合併</span></div>
+      <div class="three">
+        <div class="stat"><b>3 週</b><span>完成開發（9/24–10/13）</span></div>
+        <div class="stat"><b>114 個</b><span>PR 累計合併（團隊 3 週；我負責其中 12 個）</span></div>
+        <div class="stat"><b>47 次</b><span>資料庫變更可追溯</span></div>
+      </div></div><div class="mini"><div class="three"><div class="box"><h4>規劃｜Notion</h4><p>PRD、WBS、每人負責項目</p></div><div class="box"><h4>開發｜Claude Code</h4><p>規範寫成文件（CLAUDE.md），AI 每次先讀</p></div><div class="box"><h4>交付｜GitHub＋Vercel</h4><p>每個模組一個分支、一個 PR</p></div></div><div class="hero-actions" style="margin-top:14px"><a class="pill ghost" href="https://circular-prose-657.notion.site/Team-Idea-Vault-3b449eb4905f80d79201c9daa6aedcda" target="_blank" rel="noopener">開啟 Team Idea Vault ↗</a></div></div></div></details>
+  </section>
+
+  <div class="part" id="p3" data-toc="1" data-label="03 完整文件與影片"><b>03</b><h2>完整文件與影片</h2><p>想看原始資料，這裡都有。</p></div>
+  <section id="docs">
+    <details class="embed more"><summary>產品需求文件 PRD（v4.11）<small>可直接捲動閱讀</small></summary><div class="bd"><div class="mini"><p>我主責撰寫的 PRD，兩週內從 v1.0 迭代到 v4.11，最後附上驗收總表與團隊分工。</p>
+      <div class="prd">
+        <div class="prd-head">
+          <div>
+            <span class="ver">v4.11 · 2026/10/12</span>
+            <b class="t">夠練 GoLand 產品需求文件</b>
+            <p class="note" style="margin:0">可以直接在下方捲動閱讀；右側橫線是章節導覽，滑過即可跳章。</p>
+          </div>
+          <a class="pill dark" href="https://ocean50117.github.io/GoLand_PRD/" target="_blank" rel="noopener">開啟完整 PRD ↗</a>
+        </div>
+        <iframe class="prd-frame" src="assets/goland/prd.html" title="夠練 GoLand PRD" loading="lazy"></iframe>
+      </div></div></div></details>
+    <details class="embed more"><summary>結案簡報（31 頁）<small>輪播瀏覽</small></summary><div class="bd"><div class="mini"><div class="deck" id="deck">
+        <div class="stage">
+          <img id="slide" src="assets/goland/slides/s01.webp" alt="簡報第 1 頁" width="1600" height="900">
+          <button class="nav-btn go-prev" type="button" aria-label="上一頁"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>
+          <button class="nav-btn go-next" type="button" aria-label="下一頁"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>
+        </div>
+        <div class="bar2">
+          <div class="parts" aria-label="簡報章節">
+            <button type="button" data-go="1">封面</button>
+            <button type="button" data-go="2">01 問題定位</button>
+            <button type="button" data-go="10">02 產品驗證</button>
+            <button type="button" data-go="16">03 商業成長</button>
+            <button type="button" data-go="23">04 協作執行</button>
+          </div>
+          <span class="count" id="count" aria-live="polite">1 / 31</span>
+        </div>
+        <div class="thumbs" id="thumbs"></div>
+      </div>
+      <div class="hero-actions" style="margin-top:14px"><a class="pill ghost" href="assets/goland/GoLand_slides.pdf" download>下載簡報 PDF ↓</a></div></div></div></details>
+  </section>
+  <section id="video">
+    <h3 class="sub-h" style="margin-top:28px" data-toc="2" data-label="影片">Demo 與行銷影片</h3>
+    <div class="vids">
+        <div class="vid wide" id="v-demo" data-yt="W_tePi4N2v4"><div class="lb"><span>Demo 影片</span><span class="soon">上傳中</span></div></div>
+        <div class="vid tall" id="v-ad" data-yt=""><img src="assets/goland/ad_poster.webp" alt="" loading="lazy"><div class="lb"><span>行銷廣告</span><span class="soon">上傳中</span></div></div>
+      </div>
+  </section>
+
+  <section id="reflect">
+    <p class="eb">反思</p>
+    <h3 class="sh" data-toc="1" data-label="如果重來一次">如果重來一次</h3>
+    <ol class="reflect">
+        <li><b>PRD 改成以「頁面與流程」撰寫，並做成可互動的版本</b>前期 PRD 以功能為單位寫，首頁、法律條款頁到開發後期才補上。下次會先列出頁面清單，讓學員、教練、訪客三種角色各走一遍流程。</li>
+        <li><b>自己負責的功能需求更早寫進 PRD</b>第一次當 PM，需求是邊做邊補，導致 PRD 後期一直更新。下次會在 Scope Freeze 前把需求寫完，未定的規則標「待定」並訂下決策期限。</li>
+        <li><b>第一天就建好 Discord</b>從 LINE 換到 Discord 後，溝通效率明顯變好。下次專案一開始就建好分頻道的協作空間。</li>
+      </ol>
+  </section>
+    <div class="next">
+      <a class="pill ghost" href="index.html#work">← 回到 Work</a>
+      <a class="pill coral" href="work-2.html">下一個：Habitcat →</a>
+    </div>
+  </article>
+</main>
+
+<nav class="rail" aria-label="本頁目錄">
+  <div class="panel" id="railPanel"></div>
+  <ol class="dashes" id="railDashes" aria-hidden="true"></ol>
+</nav>
+<footer>© 2026 Sonia Liu</footer>
+
+<script>
+/* always open at the top (browsers otherwise restore the last scroll position); keep #anchor links working */
+(function(){
+  /* open exactly at the top: embedded frames (PRD, YouTube) may try to scroll this page while loading, so hold the position until the visitor scrolls */
+  try{ if('scrollRestoration' in history) history.scrollRestoration='manual'; }catch(e){}
+  if(location.hash) return;
+  var touched=false, root=document.documentElement;
+  ['wheel','touchstart','keydown','mousedown'].forEach(function(t){ addEventListener(t,function(){ touched=true; },{passive:true,once:true}); });
+  function top(){ if(touched||window.scrollY===0) return; root.style.scrollBehavior='auto'; window.scrollTo(0,0); root.style.scrollBehavior=''; }
+  top(); addEventListener('scroll',top,{passive:true}); addEventListener('pageshow',top); addEventListener('load',top);
+  setTimeout(function(){ touched=true; },4000);
+})();
+
+/* Notion-style rail: one dash per [data-toc] heading (1 = part, 2 = topic) */
+(function(){
+  const heads=[...document.querySelectorAll('[data-toc]')];
+  const panel=document.getElementById('railPanel'), dashes=document.getElementById('railDashes');
+  const items=heads.map(h=>{
+    const sub=h.dataset.toc==='2'; const target=h.closest('section')||h;
+    const a=document.createElement('a'); a.href='#'+target.id; a.textContent=h.dataset.label||h.textContent.trim(); if(sub) a.className='sub'; panel.appendChild(a);
+    const li=document.createElement('li'); const i=document.createElement('i'); if(sub) i.className='sub'; li.appendChild(i); dashes.appendChild(li);
+    return {target,a,i};
+  });
+  function on(){
+    const y=scrollY+160; let k=0;
+    items.forEach((it,n)=>{ if(it.target.getBoundingClientRect().top+scrollY<=y) k=n; });
+    items.forEach((it,n)=>{ it.a.classList.toggle('on',n===k); it.i.classList.toggle('on',n===k); });
+  }
+  addEventListener('scroll',on,{passive:true}); on();
+})();
+
+/* live demo embed: load the real site only after a click, so the page stays light */
+(function(){
+  const view=document.getElementById('liveView'), poster=document.getElementById('livePoster');
+  const URL_='https://coach-sharing-platform.vercel.app';
+  /* inside a preview frame (e.g. Claude artifact) external sites are blocked → open a new tab instead; on the real site (top-level page) embed it */
+  const framed=(function(){ try{ return window.top!==window.self; }catch(e){ return true; } })();
+  if(framed){ poster.querySelector('span').textContent='▶ 開新分頁試用網站'; document.querySelector('.live-note').textContent='預覽環境不支援內嵌網站；正式上線後可直接在這裡操作。'; }
+  poster.addEventListener('click',()=>{
+    if(framed){ window.open(URL_,'_blank','noopener'); return; }
+    const f=document.createElement('iframe'); f.src=URL_; f.title='夠練 GoLand 網站 Demo';
+    view.appendChild(f); poster.remove();
+  });
+  const btns=[...document.querySelectorAll('.seg button')];
+  btns.forEach(b=>b.addEventListener('click',()=>{ btns.forEach(x=>x.classList.toggle('on',x===b)); view.classList.toggle('mobile',b.dataset.mode==='mobile'); }));
+})();
+
+
+
+/* slides carousel */
+(function(){
+  const N=31, img=document.getElementById('slide'), count=document.getElementById('count'), thumbs=document.getElementById('thumbs');
+  const parts=[...document.querySelectorAll('.parts button')];
+  const src=i=>'assets/goland/slides/s'+String(i).padStart(2,'0')+'.webp';
+  let cur=1;
+  for(let i=1;i<=N;i++){
+    const b=document.createElement('button'); b.type='button'; b.setAttribute('aria-label','第 '+i+' 頁');
+    b.innerHTML='<img loading="lazy" alt="" src="'+src(i)+'">'; b.onclick=()=>go(i); thumbs.appendChild(b);
+  }
+  const tb=[...thumbs.children];
+  function go(i){
+    cur=(i-1+N)%N+1; img.src=src(cur); img.alt='簡報第 '+cur+' 頁'; count.textContent=cur+' / '+N;
+    tb.forEach((b,k)=>b.classList.toggle('on',k===cur-1));
+    const t=tb[cur-1]; thumbs.scrollTo({left:t.offsetLeft-thumbs.clientWidth/2+t.clientWidth/2,behavior:'smooth'});
+    let p=0; parts.forEach((b,k)=>{ if(+b.dataset.go<=cur) p=k; }); parts.forEach((b,k)=>b.classList.toggle('on',k===p));
+    [cur+1,cur-1].forEach(j=>{ if(j>=1&&j<=N){ const pre=new Image(); pre.src=src(j);} });
+  }
+  document.querySelector('.nav-btn.go-prev').onclick=()=>go(cur-1);
+  document.querySelector('.nav-btn.go-next').onclick=()=>go(cur+1);
+  parts.forEach(b=>b.onclick=()=>go(+b.dataset.go));
+  const deck=document.getElementById('deck'); deck.tabIndex=0;
+  deck.addEventListener('keydown',e=>{ if(e.key==='ArrowRight'){go(cur+1);e.preventDefault();} if(e.key==='ArrowLeft'){go(cur-1);e.preventDefault();} });
+  let x0=null; const st=deck.querySelector('.stage');
+  st.addEventListener('touchstart',e=>{x0=e.touches[0].clientX},{passive:true});
+  st.addEventListener('touchend',e=>{ if(x0===null)return; const dx=e.changedTouches[0].clientX-x0; if(Math.abs(dx)>40) go(cur+(dx<0?1:-1)); x0=null; });
+  go(1);
+})();
+
+/* YouTube: fill data-yt with the video id to embed */
+document.querySelectorAll('.vid[data-yt]').forEach(v=>{
+  const id=v.dataset.yt; if(!id) return;
+  v.innerHTML='<iframe src="https://www.youtube-nocookie.com/embed/'+id+'" title="'+(v.id==='v-ad'?'夠練行銷廣告':'夠練 Demo')+'" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture; fullscreen" loading="lazy"></iframe>';
+});
+</script>
+</body>
+</html>
