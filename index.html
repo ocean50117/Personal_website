@@ -455,7 +455,7 @@ button.tag-dark:hover{transform:translateY(-2px);background:#3A3F47}
   #work>.container{position:relative}
   #about .about-copy{zoom:var(--az,1)}
   #about .collage{zoom:var(--cz,1);right:calc(4vw/var(--cz,1))}
-  #about{min-height:max(calc(780px*var(--az,1)),calc(860px*var(--cz,1)));padding-top:calc(120px*var(--az,1))}
+  #about{min-height:max(calc(780px*var(--az,1)),calc(790px*var(--cz,1)));padding-top:calc(120px*var(--az,1))}
   .work-head{display:block;position:sticky;top:calc(72px + (var(--gap,68px) - 20px)/2);height:0;z-index:6;margin:calc(-82px - var(--gap,68px)/2) 0 calc(82px + var(--gap,68px)/2);padding-left:16px;pointer-events:none}
   .work-head h2{font-family:var(--ui);font-weight:500;font-size:20px;line-height:1;letter-spacing:.2em;color:var(--coral);text-transform:uppercase;margin:0}
   .slide{--tw:min(290px,calc((min(1480px,85vw) - 32px - 72px)/5));--th:72px;position:sticky;top:var(--top,185px);display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:72px;align-items:center;min-height:min(calc(100svh - var(--top,185px) - 24px),calc(min(1480px,85vw)*.36 + 40px));overflow:visible;margin-bottom:55vh;scroll-snap-align:none;border-radius:0;box-shadow:none;padding:clamp(48px,7.5svh,68px) 72px clamp(48px,7.5svh,68px) 80px;color:var(--ink)}
@@ -1051,10 +1051,11 @@ document.documentElement.classList.add('js');
   const mq=matchMedia('(min-width:1025px)');
   function fitAbout(){
     if(!mq.matches){a.style.removeProperty('--az');a.style.removeProperty('--cz');return;}
+    const cr=a.querySelector('.about-copy');
     const k=Math.min(1,innerHeight/900);
     a.style.setProperty('--az',k.toFixed(3));
     /* 右側拼貼維持 Figma 原尺寸，只在寬度不夠、或高度不夠留白（人物下方約 50px）時才等比縮小 */
-    a.style.setProperty('--cz',Math.min(1,innerWidth*0.5/774,(innerHeight-56)/805).toFixed(3));
+    a.style.setProperty('--cz',Math.min(1.25,(innerWidth*0.96-(cr?cr.getBoundingClientRect().right:innerWidth*0.5)-8)/774,innerHeight*0.91/720).toFixed(3));
   }
   addEventListener('resize',fitAbout); addEventListener('load',fitAbout); fitAbout();
 })();
