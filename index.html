@@ -1053,8 +1053,8 @@ document.documentElement.classList.add('js');
     if(!mq.matches){a.style.removeProperty('--az');a.style.removeProperty('--cz');return;}
     const k=Math.min(1,innerHeight/900);
     a.style.setProperty('--az',k.toFixed(3));
-    /* 右側拼貼維持 Figma 原尺寸，只在寬度不夠時才等比縮小，避免壓到左邊文字 */
-    a.style.setProperty('--cz',Math.min(1,innerWidth*0.5/774).toFixed(3));
+    /* 右側拼貼維持 Figma 原尺寸，只在寬度不夠、或高度不夠留白（人物下方約 50px）時才等比縮小 */
+    a.style.setProperty('--cz',Math.min(1,innerWidth*0.5/774,(innerHeight-56)/805).toFixed(3));
   }
   addEventListener('resize',fitAbout); addEventListener('load',fitAbout); fitAbout();
 })();
