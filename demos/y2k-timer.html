@@ -1,0 +1,957 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>✨ RETRO TIMER MULTIVERSE ✨</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&family=Orbitron:wght@700&family=Oswald:wght@700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* =========================================
+           THEME 1: GAME BOY (Default)
+           ========================================= */
+        :root {
+            --bg-body: #12101d;
+            --bg-pattern: radial-gradient(#2d294a 1px, transparent 0), radial-gradient(#a81359 1px, transparent 0);
+            
+            --shell-bg: #d2d1cb;
+            --shell-border: #b8b7b0;
+            --shell-shadow-light: #ffffff;
+            --shell-shadow-dark: #82817a;
+            
+            --bezel-bg: #545360;
+            --bezel-accent: #a81359;
+            
+            --screen-bg: #8bac0f;
+            --screen-text: #0f380f;
+            --screen-border: #306230;
+            --screen-glow: drop-shadow(2px 2px 0px rgba(155,188,15,0.8));
+            
+            --btn-p-bg: #a81359;
+            --btn-p-border-l: #e6609b;
+            --btn-p-border-d: #50082a;
+            --btn-p-text: #ffffff;
+            
+            --btn-s-bg: #333438;
+            --btn-s-border-l: #6d6e75;
+            --btn-s-border-d: #141417;
+            --btn-s-text: #f0f0f0;
+            
+            --btn-t-bg: #8b8c8d;
+            --btn-t-border-l: #c4c5c7;
+            --btn-t-border-d: #48494b;
+            --btn-t-text: #111213;
+
+            --font-ui: 'Press Start 2P', cursive;
+            --font-num: 'VT323', monospace;
+            --ui-text-color: #302078;
+            
+            --decor-display: flex;
+            --flip-line-display: none;
+            --scanline-opacity: 0.7;
+        }
+
+        /* =========================================
+           THEME 2: PIP-BOY (Fallout Style)
+           ========================================= */
+        [data-theme="pipboy"] {
+            --bg-body: #050505;
+            --bg-pattern: repeating-linear-gradient(0deg, #050505, #050505 2px, #0a1105 2px, #0a1105 4px);
+            
+            --shell-bg: #1e221b;
+            --shell-border: #2a3026;
+            --shell-shadow-light: #32382d;
+            --shell-shadow-dark: #0a0b09;
+            
+            --bezel-bg: #11130f;
+            --bezel-accent: #1aff80;
+            
+            --screen-bg: #001500;
+            --screen-text: #1aff80;
+            --screen-border: #1a331a;
+            --screen-glow: drop-shadow(0px 0px 8px rgba(26,255,128,0.8));
+            
+            --btn-p-bg: #1aff80;
+            --btn-p-border-l: #66ffb3;
+            --btn-p-border-d: #00994d;
+            --btn-p-text: #001500;
+            
+            --btn-s-bg: #2a3026;
+            --btn-s-border-l: #404a3a;
+            --btn-s-border-d: #11130f;
+            --btn-s-text: #1aff80;
+            
+            --btn-t-bg: #11130f;
+            --btn-t-border-l: #2a3026;
+            --btn-t-border-d: #050505;
+            --btn-t-text: #1aff80;
+
+            --font-ui: 'VT323', monospace;
+            --font-num: 'VT323', monospace;
+            --ui-text-color: #1aff80;
+            
+            --decor-display: none;
+            --flip-line-display: none;
+            --scanline-opacity: 0.9;
+        }
+
+        /* =========================================
+           THEME 3: RETRO FLIP CLOCK
+           ========================================= */
+        [data-theme="flipclock"] {
+            --bg-body: #8a3a19;
+            --bg-pattern: radial-gradient(#61250d 2px, transparent 0);
+            
+            --shell-bg: #2e2825;
+            --shell-border: #4a403a;
+            --shell-shadow-light: #5a4e47;
+            --shell-shadow-dark: #120f0e;
+            
+            --bezel-bg: #c0c0c0;
+            --bezel-accent: #8a3a19;
+            
+            --screen-bg: #111111;
+            --screen-text: #e0e0e0;
+            --screen-border: #000000;
+            --screen-glow: none;
+            
+            --btn-p-bg: #d94a26;
+            --btn-p-border-l: #ff6b47;
+            --btn-p-border-d: #8c2a12;
+            --btn-p-text: #ffffff;
+            
+            --btn-s-bg: #1a1a1a;
+            --btn-s-border-l: #333333;
+            --btn-s-border-d: #000000;
+            --btn-s-text: #c0c0c0;
+            
+            --btn-t-bg: #c0c0c0;
+            --btn-t-border-l: #e6e6e6;
+            --btn-t-border-d: #808080;
+            --btn-t-text: #1a1a1a;
+
+            --font-ui: 'Orbitron', sans-serif;
+            --font-num: 'Oswald', sans-serif;
+            --ui-text-color: #c0c0c0;
+            
+            --decor-display: none;
+            --flip-line-display: block;
+            --scanline-opacity: 0;
+        }
+
+        body {
+            background-color: var(--bg-body);
+            background-image: var(--bg-pattern);
+            background-size: 24px 24px, 48px 48px;
+            background-position: 0 0, 12px 12px;
+            transition: background-color 0.5s ease;
+        }
+
+        .theme-font-ui { font-family: var(--font-ui); }
+        .theme-font-num { font-family: var(--font-num); }
+        .theme-text-ui { color: var(--ui-text-color); }
+        .gb-decor { display: var(--decor-display); }
+
+        .theme-shell {
+            background-color: var(--shell-bg);
+            border: 5px solid var(--shell-border);
+            box-shadow: 
+                inset 4px 4px 0px var(--shell-shadow-light),
+                inset -4px -4px 0px var(--shell-shadow-dark),
+                8px 12px 0px rgba(0,0,0,0.5);
+            transition: all 0.3s;
+        }
+
+        .theme-bezel {
+            background-color: var(--bezel-bg);
+            border-bottom: 4px solid var(--bezel-accent);
+            transition: all 0.3s;
+        }
+
+        .theme-screen {
+            background-color: var(--screen-bg);
+            color: var(--screen-text);
+            border: 2px solid var(--screen-border);
+            box-shadow: inset 4px 4px 8px rgba(0, 0, 0, 0.6), inset -2px -2px 4px rgba(255, 255, 255, 0.1);
+            transition: all 0.3s;
+        }
+
+        .theme-glow { filter: var(--screen-glow); }
+
+        .scanlines { position: relative; overflow: hidden; }
+        .scanlines::before {
+            content: " ";
+            display: block;
+            position: absolute;
+            top: 0; left: 0; bottom: 0; right: 0;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%);
+            background-size: 100% 4px;
+            z-index: 10;
+            pointer-events: none;
+            opacity: var(--scanline-opacity);
+            transition: opacity 0.3s;
+        }
+
+        .flip-split-line {
+            display: var(--flip-line-display);
+            position: absolute;
+            top: 50%; left: 0; right: 0;
+            height: 2px;
+            background-color: rgba(0,0,0,0.8);
+            z-index: 5;
+            box-shadow: 0 1px 0 rgba(255,255,255,0.1);
+        }
+
+        .btn-pixel {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-style: solid;
+            border-width: 3px;
+            user-select: none;
+            transition: all 0.06s ease-in-out;
+            cursor: pointer;
+            text-transform: uppercase;
+        }
+
+        .btn-primary {
+            background-color: var(--btn-p-bg);
+            border-color: var(--btn-p-border-l) var(--btn-p-border-d) var(--btn-p-border-d) var(--btn-p-border-l);
+            box-shadow: 0 6px 0 var(--btn-p-border-d), 0 8px 10px rgba(0,0,0,0.4);
+            color: var(--btn-p-text);
+            text-shadow: 1px 1px 0px rgba(0,0,0,0.5);
+        }
+        .btn-primary:active {
+            transform: translateY(6px);
+            box-shadow: 0 0px 0 var(--btn-p-border-d), 0 2px 4px rgba(0,0,0,0.4);
+        }
+
+        .btn-secondary {
+            background-color: var(--btn-s-bg);
+            border-color: var(--btn-s-border-l) var(--btn-s-border-d) var(--btn-s-border-d) var(--btn-s-border-l);
+            box-shadow: 0 6px 0 var(--btn-s-border-d), 0 8px 10px rgba(0,0,0,0.4);
+            color: var(--btn-s-text);
+        }
+        .btn-secondary:active {
+            transform: translateY(6px);
+            box-shadow: 0 0px 0 var(--btn-s-border-d), 0 2px 4px rgba(0,0,0,0.4);
+        }
+
+        .btn-preset {
+            background-color: var(--btn-t-bg);
+            border-color: var(--btn-t-border-l) var(--btn-t-border-d) var(--btn-t-border-d) var(--btn-t-border-l);
+            box-shadow: 0 5px 0 var(--btn-t-border-d), 0 6px 8px rgba(0,0,0,0.3);
+            color: var(--btn-t-text);
+        }
+        .btn-preset:active {
+            transform: translateY(5px);
+            box-shadow: 0 0px 0 var(--btn-t-border-d), 0 2px 4px rgba(0,0,0,0.3);
+        }
+
+        @keyframes pixel-flash {
+            0%, 100% { filter: invert(0%); }
+            50% { filter: invert(100%); }
+        }
+        .alarm-active { animation: pixel-flash 0.4s infinite; }
+
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--bg-body); }
+        ::-webkit-scrollbar-thumb { background: var(--shell-border); }
+    </style>
+</head>
+
+<body class="min-h-screen text-white flex flex-col items-center justify-between p-4 sm:p-6 overflow-x-hidden">
+
+    <!-- Floating Background Decorative Stars -->
+    <div id="stars-container" class="fixed inset-0 pointer-events-none z-0 gb-decor"></div>
+
+    <header class="z-10 mt-2 mb-4 text-center">
+        <div class="inline-block bg-black/50 backdrop-blur px-4 py-2 rounded-lg border border-white/20">
+            <h1 class="theme-font-ui text-xs sm:text-sm theme-text-ui tracking-wider flex items-center gap-2 font-bold">
+                <span class="animate-pulse gb-decor">✨</span> 
+                <span>RETRO TIMER MULTIVERSE</span> 
+                <span class="animate-pulse gb-decor">✨</span>
+            </h1>
+        </div>
+    </header>
+
+    <main class="z-10 w-full max-w-2xl mx-auto my-auto">
+        <div class="theme-shell rounded-b-3xl rounded-t-xl p-4 sm:p-6 relative">
+            <div class="w-full h-1 bg-black/20 mb-3 rounded-full"></div>
+
+            <div class="flex justify-between items-center mb-3 px-1">
+                <div class="flex gap-2 items-center">
+                    <div id="power-led" class="w-3.5 h-3.5 rounded-full bg-red-600 border border-gray-700 shadow-[0_0_8px_#ff0000]"></div>
+                    <span class="theme-font-ui text-[9px] text-current opacity-60 tracking-tighter uppercase">PWR</span>
+                </div>
+                <div class="theme-font-ui text-[11px] font-bold theme-text-ui italic tracking-tight uppercase">
+                    Chrono <span class="text-current opacity-70 font-normal not-italic text-[10px]">DEVICE</span>
+                </div>
+            </div>
+
+            <div class="theme-bezel rounded-lg p-3 sm:p-5 relative mb-4">
+                <div class="gb-decor flex h-1.5 w-full mb-2 rounded overflow-hidden">
+                    <div class="w-1/2 bg-[#302078]"></div>
+                    <div class="w-1/2 bg-[#a81359]"></div>
+                </div>
+
+                <div id="screen-box" class="scanlines theme-screen rounded p-4 sm:p-6 text-center relative overflow-hidden flex flex-col justify-center min-h-[240px] sm:min-h-[300px] cursor-pointer">
+                    <div class="flip-split-line"></div>
+
+                    <div class="flex justify-between items-center theme-font-ui text-[9px] sm:text-[10px] opacity-80 mb-2 font-bold z-10">
+                        <span id="status-badge" class="tracking-widest">● READY</span>
+                        <span id="sound-indicator" class="cursor-pointer hover:opacity-100" onclick="toggleMute()">
+                            🔊 SOUND: ON
+                        </span>
+                    </div>
+
+                    <div id="game-hud" class="flex justify-between items-center theme-font-ui text-[9px] sm:text-[10px] font-bold z-10 mb-1 px-1 text-emerald-900 dark:text-emerald-300">
+                        <span>SCORE: <span id="current-score" class="theme-font-num text-base font-extrabold">0000</span></span>
+                        <span class="text-[8px] opacity-70">◄ press ← & → ►</span>
+                        <span>HI: <span id="high-score" class="theme-font-num text-base font-extrabold">0000</span></span>
+                    </div>
+
+                    <canvas id="breakout-canvas" class="absolute inset-0 w-full h-full z-0 opacity-90 hidden pointer-events-auto"></canvas>
+
+                    <div id="timer-container" class="py-2 sm:py-4 z-10 theme-glow relative transition-all duration-300">
+                        <div id="timer-display" class="theme-font-num text-7xl sm:text-8xl md:text-9xl font-bold tracking-tight select-none leading-none">
+                            25:00
+                        </div>
+                        <div id="start-prompt" class="theme-font-ui text-[9px] sm:text-[11px] opacity-80 mt-3 font-bold tracking-wider animate-pulse text-center">
+                            [ PRESS ANY KEY TO PLAY / START ]
+                        </div>
+                    </div>
+
+                    <div class="theme-font-ui text-[8px] sm:text-[9px] opacity-70 tracking-widest uppercase mt-1 font-bold z-10 flex justify-between items-center px-1">
+                        <span>&lt; BREAKOUT EDITION &gt;</span>
+                        <span id="game-tip" class="hidden text-amber-300 animate-pulse">🎮 PRESS ← & → TO PLAY!</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="space-y-3">
+                <div class="grid grid-cols-3 gap-2 sm:gap-3">
+                    <button id="btn-start" onclick="startTimer()" class="btn-pixel btn-primary theme-font-ui text-xs sm:text-sm py-2.5 sm:py-3 rounded-full font-bold">
+                        ▶ PLAY
+                    </button>
+                    <button id="btn-pause" onclick="pauseTimer()" class="btn-pixel btn-primary theme-font-ui text-xs sm:text-sm py-2.5 sm:py-3 rounded-full font-bold">
+                        ⏸ PAUSE
+                    </button>
+                    <button id="btn-reset" onclick="resetTimer()" class="btn-pixel btn-secondary theme-font-ui text-xs sm:text-[11px] py-2.5 sm:py-3 rounded-lg font-bold">
+                        🔄 RESET
+                    </button>
+                </div>
+
+                <div>
+                    <div class="theme-font-ui text-[9px] text-current opacity-60 font-bold mb-1.5 tracking-wider flex items-center gap-1 uppercase">
+                        <span>⚡</span> PRESETS & SETTINGS:
+                    </div>
+                    <div class="grid grid-cols-5 gap-2">
+                        <button onclick="setMinutes(1)" class="btn-pixel btn-preset theme-font-ui text-[10px] py-1.5 rounded-full transform -rotate-6 font-bold">1m</button>
+                        <button onclick="setMinutes(5)" class="btn-pixel btn-preset theme-font-ui text-[10px] py-1.5 rounded-full transform -rotate-6 font-bold">5m</button>
+                        <button onclick="setMinutes(10)" class="btn-pixel btn-preset theme-font-ui text-[10px] py-1.5 rounded-full transform -rotate-6 font-bold">10m</button>
+                        <button onclick="setMinutes(25)" class="btn-pixel btn-preset theme-font-ui text-[10px] py-1.5 rounded-full transform -rotate-6 font-bold">25m</button>
+                        <button onclick="openSettingsModal()" class="btn-pixel btn-primary theme-font-ui text-[11px] py-1.5 rounded-full transform -rotate-6">
+                            ⚙️
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex justify-end gap-2 mt-4 pr-4 opacity-50">
+                <div class="w-2 h-5 bg-black/40 rounded-full transform rotate-12 shadow-inner"></div>
+                <div class="w-2 h-5 bg-black/40 rounded-full transform rotate-12 shadow-inner"></div>
+                <div class="w-2 h-5 bg-black/40 rounded-full transform rotate-12 shadow-inner"></div>
+                <div class="w-2 h-5 bg-black/40 rounded-full transform rotate-12 shadow-inner"></div>
+                <div class="w-2 h-5 bg-black/40 rounded-full transform rotate-12 shadow-inner"></div>
+            </div>
+        </div>
+    </main>
+
+    <div id="settings-modal" class="fixed inset-0 bg-black/80 backdrop-blur-md z-50 flex items-center justify-center p-4 hidden">
+        <div class="theme-shell border-4 p-6 rounded-lg max-w-sm w-full text-center space-y-6 shadow-[0_0_30px_rgba(0,0,0,0.8)] relative">
+            <button onclick="closeSettingsModal()" class="absolute top-2 right-3 theme-font-ui text-sm opacity-50 hover:opacity-100">✖</button>
+
+            <h2 class="theme-font-ui text-sm theme-text-ui font-bold tracking-wider border-b-2 border-current/20 pb-2">⚙️ SYSTEM SETTINGS</h2>
+            
+            <div class="text-left space-y-3">
+                <label class="theme-font-ui text-[10px] opacity-70 block uppercase">1. Select Visual Theme:</label>
+                <div class="grid grid-cols-1 gap-2">
+                    <button onclick="changeTheme('default')" class="btn-pixel btn-preset w-full py-2 theme-font-ui text-[10px] flex justify-center gap-2">
+                        🎮 CLASSIC Y2K GAMEBOY
+                    </button>
+                    <button onclick="changeTheme('pipboy')" class="btn-pixel btn-preset w-full py-2 theme-font-ui text-[10px] flex justify-center gap-2">
+                        ☢️ WASTELAND PIP-BOY
+                    </button>
+                    <button onclick="changeTheme('flipclock')" class="btn-pixel btn-preset w-full py-2 theme-font-ui text-[10px] flex justify-center gap-2">
+                        📻 RETRO FLIP CLOCK
+                    </button>
+                </div>
+            </div>
+
+            <div class="text-left space-y-3 pt-3 border-t-2 border-current/20">
+                <label class="theme-font-ui text-[10px] opacity-70 block uppercase">2. Custom Timer Setup:</label>
+                <div class="flex justify-center items-center gap-2 theme-font-num text-3xl theme-text-ui">
+                    <div class="flex flex-col items-center">
+                        <label class="theme-font-ui text-[8px] opacity-70 mb-1">HR</label>
+                        <input type="number" id="input-hours" min="0" max="99" value="0" class="w-16 theme-screen text-center rounded p-1 font-bold focus:outline-none focus:ring-2 focus:ring-white">
+                    </div>
+                    <span class="mt-4 opacity-70">:</span>
+                    <div class="flex flex-col items-center">
+                        <label class="theme-font-ui text-[8px] opacity-70 mb-1">MIN</label>
+                        <input type="number" id="input-minutes" min="0" max="59" value="25" class="w-16 theme-screen text-center rounded p-1 font-bold focus:outline-none focus:ring-2 focus:ring-white">
+                    </div>
+                    <span class="mt-4 opacity-70">:</span>
+                    <div class="flex flex-col items-center">
+                        <label class="theme-font-ui text-[8px] opacity-70 mb-1">SEC</label>
+                        <input type="number" id="input-seconds" min="0" max="59" value="0" class="w-16 theme-screen text-center rounded p-1 font-bold focus:outline-none focus:ring-2 focus:ring-white">
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex justify-center gap-3 pt-4">
+                <button onclick="applySettings()" class="btn-pixel btn-primary theme-font-ui text-[10px] px-6 py-3 rounded-full">
+                    APPLY & START
+                </button>
+                <button onclick="closeSettingsModal()" class="btn-pixel btn-secondary theme-font-ui text-[10px] px-4 py-3 rounded">
+                    CANCEL
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Global State Variables
+        let totalSeconds = 25 * 60;
+        let remainingSeconds = 25 * 60;
+        let timerInterval = null;
+        let isRunning = false;
+        let isMuted = false;
+        let alarmInterval = null;
+        let currentTheme = 'default';
+
+        // Breakout Game State & High Score
+        let breakoutCanvas = null;
+        let ctx = null;
+        let gameScore = 0;
+        let highScore = parseInt(localStorage.getItem('chrono_breakout_hi') || '0');
+        let isGameActive = false;
+        let animFrameId = null;
+
+        // Breakout Objects
+        let paddle = { x: 0, y: 0, w: 50, h: 8, speed: 6 };
+        let ball = { x: 0, y: 0, vx: 2.5, vy: -2.5, radius: 4, speed: 3.5 };
+        let bricks = [];
+        const brickRows = 4;
+        const brickCols = 8;
+        const keyState = { left: false, right: false };
+
+        // DOM Element Cache
+        const timerDisplay = document.getElementById('timer-display');
+        const timerContainer = document.getElementById('timer-container');
+        const statusBadge = document.getElementById('status-badge');
+        const screenBox = document.getElementById('screen-box');
+        const powerLed = document.getElementById('power-led');
+        const soundIndicator = document.getElementById('sound-indicator');
+        const settingsModal = document.getElementById('settings-modal');
+        const currentScoreEl = document.getElementById('current-score');
+        const highScoreEl = document.getElementById('high-score');
+        const gameTipEl = document.getElementById('game-tip');
+        const startPromptEl = document.getElementById('start-prompt');
+
+        const AudioContext = window.AudioContext || window.webkitAudioContext;
+        let audioCtx = null;
+
+        function initAudio() {
+            if (!audioCtx) audioCtx = new AudioContext();
+            if (audioCtx.state === 'suspended') audioCtx.resume();
+        }
+
+        function playBeep(type) {
+            if (isMuted) return;
+            try {
+                initAudio();
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+
+                const now = audioCtx.currentTime;
+
+                if (type === 'click') {
+                    osc.type = 'square';
+                    osc.frequency.setValueAtTime(800, now);
+                    gain.gain.setValueAtTime(0.1, now);
+                    gain.gain.exponentialRampToValueAtTime(0.01, now + 0.05);
+                    osc.start(now);
+                    osc.stop(now + 0.05);
+                } else if (type === 'start') {
+                    osc.type = 'square';
+                    osc.frequency.setValueAtTime(523.25, now);
+                    osc.frequency.setValueAtTime(659.25, now + 0.08);
+                    osc.frequency.setValueAtTime(783.99, now + 0.16);
+                    gain.gain.setValueAtTime(0.15, now);
+                    gain.gain.exponentialRampToValueAtTime(0.01, now + 0.3);
+                    osc.start(now);
+                    osc.stop(now + 0.3);
+                } else if (type === 'pause') {
+                    osc.type = 'sawtooth';
+                    osc.frequency.setValueAtTime(400, now);
+                    osc.frequency.setValueAtTime(250, now + 0.08);
+                    gain.gain.setValueAtTime(0.15, now);
+                    gain.gain.exponentialRampToValueAtTime(0.01, now + 0.2);
+                    osc.start(now);
+                    osc.stop(now + 0.2);
+                } else if (type === 'alarm') {
+                    osc.type = 'square';
+                    osc.frequency.setValueAtTime(880, now);
+                    osc.frequency.setValueAtTime(1760, now + 0.1);
+                    gain.gain.setValueAtTime(0.2, now);
+                    gain.gain.exponentialRampToValueAtTime(0.01, now + 0.25);
+                    osc.start(now);
+                    osc.stop(now + 0.25);
+                } else if (type === 'hit') {
+                    osc.type = 'triangle';
+                    osc.frequency.setValueAtTime(300, now);
+                    gain.gain.setValueAtTime(0.1, now);
+                    gain.gain.exponentialRampToValueAtTime(0.01, now + 0.04);
+                    osc.start(now);
+                    osc.stop(now + 0.04);
+                } else if (type === 'brick') {
+                    osc.type = 'square';
+                    osc.frequency.setValueAtTime(600 + Math.random() * 400, now);
+                    gain.gain.setValueAtTime(0.12, now);
+                    gain.gain.exponentialRampToValueAtTime(0.01, now + 0.08);
+                    osc.start(now);
+                    osc.stop(now + 0.08);
+                }
+            } catch (e) {
+                console.error(e);
+            }
+        }
+
+        function changeTheme(themeName) {
+            playBeep('click');
+            currentTheme = themeName;
+            if (themeName === 'default') {
+                document.documentElement.removeAttribute('data-theme');
+            } else {
+                document.documentElement.setAttribute('data-theme', themeName);
+            }
+            if (isGameActive) drawBreakout();
+        }
+
+        function updateDisplay() {
+            const hrs = Math.floor(remainingSeconds / 3600);
+            const mins = Math.floor((remainingSeconds % 3600) / 60);
+            const secs = remainingSeconds % 60;
+
+            const formatted = hrs > 0 
+                ? `${String(hrs).padStart(2, '0')}:${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`
+                : `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+            if (timerDisplay) timerDisplay.textContent = formatted;
+        }
+
+        function setStatus(text, isAlarm = false) {
+            if (statusBadge) statusBadge.textContent = `● ${text}`;
+            if (isAlarm) {
+                screenBox.classList.add('alarm-active');
+            } else {
+                screenBox.classList.remove('alarm-active');
+            }
+        }
+
+        function getThemeColors() {
+            if (currentTheme === 'pipboy') {
+                return { bg: 'rgba(0, 21, 0, 0.85)', primary: '#1aff80', secondary: '#005522', text: '#1aff80' };
+            } else if (currentTheme === 'flipclock') {
+                return { bg: 'rgba(17, 17, 17, 0.85)', primary: '#ff6b47', secondary: '#4a403a', text: '#e0e0e0' };
+            } else {
+                return { bg: 'rgba(139, 172, 15, 0.85)', primary: '#0f380f', secondary: '#306230', text: '#0f380f' };
+            }
+        }
+
+        function initBreakout() {
+            breakoutCanvas = document.getElementById('breakout-canvas');
+            ctx = breakoutCanvas.getContext('2d');
+            resizeCanvas();
+
+            highScoreEl.textContent = String(highScore).padStart(4, '0');
+            currentScoreEl.textContent = String(gameScore).padStart(4, '0');
+
+            resetBricks();
+            resetBallAndPaddle();
+        }
+
+        function resizeCanvas() {
+            if (!breakoutCanvas) return;
+            const rect = screenBox.getBoundingClientRect();
+            breakoutCanvas.width = rect.width;
+            breakoutCanvas.height = rect.height;
+            paddle.w = Math.max(40, rect.width * 0.18);
+            paddle.y = breakoutCanvas.height - 18;
+        }
+
+        function resetBricks() {
+            bricks = [];
+            const padding = 4;
+            const offsetTop = 32;
+            const offsetLeft = 8;
+            const availableWidth = breakoutCanvas.width - (offsetLeft * 2);
+            const brickWidth = (availableWidth - (padding * (brickCols - 1))) / brickCols;
+            const brickHeight = 10;
+
+            for (let r = 0; r < brickRows; r++) {
+                bricks[r] = [];
+                for (let c = 0; c < brickCols; c++) {
+                    bricks[r][c] = {
+                        x: offsetLeft + c * (brickWidth + padding),
+                        y: offsetTop + r * (brickHeight + padding),
+                        w: brickWidth,
+                        h: brickHeight,
+                        status: 1,
+                        points: (brickRows - r) * 10
+                    };
+                }
+            }
+        }
+
+        function resetBallAndPaddle() {
+            paddle.x = (breakoutCanvas.width - paddle.w) / 2;
+            ball.x = breakoutCanvas.width / 2;
+            ball.y = paddle.y - 12;
+            ball.vx = (Math.random() > 0.5 ? 1 : -1) * (2 + Math.random() * 1.5);
+            ball.vy = -3;
+        }
+
+        function gameLoop() {
+            if (!isGameActive) return;
+            updateBreakout();
+            drawBreakout();
+            animFrameId = requestAnimationFrame(gameLoop);
+        }
+
+        function updateBreakout() {
+            if (keyState.left) paddle.x -= paddle.speed;
+            if (keyState.right) paddle.x += paddle.speed;
+
+            if (paddle.x < 0) paddle.x = 0;
+            if (paddle.x + paddle.w > breakoutCanvas.width) paddle.x = breakoutCanvas.width - paddle.w;
+
+            ball.x += ball.vx;
+            ball.y += ball.vy;
+
+            if (ball.x - ball.radius < 0) {
+                ball.x = ball.radius;
+                ball.vx = -ball.vx;
+                playBeep('hit');
+            } else if (ball.x + ball.radius > breakoutCanvas.width) {
+                ball.x = breakoutCanvas.width - ball.radius;
+                ball.vx = -ball.vx;
+                playBeep('hit');
+            }
+
+            if (ball.y - ball.radius < 26) {
+                ball.y = 26 + ball.radius;
+                ball.vy = -ball.vy;
+                playBeep('hit');
+            }
+
+            if (ball.y + ball.radius >= paddle.y &&
+                ball.y - ball.radius <= paddle.y + paddle.h &&
+                ball.x >= paddle.x &&
+                ball.x <= paddle.x + paddle.w) {
+                
+                ball.vy = -Math.abs(ball.vy);
+                const hitPoint = (ball.x - (paddle.x + paddle.w / 2)) / (paddle.w / 2);
+                ball.vx = hitPoint * 4.5;
+                playBeep('hit');
+            }
+
+            if (ball.y + ball.radius > breakoutCanvas.height) {
+                resetBallAndPaddle();
+                playBeep('pause');
+            }
+
+            let activeBricksLeft = 0;
+            for (let r = 0; r < brickRows; r++) {
+                for (let c = 0; c < brickCols; c++) {
+                    const b = bricks[r][c];
+                    if (b.status === 1) {
+                        activeBricksLeft++;
+                        if (ball.x + ball.radius > b.x &&
+                            ball.x - ball.radius < b.x + b.w &&
+                            ball.y + ball.radius > b.y &&
+                            ball.y - ball.radius < b.y + b.h) {
+                            
+                            b.status = 0;
+                            ball.vy = -ball.vy;
+                            gameScore += b.points;
+                            currentScoreEl.textContent = String(gameScore).padStart(4, '0');
+
+                            if (gameScore > highScore) {
+                                highScore = gameScore;
+                                highScoreEl.textContent = String(highScore).padStart(4, '0');
+                                localStorage.setItem('chrono_breakout_hi', highScore);
+                            }
+
+                            playBeep('brick');
+                        }
+                    }
+                }
+            }
+
+            if (activeBricksLeft === 0) {
+                resetBricks();
+                resetBallAndPaddle();
+                playBeep('start');
+            }
+        }
+
+        function drawBreakout() {
+            if (!ctx) return;
+            const colors = getThemeColors();
+
+            ctx.clearRect(0, 0, breakoutCanvas.width, breakoutCanvas.height);
+            ctx.fillStyle = colors.bg;
+            ctx.fillRect(0, 0, breakoutCanvas.width, breakoutCanvas.height);
+
+            for (let r = 0; r < brickRows; r++) {
+                for (let c = 0; c < brickCols; c++) {
+                    const b = bricks[r][c];
+                    if (b.status === 1) {
+                        ctx.fillStyle = colors.primary;
+                        ctx.fillRect(b.x, b.y, b.w, b.h);
+                        ctx.fillStyle = colors.secondary;
+                        ctx.fillRect(b.x + 1, b.y + 1, b.w - 2, b.h - 2);
+                    }
+                }
+            }
+
+            ctx.fillStyle = colors.primary;
+            ctx.fillRect(paddle.x, paddle.y, paddle.w, paddle.h);
+
+            ctx.beginPath();
+            ctx.arc(ball.x, ball.y, ball.radius, 0, Math.PI * 2);
+            ctx.fillStyle = colors.primary;
+            ctx.fill();
+            ctx.closePath();
+        }
+
+        function startTimer() {
+            if (isRunning || remainingSeconds <= 0) return;
+            playBeep('start');
+            isRunning = true;
+            setStatus('COUNTING...');
+            powerLed.className = "w-3.5 h-3.5 rounded-full bg-emerald-400 shadow-[0_0_8px_#00ff66] animate-pulse";
+
+            isGameActive = true;
+            document.getElementById('breakout-canvas').classList.remove('hidden');
+            timerContainer.classList.add('scale-75', 'opacity-85', '-translate-y-2');
+            gameTipEl.classList.remove('hidden');
+            if (startPromptEl) startPromptEl.classList.add('hidden');
+
+            initBreakout();
+            cancelAnimationFrame(animFrameId);
+            gameLoop();
+
+            timerInterval = setInterval(() => {
+                if (remainingSeconds > 0) {
+                    remainingSeconds--;
+                    updateDisplay();
+                } else {
+                    finishTimer();
+                }
+            }, 1000);
+        }
+
+        function pauseTimer() {
+            if (!isRunning) return;
+            playBeep('pause');
+            clearInterval(timerInterval);
+            isRunning = false;
+            isGameActive = false;
+            cancelAnimationFrame(animFrameId);
+            setStatus('PAUSED');
+            powerLed.className = "w-3.5 h-3.5 rounded-full bg-yellow-400 shadow-[0_0_8px_#ffea00]";
+            gameTipEl.classList.add('hidden');
+            if (startPromptEl) startPromptEl.classList.remove('hidden');
+        }
+
+        function resetTimer() {
+            playBeep('click');
+            clearInterval(timerInterval);
+            stopAlarm();
+            isRunning = false;
+            isGameActive = false;
+            cancelAnimationFrame(animFrameId);
+
+            remainingSeconds = totalSeconds;
+            updateDisplay();
+            setStatus('READY');
+            powerLed.className = "w-3.5 h-3.5 rounded-full bg-red-600 shadow-[0_0_8px_#ff0000]";
+
+            gameScore = 0;
+            currentScoreEl.textContent = "0000";
+            document.getElementById('breakout-canvas').classList.add('hidden');
+            timerContainer.classList.remove('scale-75', 'opacity-85', '-translate-y-2');
+            gameTipEl.classList.add('hidden');
+            if (startPromptEl) startPromptEl.classList.remove('hidden');
+        }
+
+        function finishTimer() {
+            clearInterval(timerInterval);
+            isRunning = false;
+            isGameActive = false;
+            cancelAnimationFrame(animFrameId);
+
+            remainingSeconds = 0;
+            updateDisplay();
+            setStatus("GAME OVER / TIME'S UP!!", true);
+            powerLed.className = "w-3.5 h-3.5 rounded-full bg-red-500 shadow-[0_0_12px_#ff0000] animate-ping";
+
+            if (gameScore > highScore) {
+                highScore = gameScore;
+                highScoreEl.textContent = String(highScore).padStart(4, '0');
+                localStorage.setItem('chrono_breakout_hi', highScore);
+            }
+
+            gameTipEl.textContent = `🏆 FINAL SCORE: ${gameScore} PTS!`;
+            gameTipEl.classList.remove('hidden');
+
+            playBeep('alarm');
+            alarmInterval = setInterval(() => { playBeep('alarm'); }, 1200);
+        }
+
+        function stopAlarm() {
+            if (alarmInterval) {
+                clearInterval(alarmInterval);
+                alarmInterval = null;
+            }
+            screenBox.classList.remove('alarm-active');
+        }
+
+        function setMinutes(mins) {
+            playBeep('click');
+            stopAlarm();
+            if (isRunning) {
+                clearInterval(timerInterval);
+                isRunning = false;
+                isGameActive = false;
+                cancelAnimationFrame(animFrameId);
+                powerLed.className = "w-3.5 h-3.5 rounded-full bg-red-600 shadow-[0_0_8px_#ff0000]";
+                document.getElementById('breakout-canvas').classList.add('hidden');
+                timerContainer.classList.remove('scale-75', 'opacity-85', '-translate-y-2');
+                if (gameTipEl) gameTipEl.classList.add('hidden');
+                if (startPromptEl) startPromptEl.classList.remove('hidden');
+            }
+            totalSeconds = mins * 60;
+            remainingSeconds = totalSeconds;
+            updateDisplay();
+            setStatus('READY');
+        }
+
+        function toggleMute() {
+            isMuted = !isMuted;
+            soundIndicator.textContent = `🔊 SOUND: ${isMuted ? 'OFF' : 'ON'}`;
+            if (!isMuted) playBeep('click');
+        }
+
+        function openSettingsModal() {
+            playBeep('click');
+            if (isRunning) pauseTimer();
+            settingsModal.classList.remove('hidden');
+        }
+
+        function closeSettingsModal() {
+            playBeep('click');
+            settingsModal.classList.add('hidden');
+        }
+
+        function applySettings() {
+            const h = parseInt(document.getElementById('input-hours').value) || 0;
+            const m = parseInt(document.getElementById('input-minutes').value) || 0;
+            const s = parseInt(document.getElementById('input-seconds').value) || 0;
+            
+            const total = (h * 3600) + (m * 60) + s;
+            if (total > 0) {
+                totalSeconds = total;
+                remainingSeconds = total;
+                updateDisplay();
+                setStatus('READY');
+            }
+            
+            closeSettingsModal();
+            setTimeout(startTimer, 200);
+        }
+
+        window.addEventListener('keydown', (e) => {
+            if (!settingsModal.classList.contains('hidden')) return;
+
+            if (!isRunning && remainingSeconds > 0 && e.key !== 'Escape') {
+                startTimer();
+            }
+
+            if (e.key === 'ArrowLeft' || e.key === 'a' || e.key === 'A') {
+                keyState.left = true;
+            } else if (e.key === 'ArrowRight' || e.key === 'd' || e.key === 'D') {
+                keyState.right = true;
+            }
+        });
+
+        window.addEventListener('keyup', (e) => {
+            if (e.key === 'ArrowLeft' || e.key === 'a' || e.key === 'A') {
+                keyState.left = false;
+            } else if (e.key === 'ArrowRight' || e.key === 'd' || e.key === 'D') {
+                keyState.right = false;
+            }
+        });
+
+        screenBox.addEventListener('click', (e) => {
+            if (e.target.id === 'sound-indicator') return;
+            if (!isRunning && remainingSeconds > 0) {
+                startTimer();
+            }
+        });
+
+        let touchStartX = null;
+        window.addEventListener('touchstart', (e) => {
+            if (e.touches.length > 0) touchStartX = e.touches[0].clientX;
+        }, { passive: true });
+
+        window.addEventListener('touchmove', (e) => {
+            if (!isGameActive || !touchStartX || e.touches.length === 0) return;
+            const diffX = e.touches[0].clientX - touchStartX;
+            paddle.x += diffX * 1.2;
+            if (paddle.x < 0) paddle.x = 0;
+            if (paddle.x + paddle.w > breakoutCanvas.width) paddle.x = breakoutCanvas.width - paddle.w;
+            touchStartX = e.touches[0].clientX;
+        }, { passive: true });
+
+        function createPixelStars() {
+            const container = document.getElementById('stars-container');
+            for (let i = 0; i < 20; i++) {
+                const star = document.createElement('div');
+                star.className = 'absolute bg-pink-300/40 rounded-none pointer-events-none animate-pulse';
+                const size = Math.random() > 0.5 ? '4px' : '6px';
+                star.style.width = size;
+                star.style.height = size;
+                star.style.left = `${Math.random() * 100}%`;
+                star.style.top = `${Math.random() * 100}%`;
+                star.style.animationDuration = `${1.5 + Math.random() * 2.5}s`;
+                container.appendChild(star);
+            }
+        }
+
+        window.onload = function() {
+            updateDisplay();
+            createPixelStars();
+            window.addEventListener('resize', resizeCanvas);
+        };
+    </script>
+</body>
+</html>

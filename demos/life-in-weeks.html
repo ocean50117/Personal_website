@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="zh-TW" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Life in Weeks - 人生週數視覺化地圖</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#f0f9ff',
+                            500: '#06b6d4',
+                            600: '#0284c7',
+                            700: '#0369a1',
+                        }
+                    },
+                    animation: {
+                        'pulse-glow': 'pulseGlow 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    },
+                    keyframes: {
+                        pulseGlow: {
+                            '0%, 100%': { transform: 'scale(1)', opacity: '1', boxShadow: '0 0 10px #f59e0b' },
+                            '50%': { transform: 'scale(1.25)', opacity: '0.85', boxShadow: '0 0 18px #d97706' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+        }
+        
+        /* 亮色主題自訂精細滾動條 */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: rgba(241, 245, 249, 0.8);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(148, 163, 184, 0.6);
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(100, 116, 139, 0.8);
+        }
+
+        /* 方格尺寸定義 */
+        .grid-cell {
+            width: 10px;
+            height: 10px;
+            transition: all 0.15s ease;
+        }
+        
+        @media (min-width: 640px) {
+            .grid-cell {
+                width: 12px;
+                height: 12px;
+            }
+        }
+
+        /* 每四週（1個月）右側加入視覺分隔 */
+        .month-border-right {
+            margin-right: 3px !important;
+        }
+
+        /* 每五年下方加入視覺分隔 */
+        .year-5-border-bottom {
+            margin-bottom: 6px !important;
+        }
+
+        /* 精確對齊 4 格週數的月份標頭寬度 */
+        .month-header-cell {
+            width: 51px;
+            flex-shrink: 0;
+        }
+
+        @media (min-width: 640px) {
+            .month-header-cell {
+                width: 59px;
+            }
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col selection:bg-sky-500 selection:text-white relative text-slate-800 bg-slate-100/80">
+
+    <!-- Header Banner in Clean Light Style -->
+    <header class="relative bg-white text-slate-900 shadow-sm border-b border-slate-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5 sm:py-6 flex flex-col md:flex-row md:items-center justify-between gap-4">
+            <div class="flex items-center space-x-4">
+                <div class="p-3 bg-gradient-to-tr from-sky-500 to-blue-600 rounded-2xl text-white shadow-md shadow-sky-500/20">
+                    <i class="fa-solid fa-table-cells text-2xl sm:text-3xl"></i>
+                </div>
+                <div>
+                    <h1 class="font-extrabold text-2xl sm:text-3xl text-slate-900 tracking-tight">Life in Weeks</h1>
+                    <p class="text-sm text-slate-600 mt-0.5 font-semibold">人生週數視覺化地圖 — 探索與珍惜時間的軌跡</p>
+                </div>
+            </div>
+            
+            <div class="flex items-center space-x-2 text-xs font-semibold text-slate-700 bg-slate-100 py-2 px-4 rounded-full border border-slate-200 shadow-sm self-start md:self-auto">
+                <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-ping"></span>
+                <span>即時計算中</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Container -->
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
+        
+        <!-- Controls & Input Section -->
+        <section class="bg-white border border-slate-200/80 rounded-2xl p-6 shadow-sm relative overflow-hidden">
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-end">
+                <!-- Date Input -->
+                <div class="md:col-span-5 space-y-2">
+                    <label for="birthdate" class="block text-sm font-bold text-slate-800">
+                        <i class="fa-regular fa-calendar-days text-sky-600 mr-1.5"></i> 請選擇您的出生日期 (yyyy-mm-dd)
+                    </label>
+                    <input type="date" id="birthdate" 
+                           class="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-3 text-slate-900 focus:outline-none focus:ring-2 focus:ring-sky-500/50 focus:border-sky-500 transition-all font-mono text-sm shadow-sm font-semibold">
+                </div>
+
+                <!-- Lifespan Target Select -->
+                <div class="md:col-span-4 space-y-2">
+                    <label for="target-years" class="block text-sm font-bold text-slate-800">
+                        <i class="fa-solid fa-hourglass-half text-amber-500 mr-1.5"></i> 設定預期總壽命 (年)
+                    </label>
+                    <select id="target-years" 
+                            class="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-3 text-slate-900 focus:outline-none focus:ring-2 focus:ring-sky-500/50 focus:border-sky-500 transition-all text-sm font-semibold shadow-sm">
+                        <option value="80">80 年 (4,160 週)</option>
+                        <option value="90" selected>90 年 (4,680 週) [預設]</option>
+                        <option value="100">100 年 (5,200 週)</option>
+                    </select>
+                </div>
+
+                <!-- Render Button -->
+                <div class="md:col-span-3">
+                    <button id="calculate-btn" 
+                            class="w-full bg-gradient-to-r from-sky-500 to-blue-600 hover:from-sky-600 hover:to-blue-700 text-white font-bold py-3 px-6 rounded-xl transition-all shadow-md shadow-sky-500/30 flex items-center justify-center space-x-2 text-sm active:scale-[0.98]">
+                        <i class="fa-solid fa-wand-magic-sparkles"></i>
+                        <span>生成人生地圖</span>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Statistics Summary Cards -->
+        <section id="stats-section" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            <!-- Card 1: Lived Weeks -->
+            <div class="bg-white border border-slate-200/80 rounded-2xl p-5 flex flex-col justify-between shadow-sm hover:shadow-md transition-shadow">
+                <div class="flex items-center justify-between text-slate-600 mb-2">
+                    <span class="text-xs font-bold uppercase tracking-wider text-slate-500">已活過週數</span>
+                    <div class="w-8 h-8 rounded-lg bg-sky-100 text-sky-600 flex items-center justify-center">
+                        <i class="fa-solid fa-check-double"></i>
+                    </div>
+                </div>
+                <div>
+                    <div id="stat-lived-weeks" class="text-3xl font-black text-slate-900 font-mono tracking-tight">0</div>
+                    <p id="stat-lived-days" class="text-xs font-semibold text-slate-500 mt-1">約 0 天</p>
+                </div>
+            </div>
+
+            <!-- Card 2: Remaining Weeks -->
+            <div class="bg-white border border-slate-200/80 rounded-2xl p-5 flex flex-col justify-between shadow-sm hover:shadow-md transition-shadow">
+                <div class="flex items-center justify-between text-slate-600 mb-2">
+                    <span class="text-xs font-bold uppercase tracking-wider text-slate-500">剩餘週數</span>
+                    <div class="w-8 h-8 rounded-lg bg-emerald-100 text-emerald-600 flex items-center justify-center">
+                        <i class="fa-solid fa-seedling"></i>
+                    </div>
+                </div>
+                <div>
+                    <div id="stat-remaining-weeks" class="text-3xl font-black text-slate-900 font-mono tracking-tight">0</div>
+                    <p id="stat-remaining-years" class="text-xs font-semibold text-slate-500 mt-1">約 0 年</p>
+                </div>
+            </div>
+
+            <!-- Card 3: Current Age -->
+            <div class="bg-white border border-slate-200/80 rounded-2xl p-5 flex flex-col justify-between shadow-sm hover:shadow-md transition-shadow">
+                <div class="flex items-center justify-between text-slate-600 mb-2">
+                    <span class="text-xs font-bold uppercase tracking-wider text-slate-500">目前年齡</span>
+                    <div class="w-8 h-8 rounded-lg bg-purple-100 text-purple-600 flex items-center justify-center">
+                        <i class="fa-solid fa-user-clock"></i>
+                    </div>
+                </div>
+                <div>
+                    <div id="stat-current-age" class="text-3xl font-black text-slate-900 font-mono tracking-tight">0 歲</div>
+                    <p id="stat-current-week-num" class="text-xs font-semibold text-slate-500 mt-1">第 0 週</p>
+                </div>
+            </div>
+
+            <!-- Card 4: Life Progress -->
+            <div class="bg-white border border-slate-200/80 rounded-2xl p-5 flex flex-col justify-between shadow-sm hover:shadow-md transition-shadow">
+                <div class="flex items-center justify-between text-slate-600 mb-2">
+                    <span class="text-xs font-bold uppercase tracking-wider text-slate-500">人生完成進度</span>
+                    <div class="w-8 h-8 rounded-lg bg-amber-100 text-amber-600 flex items-center justify-center">
+                        <i class="fa-solid fa-chart-pie"></i>
+                    </div>
+                </div>
+                <div>
+                    <div id="stat-progress-pct" class="text-3xl font-black text-slate-900 font-mono tracking-tight">0%</div>
+                    <div class="w-full bg-slate-200 rounded-full h-2.5 mt-3 overflow-hidden">
+                        <div id="stat-progress-bar" class="bg-gradient-to-r from-sky-500 to-blue-600 h-2.5 rounded-full transition-all duration-700" style="width: 0%"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Legend Row -->
+        <section class="flex flex-wrap items-center justify-between gap-4 bg-white p-4 rounded-xl border border-slate-200/80 text-xs text-slate-800 shadow-sm">
+            <div class="flex flex-wrap items-center gap-6">
+                <div class="flex items-center space-x-2">
+                    <span class="w-3.5 h-3.5 rounded-sm bg-gradient-to-br from-sky-500 to-blue-600 inline-block shadow-sm"></span>
+                    <span class="font-bold">已活過的週數</span>
+                </div>
+                <div class="flex items-center space-x-2">
+                    <span class="w-3.5 h-3.5 rounded-sm bg-amber-400 animate-pulse-glow inline-block"></span>
+                    <span class="font-bold">當前這一週</span>
+                </div>
+                <div class="flex items-center space-x-2">
+                    <span class="w-3.5 h-3.5 rounded-sm bg-slate-100 border border-slate-300 inline-block"></span>
+                    <span class="font-bold">未來的週數</span>
+                </div>
+            </div>
+            <div class="text-slate-600 flex items-center space-x-1 font-bold">
+                <i class="fa-solid fa-circle-info text-sky-600"></i>
+                <span>上方：每 4 週 (1個月) 標記 | 左側：每 5 年標記</span>
+            </div>
+        </section>
+
+        <!-- Interactive Life Grid Canvas -->
+        <section class="bg-white border border-slate-200/80 rounded-2xl p-4 sm:p-6 shadow-sm overflow-hidden relative">
+            
+            <!-- Floating Dark Tooltip for High Contrast -->
+            <div id="tooltip" class="fixed hidden z-50 pointer-events-none bg-slate-900/95 border border-slate-700 text-slate-100 text-xs rounded-xl py-2.5 px-3.5 shadow-2xl backdrop-blur-md transform -translate-x-1/2 -translate-y-full mb-2">
+                <div id="tooltip-content" class="font-mono leading-relaxed"></div>
+            </div>
+
+            <!-- Scrollable wrapper for grid -->
+            <div class="overflow-x-auto pb-4">
+                <div class="inline-block min-w-max">
+                    
+                    <!-- X-Axis Top Header (M1 - M13, perfectly aligned above 4-week groups) -->
+                    <div class="flex items-center mb-2">
+                        <!-- Y-Axis left spacer (width matching left label column) -->
+                        <div class="w-12 sm:w-16 flex-shrink-0"></div>
+                        <div id="x-axis-container" class="flex">
+                            <!-- JS Generated Month Header Blocks -->
+                        </div>
+                    </div>
+
+                    <!-- Main Grid Area (Left Y-Axis + 52 Column Matrix) -->
+                    <div id="grid-main-wrapper" class="flex flex-col space-y-1">
+                        <!-- JS Generated Rows -->
+                    </div>
+
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-slate-200 bg-white py-6 text-center text-xs text-slate-600 font-bold">
+        <p>「時間是我們最寶貴的資產，珍惜每一星期的精彩。」</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // DOM Elements
+            const birthdateInput = document.getElementById('birthdate');
+            const targetYearsSelect = document.getElementById('target-years');
+            const calculateBtn = document.getElementById('calculate-btn');
+            
+            const statLivedWeeks = document.getElementById('stat-lived-weeks');
+            const statLivedDays = document.getElementById('stat-lived-days');
+            const statRemainingWeeks = document.getElementById('stat-remaining-weeks');
+            const statRemainingYears = document.getElementById('stat-remaining-years');
+            const statCurrentAge = document.getElementById('stat-current-age');
+            const statCurrentWeekNum = document.getElementById('stat-current-week-num');
+            const statProgressPct = document.getElementById('stat-progress-pct');
+            const statProgressBar = document.getElementById('stat-progress-bar');
+            
+            const xAxisContainer = document.getElementById('x-axis-container');
+            const gridMainWrapper = document.getElementById('grid-main-wrapper');
+            const tooltip = document.getElementById('tooltip');
+            const tooltipContent = document.getElementById('tooltip-content');
+
+            // Default birth date set to 25 years ago today for instant demo
+            const defaultBirthDate = new Date();
+            defaultBirthDate.setFullYear(defaultBirthDate.getFullYear() - 25);
+            birthdateInput.value = defaultBirthDate.toISOString().split('T')[0];
+
+            // Render X-Axis Top Headers (13 Month Sections, perfectly aligned)
+            function renderXAxisHeader() {
+                xAxisContainer.innerHTML = '';
+                // 52 weeks = 13 blocks of 4 weeks
+                for (let m = 1; m <= 13; m++) {
+                    const monthBox = document.createElement('div');
+                    monthBox.className = 'month-header-cell flex items-center justify-center text-[10px] sm:text-xs text-slate-600 font-mono font-bold border-b border-slate-300 pb-1';
+                    monthBox.innerHTML = `<span>M${m}</span>`;
+                    xAxisContainer.appendChild(monthBox);
+                }
+            }
+
+            function calculateAndRender() {
+                const birthStr = birthdateInput.value;
+                if (!birthStr) {
+                    alert('請輸入有效的出生日期！');
+                    return;
+                }
+
+                const birthDate = new Date(birthStr);
+                const today = new Date();
+
+                if (birthDate > today) {
+                    alert('出生日期不能在未來！');
+                    return;
+                }
+
+                const totalYears = parseInt(targetYearsSelect.value, 10);
+                const weeksPerYear = 52;
+                const totalWeeks = totalYears * weeksPerYear;
+
+                // Difference in time
+                const diffTime = Math.abs(today - birthDate);
+                const daysLived = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+                const weeksLived = Math.floor(daysLived / 7);
+
+                const remainingWeeks = Math.max(0, totalWeeks - weeksLived);
+                const remainingYears = (remainingWeeks / 52).toFixed(1);
+
+                // Calculate Exact Age
+                let ageYears = today.getFullYear() - birthDate.getFullYear();
+                let m = today.getMonth() - birthDate.getMonth();
+                if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+                    ageYears--;
+                }
+
+                // Progress Percentage
+                const progressPct = Math.min(100, ((weeksLived / totalWeeks) * 100)).toFixed(1);
+
+                // Update Dashboard Statistics
+                statLivedWeeks.textContent = weeksLived.toLocaleString();
+                statLivedDays.textContent = `約 ${daysLived.toLocaleString()} 天`;
+
+                statRemainingWeeks.textContent = remainingWeeks.toLocaleString();
+                statRemainingYears.textContent = `約 ${remainingYears} 年`;
+
+                statCurrentAge.textContent = `${ageYears} 歲`;
+                statCurrentWeekNum.textContent = `第 ${weeksLived + 1} 週`;
+
+                statProgressPct.textContent = `${progressPct}%`;
+                statProgressBar.style.width = `${progressPct}%`;
+
+                // Render the Main Grid
+                renderGrid(birthDate, weeksLived, totalYears);
+            }
+
+            function renderGrid(birthDate, weeksLived, totalYears) {
+                gridMainWrapper.innerHTML = '';
+
+                for (let r = 0; r < totalYears; r++) {
+                    const rowDiv = document.createElement('div');
+                    rowDiv.className = 'flex items-center';
+                    
+                    // Check if this row is a 5-year boundary
+                    const isFiveYearMarker = (r % 5 === 0);
+                    if (isFiveYearMarker) {
+                        rowDiv.classList.add('year-5-border-bottom');
+                    }
+
+                    // Y-Axis Left Label Container
+                    const yLabelDiv = document.createElement('div');
+                    yLabelDiv.className = 'w-12 sm:w-16 flex-shrink-0 text-[10px] sm:text-xs font-mono pr-2 text-right flex items-center justify-end font-extrabold';
+
+                    if (isFiveYearMarker) {
+                        yLabelDiv.className += ' text-sky-700 font-extrabold';
+                        yLabelDiv.innerHTML = `<span>${r} 歲</span>`;
+                    } else {
+                        yLabelDiv.className += ' text-slate-400 font-semibold';
+                        yLabelDiv.innerHTML = `<span>${r}</span>`;
+                    }
+
+                    rowDiv.appendChild(yLabelDiv);
+
+                    // Row of 52 Weeks
+                    const weeksRow = document.createElement('div');
+                    weeksRow.className = 'flex items-center';
+
+                    for (let c = 0; c < 52; c++) {
+                        const weekIndex = r * 52 + c;
+                        const cell = document.createElement('div');
+
+                        // Calculate date range for this week box
+                        const weekStartDate = new Date(birthDate.getTime() + weekIndex * 7 * 24 * 60 * 60 * 1000);
+                        const dateFormatted = `${weekStartDate.getFullYear()}/${weekStartDate.getMonth() + 1}/${weekStartDate.getDate()}`;
+
+                        // Styling base
+                        cell.className = 'grid-cell rounded-sm mx-[1px] my-[1px] flex-shrink-0 cursor-pointer transition-transform duration-100 hover:scale-150 hover:z-20';
+
+                        // Every 4th column right margin (Month separator)
+                        if ((c + 1) % 4 === 0 && c < 51) {
+                            cell.classList.add('month-border-right');
+                        }
+
+                        // Cell Status Coloring (Bright Light Theme)
+                        if (weekIndex < weeksLived) {
+                            // Lived Week - Deep vibrant blue
+                            cell.classList.add('bg-gradient-to-br', 'from-sky-500', 'to-blue-600', 'shadow-sm');
+                        } else if (weekIndex === weeksLived) {
+                            // Current Week - Pulsing Amber
+                            cell.classList.add('bg-amber-400', 'animate-pulse-glow', 'z-10');
+                        } else {
+                            // Future Week - Clean light tile
+                            cell.classList.add('bg-slate-100', 'border', 'border-slate-300/80', 'hover:bg-slate-200');
+                        }
+
+                        // Tooltip Interaction
+                        cell.addEventListener('mouseenter', (e) => {
+                            const monthNum = Math.floor(c / 4) + 1;
+                            const weekInMonth = (c % 4) + 1;
+                            
+                            let statusText = '未來的週';
+                            let statusBadge = '<span class="text-slate-400">未到</span>';
+                            
+                            if (weekIndex < weeksLived) {
+                                statusText = '已活過';
+                                statusBadge = '<span class="text-sky-400">已過</span>';
+                            } else if (weekIndex === weeksLived) {
+                                statusText = '當前這一週';
+                                statusBadge = '<span class="text-amber-400 font-bold">進行中 🔥</span>';
+                            }
+
+                            tooltipContent.innerHTML = `
+                                <div class="font-bold text-white mb-0.5">${r} 歲 (第 ${r + 1} 年)</div>
+                                <div class="text-slate-300">西元：${dateFormatted} 開始</div>
+                                <div class="text-slate-300">定位：M${monthNum} 第 ${weekInMonth} 週 (第 ${weekIndex + 1} 總週數)</div>
+                                <div class="mt-1 pt-1 border-t border-slate-700/80 flex justify-between items-center">
+                                    <span>狀態：</span> ${statusBadge}
+                                </div>
+                            `;
+                            
+                            tooltip.classList.remove('hidden');
+                            positionTooltip(e);
+                        });
+
+                        cell.addEventListener('mousemove', (e) => {
+                            positionTooltip(e);
+                        });
+
+                        cell.addEventListener('mouseleave', () => {
+                            tooltip.classList.add('hidden');
+                        });
+
+                        weeksRow.appendChild(cell);
+                    }
+
+                    rowDiv.appendChild(weeksRow);
+                    gridMainWrapper.appendChild(rowDiv);
+                }
+            }
+
+            // Position tooltip smoothly near cursor
+            function positionTooltip(e) {
+                const tooltipWidth = tooltip.offsetWidth;
+                let left = e.clientX;
+                let top = e.clientY - 10;
+
+                if (left - tooltipWidth / 2 < 10) left = tooltipWidth / 2 + 10;
+                if (left + tooltipWidth / 2 > window.innerWidth - 10) left = window.innerWidth - tooltipWidth / 2 - 10;
+
+                tooltip.style.left = `${left}px`;
+                tooltip.style.top = `${top}px`;
+            }
+
+            // Initial setup and trigger
+            renderXAxisHeader();
+            calculateAndRender();
+
+            // Event Listeners
+            calculateBtn.addEventListener('click', calculateAndRender);
+            targetYearsSelect.addEventListener('change', calculateAndRender);
+            birthdateInput.addEventListener('change', calculateAndRender);
+        });
+    </script>
+</body>
+</html>

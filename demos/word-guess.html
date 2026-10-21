@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>guess_the_word.json</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #000000;
+    --fg: #f2f2f2;
+    --key: #7a7a7a;
+    --punc: #4d4d4d;
+    --dim: #6b6b6b;
+    --line: #2a2a2a;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    min-height: 100vh;
+    background: var(--bg);
+    color: var(--fg);
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+  }
+
+  .stage {
+    width: 100%;
+    max-width: 520px;
+  }
+
+  .filename {
+    font-size: 12px;
+    color: var(--dim);
+    margin-bottom: 8px;
+    letter-spacing: 0.02em;
+  }
+
+  .filename::before { content: "// "; }
+
+  .console {
+    border: 1px solid var(--line);
+    padding: 22px 22px 18px;
+  }
+
+  pre {
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.9;
+    white-space: pre-wrap;
+    word-break: break-all;
+  }
+
+  .k { color: var(--key); }
+  .p { color: var(--punc); }
+  .s { color: var(--fg); }
+  .n { color: var(--fg); }
+
+  .lives-line {
+    letter-spacing: 2px;
+  }
+
+  .lives-line .up { color: var(--fg); }
+  .lives-line .down { color: var(--line); }
+
+  .divider {
+    border: none;
+    border-top: 1px solid var(--line);
+    margin: 16px 0;
+  }
+
+  .prompt-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .prompt-row .arrow { color: var(--dim); }
+
+  input#guessInput {
+    flex: 1;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: var(--fg);
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 14px;
+    caret-color: var(--fg);
+  }
+
+  input#guessInput::placeholder { color: var(--dim); }
+
+  input#guessInput:disabled { opacity: 0.3; }
+
+  .status-line {
+    margin-top: 14px;
+    font-size: 13px;
+    color: var(--dim);
+    min-height: 18px;
+  }
+
+  .status-line.win { color: var(--fg); }
+  .status-line.lose { color: var(--fg); }
+
+  .again-row {
+    margin-top: 4px;
+  }
+
+  button#againBtn {
+    display: none;
+    background: transparent;
+    border: 1px solid var(--fg);
+    color: var(--fg);
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 12px;
+    padding: 8px 14px;
+    cursor: pointer;
+    margin-top: 12px;
+  }
+
+  button#againBtn:hover { background: var(--fg); color: #000; }
+  button#againBtn.show { display: inline-block; }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { transition: none !important; }
+  }
+</style>
+</head>
+<body>
+
+<div class="stage">
+  <div class="filename">guess_the_word.json</div>
+
+  <div class="console">
+    <pre id="jsonBlock"></pre>
+
+    <hr class="divider">
+
+    <div class="prompt-row">
+      <span class="arrow">&gt;</span>
+      <input id="guessInput" type="text" maxlength="1" placeholder="input a letter, press enter" autocomplete="off">
+    </div>
+
+    <div class="status-line" id="status"></div>
+
+    <div class="again-row">
+      <button id="againBtn">reset()</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  const wordBank = ['rizz', 'ohio', 'sigma', 'tiktok', 'skibidi'];
+  const maxAttempts = 10;
+
+  let word, guessedLetters, attempts, gameOver;
+
+  const jsonBlock = document.getElementById('jsonBlock');
+  const input = document.getElementById('guessInput');
+  const statusEl = document.getElementById('status');
+  const againBtn = document.getElementById('againBtn');
+
+  function startGame() {
+    word = wordBank[Math.floor(Math.random() * wordBank.length)];
+    guessedLetters = [];
+    attempts = maxAttempts;
+    gameOver = false;
+
+    input.disabled = false;
+    input.value = '';
+    statusEl.textContent = 'awaiting input...';
+    statusEl.className = 'status-line';
+    againBtn.classList.remove('show');
+
+    render();
+    input.focus();
+  }
+
+  function currentWordDisplay() {
+    return [...word].map(ch => guessedLetters.includes(ch) ? ch : '_');
+  }
+
+  function render() {
+    const display = currentWordDisplay();
+    const wordArr = display.map(ch => `"${ch}"`).join(', ');
+    const guessedArr = guessedLetters.map(ch => `"${ch}"`).join(', ');
+
+    const livesUp = '|'.repeat(attempts);
+    const livesDown = '.'.repeat(maxAttempts - attempts);
+
+    jsonBlock.innerHTML =
+`<span class="p">{</span>
+  <span class="k">"word"</span><span class="p">:</span> <span class="p">[</span><span class="s">${wordArr}</span><span class="p">]</span><span class="p">,</span>
+  <span class="k">"length"</span><span class="p">:</span> <span class="n">${word.length}</span><span class="p">,</span>
+  <span class="k">"guessed"</span><span class="p">:</span> <span class="p">[</span><span class="s">${guessedArr}</span><span class="p">]</span><span class="p">,</span>
+  <span class="k">"lives"</span><span class="p">:</span> <span class="s lives-line"><span class="up">${livesUp}</span><span class="down">${livesDown}</span></span> <span class="p">(${attempts}/${maxAttempts})</span>
+<span class="p">}</span>`;
+  }
+
+  function handleGuess(letterRaw) {
+    if (gameOver) return;
+    const letter = letterRaw.toLowerCase();
+    if (!/^[a-z]$/.test(letter)) {
+      statusEl.textContent = 'error: expected a single a-z character';
+      statusEl.className = 'status-line';
+      return;
+    }
+    if (guessedLetters.includes(letter)) {
+      statusEl.textContent = `"${letter}" already guessed`;
+      statusEl.className = 'status-line';
+      return;
+    }
+
+    guessedLetters.push(letter);
+
+    if (word.includes(letter)) {
+      statusEl.textContent = 'correct — great guess!';
+      statusEl.className = 'status-line';
+    } else {
+      attempts--;
+      statusEl.textContent = `wrong guess. attempts_left: ${attempts}`;
+      statusEl.className = 'status-line';
+    }
+
+    render();
+
+    const won = [...word].every(ch => guessedLetters.includes(ch));
+
+    if (won) {
+      gameOver = true;
+      statusEl.textContent = `success — the word was "${word}"`;
+      statusEl.className = 'status-line win';
+      input.disabled = true;
+      againBtn.classList.add('show');
+    } else if (attempts === 0) {
+      gameOver = true;
+      statusEl.textContent = `out of attempts — the word was "${word}"`;
+      statusEl.className = 'status-line lose';
+      input.disabled = true;
+      againBtn.classList.add('show');
+    }
+  }
+
+  input.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' && input.value) {
+      handleGuess(input.value);
+      input.value = '';
+    }
+  });
+
+  againBtn.addEventListener('click', startGame);
+
+  startGame();
+</script>
+
+</body>
+</html>
