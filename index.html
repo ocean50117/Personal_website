@@ -198,6 +198,19 @@ h3.sec{font-family:var(--display);font-weight:400;font-size:42px;line-height:1.1
 button.tag-dark{font:inherit;font-size:13px;border:0;cursor:pointer;display:inline-flex;align-items:center;gap:6px;transition:transform .2s ease,background .2s ease}
 button.tag-dark::after{content:"";width:14px;height:14px;flex:none;background:currentColor;-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='round'%3E%3Crect x='3' y='5' width='18' height='14' rx='2'/%3E%3Cpath d='M7 15l3-3 3 3 2-2 2 2'/%3E%3C/svg%3E") center/contain no-repeat;mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='round'%3E%3Crect x='3' y='5' width='18' height='14' rx='2'/%3E%3Cpath d='M7 15l3-3 3 3 2-2 2 2'/%3E%3C/svg%3E") center/contain no-repeat;opacity:.8}
 button.tag-dark:hover{transform:translateY(-2px);background:#3A3F47}
+.res-modal{border:0;padding:0;background:transparent;max-width:min(460px,92vw);width:100%;overflow:visible}
+.res-modal::backdrop{background:rgba(20,22,26,.72);backdrop-filter:blur(4px)}
+.res-modal .box{position:relative;background:#fff;color:#262A30;border-radius:18px;padding:28px 26px 24px;box-shadow:0 20px 60px rgba(0,0,0,.35);font-family:var(--body)}
+.res-modal h4{margin:0 0 4px;font-family:var(--ui);font-weight:700;font-size:20px}
+.res-modal p{margin:0 0 18px;font-size:13px;color:#5E6670}
+.res-modal .opts{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.res-modal .opt{display:flex;flex-direction:column;gap:4px;padding:16px;border-radius:14px;border:1.5px solid #262A30;color:#262A30;text-decoration:none;transition:transform .2s ease,background .2s ease}
+.res-modal .opt:hover{transform:translateY(-3px);background:#EBFF3A}
+.res-modal .opt b{font-family:var(--ui);font-size:17px}
+.res-modal .opt small{font-size:12px;color:#5E6670}
+.res-modal .opt em{font-style:normal;font-family:var(--ui);font-weight:600;font-size:12px;margin-top:8px}
+.res-modal .x{position:absolute;top:-14px;right:-14px;width:40px;height:40px;border-radius:50%;border:0;background:#EBFF3A;color:#262A30;font-size:20px;cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,.25)}
+@media (max-width:640px){.res-modal .x{top:-48px;right:0}.res-modal .opts{grid-template-columns:1fr}}
 .cert-modal{border:0;padding:0;background:transparent;max-width:min(920px,94vw);width:100%;overflow:visible}
 .cert-modal::backdrop{background:rgba(20,22,26,.72);backdrop-filter:blur(4px)}
 .cert-modal figure{margin:0;background:var(--white);border-radius:18px;padding:14px;box-shadow:0 20px 60px rgba(0,0,0,.35)}
@@ -812,7 +825,7 @@ button.tag-dark:hover{transform:translateY(-2px);background:#3A3F47}
     <p class="hi">這邊能找到我 :D</p>
     <div class="cta-row">
       <button class="pill lime" id="copy-email" type="button" title="點一下複製 email">ocean50117@gmail.com</button>
-      <a class="pill coral pdf" href="#" target="_blank" rel="noopener" data-todo="resume-pdf">履歷 PDF</a>
+      <a class="pill coral pdf" href="assets/resume/Sonia_Liu_Resume_zh.pdf" id="resBtn" aria-haspopup="dialog">履歷 PDF</a>
       <a class="pill ghost" href="https://github.com/ocean50117" target="_blank" rel="noopener">GitHub</a>
       <a class="pill ghost" href="#" target="_blank" rel="noopener" data-todo="instagram">Instagram</a>
       <a class="pill ghost" href="https://www.linkedin.com/in/thisissonialiu" target="_blank" rel="noopener">LinkedIn</a>
@@ -837,6 +850,17 @@ button.tag-dark:hover{transform:translateY(-2px);background:#3A3F47}
   <div class="drawer-foot"><span class="count" id="dcount">01 / 07</span><button class="arrow" id="dprev" aria-label="上一段經歷">←</button><button class="arrow" id="dnext" aria-label="下一段經歷">→</button></div>
 </aside>
 
+<dialog class="res-modal" id="resModal" aria-label="下載履歷">
+  <div class="box">
+    <button class="x" type="button" aria-label="關閉">✕</button>
+    <h4>下載履歷</h4>
+    <p>請選擇語言版本（PDF）</p>
+    <div class="opts">
+      <a class="opt" href="assets/resume/Sonia_Liu_Resume_zh.pdf" download="劉敏雯_履歷.pdf"><b>中文履歷</b><small>繁體中文</small><em>下載 PDF ↓</em></a>
+      <a class="opt" href="assets/resume/Sonia_Liu_Resume_en.pdf" download="Sonia_Liu_Resume_EN.pdf"><b>English</b><small>English Resume</small><em>Download PDF ↓</em></a>
+    </div>
+  </div>
+</dialog>
 <dialog class="cert-modal" id="certModal" aria-label="證照">
   <button class="x" type="button" aria-label="關閉">✕</button>
   <figure><div class="cm-wrap"><div class="cm-track"></div><button class="cm-nav prev" type="button" aria-label="上一張">←</button><button class="cm-nav next" type="button" aria-label="下一張">→</button></div><div class="cm-dots"></div><figcaption><span></span><small></small></figcaption></figure>
@@ -860,6 +884,14 @@ button.tag-dark:hover{transform:translateY(-2px);background:#3A3F47}
     dots.hidden=cnt<2; prev.hidden=next.hidden=cnt<2; t.textContent=b.dataset.title; n.textContent=b.dataset.note||'';
     d.showModal(); track.scrollLeft=0; mark();
   }));
+  d.querySelector('.x').onclick=()=>d.close();
+  d.addEventListener('click',e=>{ if(e.target===d) d.close(); });
+})();
+</script>
+<script>
+(function(){
+  const d=document.getElementById('resModal'),b=document.getElementById('resBtn'); if(!d||!b||!d.showModal) return;
+  b.addEventListener('click',e=>{ e.preventDefault(); d.showModal(); });
   d.querySelector('.x').onclick=()=>d.close();
   d.addEventListener('click',e=>{ if(e.target===d) d.close(); });
 })();

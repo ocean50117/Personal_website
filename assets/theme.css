@@ -27,11 +27,12 @@ html[data-theme="dark"] .edu .tl .sub{color:#C9D3E0}
 html[data-theme="dark"] body::before{background:var(--mist)}
 html[data-theme="dark"] .nav.scrolled{box-shadow:0 1px 0 rgba(255,255,255,.06)}
 html[data-theme="dark"] img.tool,html[data-theme="dark"] .tool-grid img{background:transparent}
-html[data-theme="dark"] .tool-grid li{background:#EDEFF3;border-radius:10px}
 html[data-theme="dark"] .more,html[data-theme="dark"] details,html[data-theme="dark"] .box,html[data-theme="dark"] .card{border-color:var(--line)}
 @media (max-width:640px){.theme-toggle{width:54px;height:30px}.theme-toggle .knob{width:24px;height:24px}html[data-theme="dark"] .theme-toggle .knob{transform:translateX(24px)}}
 
-html[data-theme="dark"] img[src*="assets/tools/"]{background:#EDEFF3;border-radius:8px}
+html[data-theme="dark"] img[src*="assets/tools/github.png"],html[data-theme="dark"] img[src*="assets/tools/notion.png"]{filter:invert(1)}
 
 html[data-theme="dark"] .scroll-down{color:#262A30;border-color:#262A30}
 html[data-theme="dark"] .cert-hint{color:var(--muted)}
+html[data-theme="dark"] .socials a{background:#fff}
+html[data-theme="dark"] #s1{background:#1F7A70}
