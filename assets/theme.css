@@ -1,10 +1,10 @@
 /* Dark theme: page background = ink (#262A30). Colour blocks (pastel cards) keep their original colours. */
-.theme-toggle{position:relative;flex:none;width:40px;height:22px;border-radius:999px;border:0;padding:0;cursor:pointer;background:#F8DB9C;transition:background .25s ease;box-shadow:inset 0 0 0 1px rgba(38,42,48,.06)}
-.theme-toggle .knob{position:absolute;top:3px;left:3px;width:16px;height:16px;border-radius:50%;background:#fff;display:grid;place-items:center;transition:transform .25s cubic-bezier(.3,.7,.2,1),background .25s ease;box-shadow:0 1px 3px rgba(38,42,48,.25)}
-.theme-toggle svg{width:10px;height:10px;display:block}
+.theme-toggle{position:relative;flex:none;width:50px;height:27px;border-radius:999px;border:0;padding:0;cursor:pointer;background:#F8DB9C;transition:background .25s ease;box-shadow:inset 0 0 0 1px rgba(38,42,48,.06)}
+.theme-toggle .knob{position:absolute;top:3px;left:3px;width:21px;height:21px;border-radius:50%;background:#fff;display:grid;place-items:center;transition:transform .25s cubic-bezier(.3,.7,.2,1),background .25s ease;box-shadow:0 1px 3px rgba(38,42,48,.25)}
+.theme-toggle svg{width:13px;height:13px;display:block}
 .theme-toggle .moon{display:none}
 html[data-theme="dark"] .theme-toggle{background:#555A62}
-html[data-theme="dark"] .theme-toggle .knob{transform:translateX(18px);background:#262A30}
+html[data-theme="dark"] .theme-toggle .knob{transform:translateX(23px);background:#262A30}
 html[data-theme="dark"] .theme-toggle .sun{display:none}
 html[data-theme="dark"] .theme-toggle .moon{display:block}
 .theme-toggle:focus-visible{outline:3px solid #FF8662;outline-offset:3px}
@@ -28,7 +28,7 @@ html[data-theme="dark"] body::before{background:var(--mist)}
 html[data-theme="dark"] .nav.scrolled{box-shadow:0 1px 0 rgba(255,255,255,.06)}
 html[data-theme="dark"] img.tool,html[data-theme="dark"] .tool-grid img{background:transparent}
 html[data-theme="dark"] .more,html[data-theme="dark"] details,html[data-theme="dark"] .box,html[data-theme="dark"] .card{border-color:var(--line)}
-@media (max-width:640px){.theme-toggle{width:38px;height:21px}.theme-toggle .knob{width:15px;height:15px}html[data-theme="dark"] .theme-toggle .knob{transform:translateX(17px)}}
+@media (max-width:640px){.theme-toggle{width:46px;height:25px}.theme-toggle .knob{width:19px;height:19px}html[data-theme="dark"] .theme-toggle .knob{transform:translateX(21px)}}
 
 html[data-theme="dark"] img[src*="assets/tools/github.png"],html[data-theme="dark"] img[src*="assets/tools/notion.png"]{filter:invert(1)}
 
@@ -68,10 +68,10 @@ html[data-theme] .nav .lang-toggle button+button::before{content:"/";margin-righ
   html[data-theme] .nav .lang-toggle button{font-size:13px;padding:0 2px}
 }
 
-/* ---- theme switch: single round button (icon only; sun in light, moon in dark) ---- */
-html[data-theme] .nav .theme-toggle{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;box-shadow:none;background:#F8DB9C}
-html[data-theme="dark"] .nav .theme-toggle{background:#555A62}
-html[data-theme] .nav .theme-toggle .knob{position:static;width:auto;height:auto;background:transparent;box-shadow:none;transform:none;display:grid;place-items:center}
-html[data-theme] .nav .theme-toggle svg{width:16px;height:16px}
-html[data-theme] .nav .theme-toggle:hover{filter:brightness(1.05)}
-@media (max-width:640px){html[data-theme] .nav .theme-toggle{width:28px;height:28px}html[data-theme] .nav .theme-toggle svg{width:15px;height:15px}}
+/* ---- language switch: one nav-style link with a globe; shows the language you can switch TO ---- */
+html[data-theme] .nav .lang-toggle button.on{display:none}
+html[data-theme] .nav .lang-toggle button+button::before{content:"";margin:0}
+html[data-theme] .nav .lang-toggle button{display:inline-flex;align-items:center;gap:6px;padding:0 2px;color:var(--ink);font-size:14px}
+html[data-theme] .nav .lang-toggle button::before{content:"";width:15px;height:15px;background:currentColor;margin:0;font-weight:inherit;-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round'%3E%3Ccircle cx='12' cy='12' r='9.5'/%3E%3Cpath d='M2.5 12h19M12 2.5c3 3 3 16 0 19M12 2.5c-3 3-3 16 0 19'/%3E%3C/svg%3E") center/contain no-repeat;mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round'%3E%3Ccircle cx='12' cy='12' r='9.5'/%3E%3Cpath d='M2.5 12h19M12 2.5c3 3 3 16 0 19M12 2.5c-3 3-3 16 0 19'/%3E%3C/svg%3E") center/contain no-repeat}
+html[data-theme] .nav .lang-toggle button:hover{opacity:.7}
+@media (max-width:640px){html[data-theme] .nav .lang-toggle button{font-size:13px;gap:4px}html[data-theme] .nav .lang-toggle button::before{width:13px;height:13px}}

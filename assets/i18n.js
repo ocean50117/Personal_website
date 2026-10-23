@@ -243,7 +243,7 @@
   function tr(zh){return lang==='en'&&DICT.hasOwnProperty(zh)?DICT[zh]:zh}
   function walk(en){
     var w=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT),n,list=[];
-    while(n=w.nextNode()){var p=n.parentElement;if(!p||/^(SCRIPT|STYLE|NOSCRIPT)$/.test(p.tagName))continue;list.push(n)}
+    while(n=w.nextNode()){var p=n.parentElement;if(!p||/^(SCRIPT|STYLE|NOSCRIPT)$/.test(p.tagName)||p.closest('.lang-toggle'))continue;list.push(n)}
     list.forEach(function(n){
       var o=textOrig.get(n);
       if(!o){var v=n.nodeValue,t=v.trim();if(!t||!DICT.hasOwnProperty(t))return;
@@ -273,7 +273,7 @@
   function mount(){
     if(document.querySelector('.lang-toggle'))return;
     var wrap=document.createElement('div');wrap.className='lang-toggle';wrap.setAttribute('role','group');wrap.setAttribute('aria-label','Language');
-    wrap.innerHTML='<button type="button" data-l="zh" lang="zh-Hant" aria-label="中文">中</button><button type="button" data-l="en" lang="en" aria-label="English">EN</button>';
+    wrap.innerHTML='<button type="button" data-l="zh" lang="zh-Hant" aria-label="中文">中文</button><button type="button" data-l="en" lang="en" aria-label="English">EN</button>';
     wrap.addEventListener('click',function(e){var b=e.target.closest('button');if(b)setLang(b.dataset.l,true)});
     var t=document.getElementById('themeToggle'),cta=document.querySelector('header .pill.coral,.nav .pill.coral');
     var ref=t||cta;if(!ref)return;ref.parentNode.insertBefore(wrap,ref);
