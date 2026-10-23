@@ -165,6 +165,8 @@ details.embed iframe{width:100%;height:min(78vh,760px);border:0;border-radius:12
 .vid .lb{position:absolute;inset:auto 12px 12px 12px;color:#fff;font-family:var(--ui);font-size:13.5px;font-weight:600;display:flex;justify-content:space-between;gap:8px;align-items:end}
 .vid .soon{background:var(--lime);color:var(--ink);border-radius:999px;padding:2px 10px;font-size:12px;white-space:nowrap}
 .vid iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.vid video{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;background:#000}
+.vid:has(video) .lb{display:none}
 .kbs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
 .kb{background:var(--white);border-radius:18px;overflow:hidden}
 .kb .ph{aspect-ratio:16/10;background:linear-gradient(135deg,var(--white),var(--powder));display:grid;place-items:center;color:var(--muted);font-family:var(--ui);font-size:13px}
@@ -622,8 +624,8 @@ details.more .mini .tag-eb{display:none}
     <h3 class="sub-h" style="margin-top:28px" data-toc="2" data-label="影片">簡報、Demo 與行銷影片</h3>
     <div class="vid wide" id="talk" data-yt="KSRIp8p9ZRU" style="margin-bottom:16px;scroll-margin-top:96px"><div class="lb"><span>團隊專題簡報影片</span></div></div>
     <div class="vids">
-        <div class="vid wide" id="v-demo" data-yt="W_tePi4N2v4"><div class="lb"><span>Demo 影片</span><span class="soon">上傳中</span></div></div>
-        <div class="vid tall" id="v-ad" data-yt=""><img src="assets/goland/ad_poster.webp" alt="" loading="lazy"><div class="lb"><span>行銷廣告</span><span class="soon">上傳中</span></div></div>
+        <div class="vid wide" id="v-demo"><video controls preload="metadata" playsinline poster="assets/goland/demo_poster.jpg" aria-label="夠練 GoLand Demo 影片"><source src="assets/goland/demo.mp4" type="video/mp4"></video><div class="lb"><span>Demo 影片</span></div></div>
+        <div class="vid tall" id="v-ad"><video controls preload="metadata" playsinline poster="assets/goland/ad_poster.webp" aria-label="夠練行銷廣告"><source src="assets/goland/ad.mp4" type="video/mp4"></video><div class="lb"><span>行銷廣告</span></div></div>
       </div>
   </section>
 
