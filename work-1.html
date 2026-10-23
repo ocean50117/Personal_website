@@ -355,7 +355,7 @@ details.more .mini .tag-eb{display:none}
     </dl>
     <div class="hero-actions">
       <a class="pill coral" href="https://coach-sharing-platform.vercel.app" target="_blank" rel="noopener">作品網址 ↗</a>
-      <span class="pill soon" id="talkVideo" aria-disabled="true">簡報影片 <small>即將公開</small></span>
+      <a class="pill ghost" id="talkVideo" href="#talk">簡報影片 ▶</a>
       <a class="pill dark" href="https://ocean50117.github.io/GoLand_PRD/" target="_blank" rel="noopener">完整 PRD ↗</a>
     </div>
     <div class="live" id="live">
@@ -619,7 +619,8 @@ details.more .mini .tag-eb{display:none}
       <div class="hero-actions" style="margin-top:14px"><a class="pill ghost" href="assets/goland/GoLand_slides.pdf" download>下載簡報 PDF ↓</a></div></div></div></details>
   </section>
   <section id="video">
-    <h3 class="sub-h" style="margin-top:28px" data-toc="2" data-label="影片">Demo 與行銷影片</h3>
+    <h3 class="sub-h" style="margin-top:28px" data-toc="2" data-label="影片">簡報、Demo 與行銷影片</h3>
+    <div class="vid wide" id="talk" data-yt="KSRIp8p9ZRU" style="margin-bottom:16px;scroll-margin-top:96px"><div class="lb"><span>團隊專題簡報影片</span></div></div>
     <div class="vids">
         <div class="vid wide" id="v-demo" data-yt="W_tePi4N2v4"><div class="lb"><span>Demo 影片</span><span class="soon">上傳中</span></div></div>
         <div class="vid tall" id="v-ad" data-yt=""><img src="assets/goland/ad_poster.webp" alt="" loading="lazy"><div class="lb"><span>行銷廣告</span><span class="soon">上傳中</span></div></div>
@@ -729,7 +730,7 @@ details.more .mini .tag-eb{display:none}
 /* YouTube: fill data-yt with the video id to embed */
 document.querySelectorAll('.vid[data-yt]').forEach(v=>{
   const id=v.dataset.yt; if(!id) return;
-  v.innerHTML='<iframe src="https://www.youtube-nocookie.com/embed/'+id+'" title="'+(v.id==='v-ad'?'夠練行銷廣告':'夠練 Demo')+'" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture; fullscreen" loading="lazy"></iframe>';
+  v.innerHTML='<iframe src="https://www.youtube-nocookie.com/embed/'+id+'" title="'+(v.id==='v-ad'?'夠練行銷廣告':v.id==='talk'?'夠練 GoLand 團隊專題簡報影片':'夠練 Demo')+'" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture; fullscreen" loading="lazy"></iframe>';
 });
 </script>
 </body>
