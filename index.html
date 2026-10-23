@@ -156,6 +156,8 @@ h3.sec{font-family:var(--display);font-weight:400;font-size:42px;line-height:1.1
 .edu{margin-left:0}
 .tl{list-style:none;margin:0;padding:0;display:grid;gap:26px}
 .tl li{display:grid;grid-template-columns:22px 72px 1fr;gap:10px;align-items:start}
+.tl li{position:relative}
+.tl .tl-line{position:absolute;width:1px;background:var(--ink);opacity:.32;pointer-events:none;border-radius:1px}
 .tl .star{width:18px;height:18px;color:var(--coral);margin-top:4px}
 .tl .yr{font-family:var(--ui);font-weight:600;font-size:21px;line-height:1.3;font-variant-numeric:tabular-nums}
 .tl .what{font-weight:700;font-size:15.5px;line-height:1.45}
@@ -1127,5 +1129,29 @@ document.documentElement.classList.add('js');
 </script>
 <script src="assets/theme.js"></script>
 <script src="assets/i18n.js"></script>
+<script>
+/* thin connector lines between timeline stars (Education / Experience) */
+(function(){
+  function draw(ul){
+    var items=[].slice.call(ul.children).filter(function(li){return li.offsetParent!==null});
+    [].forEach.call(ul.querySelectorAll(':scope > li > .tl-line'),function(l){l.remove()});
+    for(var i=0;i<items.length-1;i++){
+      var a=items[i],b=items[i+1],sa=a.querySelector(':scope > .star'),sb=b.querySelector(':scope > .star'); if(!sa||!sb)continue;
+      var ra=a.getBoundingClientRect(),r1=sa.getBoundingClientRect(),r2=sb.getBoundingClientRect();
+      var top=r1.bottom-ra.top+4,h=r2.top-4-(r1.bottom+4); if(h<4)continue;
+      var l=document.createElement('i');l.className='tl-line';l.setAttribute('aria-hidden','true');
+      l.style.left=(r1.left-ra.left+r1.width/2-.5)+'px';l.style.top=top+'px';l.style.height=h+'px';a.appendChild(l);
+    }
+  }
+  function all(){document.querySelectorAll('ul.tl').forEach(draw)}
+  var t;function later(){clearTimeout(t);t=setTimeout(all,60)}
+  addEventListener('load',all);addEventListener('resize',later);document.addEventListener('langchange',later);
+  document.addEventListener('click',function(e){if(e.target.closest('.job'))setTimeout(all,120)});
+  if(document.fonts&&document.fonts.ready)document.fonts.ready.then(all);
+  if(window.ResizeObserver){var ro=new ResizeObserver(later);document.querySelectorAll('ul.tl').forEach(function(u){ro.observe(u)})}
+  if(document.readyState!=='loading')all();else document.addEventListener('DOMContentLoaded',all);
+})();
+</script>
+
 </body>
 </html>
