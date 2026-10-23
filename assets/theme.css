@@ -36,3 +36,24 @@ html[data-theme="dark"] .scroll-down{color:#262A30;border-color:#262A30}
 html[data-theme="dark"] .cert-hint{color:var(--muted)}
 html[data-theme="dark"] .socials a{background:#fff}
 html[data-theme="dark"] #s1{background:#1F7A70}
+
+.lang-toggle{flex:none;display:inline-flex;align-items:center;height:27px;padding:3px;gap:2px;border-radius:999px;background:rgba(38,42,48,.1);box-sizing:border-box}
+.lang-toggle button{border:0;background:transparent;color:#262A30;font-family:var(--ui,Poppins,sans-serif);font-weight:600;font-size:12px;line-height:1;height:21px;min-width:26px;padding:0 8px;border-radius:999px;cursor:pointer;transition:background .2s ease}
+.lang-toggle button.on{background:#fff;box-shadow:0 1px 3px rgba(38,42,48,.25)}
+.lang-toggle button:focus-visible{outline:3px solid #FF8662;outline-offset:2px}
+html[data-theme="dark"] .lang-toggle{background:#555A62}
+html[data-theme="dark"] .lang-toggle button{color:#EDEFF3}
+html[data-theme="dark"] .lang-toggle button.on{background:#262A30;box-shadow:none}
+@media (max-width:640px){.lang-toggle{height:25px}.lang-toggle button{height:19px;min-width:22px;padding:0 6px;font-size:11px}}
+@media (max-width:640px){
+  .nav .logo,.nav .brand,.nav a[aria-label*="Sonia"]{white-space:nowrap;font-size:20px}
+  .nav .pill.coral{white-space:nowrap;padding:9px 14px;font-size:13px}
+  .nav .container{gap:8px}
+  .nav .links{gap:10px}
+}
+@media (max-width:380px){
+  .nav .logo,.nav .brand,.nav a[aria-label*="Sonia"]{font-size:17px}
+  .nav .links{gap:7px}
+  .nav .pill.coral{padding:8px 11px;font-size:12px}
+  .lang-toggle button{padding:0 5px;min-width:20px}
+}

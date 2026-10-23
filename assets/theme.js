@@ -2,7 +2,7 @@
   var root=document.documentElement;
   function get(){try{return localStorage.getItem('theme')}catch(e){return null}}
   function set(t,save){root.setAttribute('data-theme',t);if(save){try{localStorage.setItem('theme',t)}catch(e){}}
-    var b=document.getElementById('themeToggle');if(b){b.setAttribute('aria-checked',t==='dark');b.title=t==='dark'?'切換為淺色':'切換為深色'}}
+    var b=document.getElementById('themeToggle');if(b){b.setAttribute('aria-checked',t==='dark');b.title=(root.getAttribute('lang')==='en')?(t==='dark'?'Switch to light':'Switch to dark'):(t==='dark'?'切換為淺色':'切換為深色')}}
   var cur=get()||'light';
   function mount(){
     if(document.getElementById('themeToggle'))return;
