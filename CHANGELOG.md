@@ -25,7 +25,7 @@
 - 移除 Jira 圖示；GoLand 新增「反思二（使用者測試）」｜ebd8625
 - Hero 鏤空字改用 Figma 截圖去背的圖片；GoLand 頁嵌入 Demo 影片與廣告影片（mp4）｜b761895
 - GoLand 頁加入團隊專題簡報影片（YouTube）｜cee330d
-- 導覽列：「中／EN」改成純文字（選中者深色）；深淺色維持膠囊切換鈕但縮小（40×22）；位置在「Résumé」與「Get in touch」之間；頁尾加 Last updated｜本次（要退回大膠囊版：commit 2e3e69a）
+- 導覽列：「中／EN」改成純文字（選中者深色）；深淺色改成單顆圓形按鈕（亮色＝淡黃底太陽、暗色＝深灰底月亮）；位置在「Résumé」與「Get in touch」之間；頁尾加 Last updated｜本次（要退回大膠囊版：commit 2e3e69a；小膠囊版：c1b0496）
 
 ## 2026-10-22
 

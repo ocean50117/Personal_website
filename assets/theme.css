@@ -67,3 +67,11 @@ html[data-theme] .nav .lang-toggle button+button::before{content:"/";margin-righ
 @media (max-width:640px){
   html[data-theme] .nav .lang-toggle button{font-size:13px;padding:0 2px}
 }
+
+/* ---- theme switch: single round button (icon only; sun in light, moon in dark) ---- */
+html[data-theme] .nav .theme-toggle{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;box-shadow:none;background:#F8DB9C}
+html[data-theme="dark"] .nav .theme-toggle{background:#555A62}
+html[data-theme] .nav .theme-toggle .knob{position:static;width:auto;height:auto;background:transparent;box-shadow:none;transform:none;display:grid;place-items:center}
+html[data-theme] .nav .theme-toggle svg{width:16px;height:16px}
+html[data-theme] .nav .theme-toggle:hover{filter:brightness(1.05)}
+@media (max-width:640px){html[data-theme] .nav .theme-toggle{width:28px;height:28px}html[data-theme] .nav .theme-toggle svg{width:15px;height:15px}}
