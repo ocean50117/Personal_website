@@ -22,7 +22,7 @@
 - 移除 Jira 圖示；GoLand 新增「反思二（使用者測試）」｜ebd8625
 - Hero 鏤空字改用 Figma 截圖去背的圖片；GoLand 頁嵌入 Demo 影片與廣告影片（mp4）｜b761895
 - GoLand 頁加入團隊專題簡報影片（YouTube）｜cee330d
-- 主題切換鈕縮小並固定在視窗右上角（導覽其他項目維持原位；視窗 ≤1100px 時回到「Get in touch」旁）；頁尾加 Last updated｜5d3bb61、本次
+- 主題切換鈕縮小並放在導覽列右側、「Get in touch」外側一點（導覽其他項目維持原位；右側空間不夠時回到「Get in touch」旁）；頁尾加 Last updated｜5d3bb61、本次
 
 ## 2026-10-22
 
