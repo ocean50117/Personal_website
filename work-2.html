@@ -288,6 +288,8 @@ article section{padding-top:56px}
 @media (max-width:900px){.four,.steps{grid-template-columns:repeat(2,minmax(0,1fr))}.timeline{grid-template-columns:repeat(3,minmax(0,1fr))}.three{grid-template-columns:1fr}}
 @media (max-width:640px){.two,.ba,.matrix{grid-template-columns:1fr}.timeline{grid-template-columns:repeat(2,minmax(0,1fr))}.part{grid-template-columns:1fr;margin-top:96px}.part b{grid-row:auto;font-size:84px;margin-bottom:6px}.part p{font-size:15px}.ai{font-size:12px;border-spacing:3px}.ai td span{display:none}}
 </style>
+<script>try{var t=localStorage.getItem("theme")||"light";document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
+<link rel="stylesheet" href="assets/theme.css">
 </head>
 <body>
 <style>
@@ -582,5 +584,6 @@ article section{padding-top:56px}
   btns.forEach(b=>b.addEventListener('click',()=>{ btns.forEach(x=>x.classList.toggle('on',x===b)); view.classList.toggle('mobile',b.dataset.mode==='mobile'); }));
 })();
 </script>
+<script src="assets/theme.js"></script>
 </body>
 </html>

@@ -318,6 +318,8 @@ details.more .mini .tag-eb{display:none}
 @media (max-width:900px){.shotgrid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media (max-width:520px){.shotgrid{grid-template-columns:1fr}}
 </style>
+<script>try{var t=localStorage.getItem("theme")||"light";document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
+<link rel="stylesheet" href="assets/theme.css">
 </head>
 <body>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><symbol id="star" viewBox="0 0 24 24"><path d="M12 0c.9 6.6 5.4 11.1 12 12-6.6.9-11.1 5.4-12 12-.9-6.6-5.4-11.1-12-12C6.6 11.1 11.1 6.6 12 0z"/></symbol></svg>
@@ -736,5 +738,6 @@ document.querySelectorAll('.vid[data-yt]').forEach(v=>{
   v.innerHTML='<iframe src="https://www.youtube-nocookie.com/embed/'+id+'" title="'+(v.id==='v-ad'?'夠練行銷廣告':v.id==='talk'?'夠練 GoLand 團隊專題簡報影片':'夠練 Demo')+'" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture; fullscreen" loading="lazy"></iframe>';
 });
 </script>
+<script src="assets/theme.js"></script>
 </body>
 </html>

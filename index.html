@@ -513,6 +513,8 @@ button.tag-dark:hover{transform:translateY(-2px);background:#3A3F47}
 }
 </style>
 
+<script>try{var t=localStorage.getItem("theme")||"light";document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
+<link rel="stylesheet" href="assets/theme.css">
 </head>
 <body>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
@@ -1089,5 +1091,6 @@ document.documentElement.classList.add('js');
   eq(); addEventListener('resize',eq); addEventListener('load',eq); if(document.fonts) document.fonts.ready.then(eq);
 })();
 </script>
+<script src="assets/theme.js"></script>
 </body>
 </html>
