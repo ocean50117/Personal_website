@@ -32,3 +32,6 @@ html[data-theme="dark"] .more,html[data-theme="dark"] details,html[data-theme="d
 @media (max-width:640px){.theme-toggle{width:54px;height:30px}.theme-toggle .knob{width:24px;height:24px}html[data-theme="dark"] .theme-toggle .knob{transform:translateX(24px)}}
 
 html[data-theme="dark"] img[src*="assets/tools/"]{background:#EDEFF3;border-radius:8px}
+
+html[data-theme="dark"] .scroll-down{color:#262A30;border-color:#262A30}
+html[data-theme="dark"] .cert-hint{color:var(--muted)}
