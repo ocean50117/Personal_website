@@ -57,3 +57,22 @@ html[data-theme="dark"] .lang-toggle button.on{background:#262A30;box-shadow:non
   .nav .pill.coral{padding:8px 11px;font-size:12px}
   .lang-toggle button{padding:0 5px;min-width:20px}
 }
+
+/* ---- minimal nav controls: text-style language switch + bare icon theme switch ---- */
+html[data-theme] .nav .lang-toggle{background:transparent;padding:0;height:auto;gap:0;align-items:baseline}
+html[data-theme] .nav .lang-toggle button{background:transparent;box-shadow:none;height:auto;min-width:0;padding:0 3px;border-radius:4px;font-family:var(--ui);font-weight:600;font-size:14px;line-height:1.4;color:var(--muted);transition:color .2s ease}
+html[data-theme] .nav .lang-toggle button.on{background:transparent;box-shadow:none;color:var(--ink)}
+html[data-theme] .nav .lang-toggle button:hover{color:var(--ink)}
+html[data-theme] .nav .lang-toggle button+button::before{content:"/";margin-right:5px;margin-left:2px;font-weight:400;color:var(--muted)}
+html[data-theme] .nav .theme-toggle{width:28px;height:28px;border-radius:50%;background:transparent;box-shadow:none;color:var(--ink);display:grid;place-items:center;opacity:.85;transition:opacity .2s ease}
+html[data-theme] .nav .theme-toggle:hover{opacity:1}
+html[data-theme] .nav .theme-toggle .knob{position:static;width:auto;height:auto;background:transparent;box-shadow:none;transform:none}
+html[data-theme] .nav .theme-toggle svg{width:18px;height:18px}
+html[data-theme] .nav .theme-toggle .sun{stroke:currentColor}
+html[data-theme] .nav .theme-toggle .sun circle{fill:currentColor}
+html[data-theme] .nav .theme-toggle .moon path{fill:currentColor}
+@media (max-width:640px){
+  html[data-theme] .nav .lang-toggle button{font-size:13px;padding:0 2px}
+  html[data-theme] .nav .theme-toggle{width:26px;height:26px}
+  html[data-theme] .nav .theme-toggle svg{width:17px;height:17px}
+}
