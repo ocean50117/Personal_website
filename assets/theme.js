@@ -10,11 +10,7 @@
     var b=document.createElement('button');b.type='button';b.id='themeToggle';b.className='theme-toggle';b.setAttribute('role','switch');b.setAttribute('aria-label','深色模式');
     b.innerHTML='<span class="knob"><svg class="sun" viewBox="0 0 24 24" fill="none" stroke="#FF9F0A" stroke-width="2.2" stroke-linecap="round"><circle cx="12" cy="12" r="4.2" fill="#FF9F0A"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M18.7 5.3l-1.6 1.6M6.9 17.1l-1.6 1.6"/></svg><svg class="moon" viewBox="0 0 24 24"><path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a7 7 0 0 0 10.5 10.5z" fill="#FFB020"/></svg></span>';
     b.addEventListener('click',function(){set(root.getAttribute('data-theme')==='dark'?'light':'dark',true)});
-    var box=cta.closest('.container')||cta.parentNode;
-    function place(){ var r=box.getBoundingClientRect(), room=innerWidth-r.right; /* needs ~76px beside the container */
-      if(room>=76){ if(b.parentNode!==box||!b.classList.contains('corner')){box.appendChild(b);b.classList.add('corner')} }
-      else if(b.classList.contains('corner')||b.parentNode!==cta.parentNode){cta.parentNode.insertBefore(b,cta.nextSibling);b.classList.remove('corner')} }
-    place(); addEventListener('resize',place);
+    cta.parentNode.insertBefore(b,cta);
     set(root.getAttribute('data-theme')||cur,false);
   }
   set(cur,false);
